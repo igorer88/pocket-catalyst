@@ -1,8 +1,8 @@
 {
-  "name": "nestjs-paw-template",
-  "version": "0.0.1",
-  "description": "NestJs base template with TypeORM, PostgreSQL, SQLite, Swagger, E2E tests, and more.",
-  "author": "",
+  "name": "pocket-catalyst",
+  "version": "1.0.0",
+  "description": "Pocket Catalyst is a simple and intuitive finance management app. It guides you to track spending, manage subscriptions, and achieve your financial goals without the hassle, acting as the perfect catalyst for your financial health.",
+  "author": "Igor Escalona <igorer88@gmail.com>",
   "private": true,
   "license": "MIT",
   "engines": {
