@@ -1,0 +1,121 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.8em;
+  border-radius: 1.5em;
+  color: var(--neutral-800);
+  font-size: 0.85em;
+  margin-right: 0.5em;
+}
+
+.chip svg {
+  margin-left: 0.4em;
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+}
+
+.chip.bg-primary-200 {
+  background-color: var(--primary-200);
+  color: var(--primary-800);
+}
+
+.chip.bg-accent-200 {
+  background-color: var(--accent-200);
+  color: var(--accent-800);
+}
+
+.chip.bg-neutral-300 {
+  background-color: var(--neutral-300);
+  color: var(--neutral-800);
+}
+
+.chip.bg-secondary-200 {
+  background-color: var(--secondary-200);
+  color: var(--secondary-800);
+}
+
+.chip.bg-green-200 {
+  background-color: var(--color-green-200);
+  color: var(--color-green-800);
+}
+
+.label {
+  display: inline-block;
+  padding: 0.3em 0.6em;
+  border-radius: 0.3em;
+  font-size: 0.8em;
+  font-weight: bold;
+  color: var(--neutral-50);
+}
+
+.button-outline {
+  background-color: transparent;
+  color: var(--primary-500);
+  border: 4px solid var(--primary-500);
+  padding: 0.5em 1em;
+  border-radius: 0.25em;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.button-outline::before,
+.button-outline::after {
+  content: '';
+  position: absolute;
+  border-color: var(--primary-500);
+  opacity: 1;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: var(--neutral-50);
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.alert {
+  padding: 1em;
+  margin-bottom: 1em;
+  border-radius: 4px;
+  color: var(--neutral-50);
+}
+
+.alert-success {
+  background-color: var(--success);
+}
+
+.alert-info {
+  background-color: var(--info);
+}
+
+.alert-warning {
+  background-color: var(--warning);
+}
+
+.alert-danger {
+  background-color: var(--danger);
+}

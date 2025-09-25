@@ -1,0 +1,322 @@
+/* Definición de la paleta de colores Hero UI */
+:root {
+  --primary-50: #e0f2f7; /* Ejemplo de un tono claro de Teal Blue */
+  --primary-100: #b2ebf2;
+  --primary-200: #80deea;
+  --primary-300: #4dd0e1;
+  --primary-400: #26c6da;
+  --primary-500: #00bcd4; /* Teal Blue Principal */
+  --primary-600: #00acc1;
+  --primary-700: #0097a7;
+  --primary-800: #00838f;
+  --primary-900: #006064;
+
+  --accent-50: #f3e5f5; /* Ejemplo de un tono claro de Lavender Purple */
+  --accent-100: #e1bee7;
+  --accent-200: #ce93d8;
+  --accent-300: #ba68c8;
+  --accent-400: #ab47bc;
+  --accent-500: #9c27b0; /* Lavender Purple Principal */
+  --accent-600: #8e24aa;
+  --accent-700: #7b1fa2;
+  --accent-800: #6a1b9a;
+  --accent-900: #4a148c;
+
+  --neutral-50: #fafafa; /* Ejemplo de un tono claro de Gray */
+  --neutral-100: #f5f5f5;
+  --neutral-200: #eeeeee;
+  --neutral-300: #e0e0e0;
+  --neutral-400: #bdbdbd;
+  --neutral-500: #9e9e9e; /* Gray Principal */
+  --neutral-600: #757575;
+  --neutral-700: #616161;
+  --neutral-800: #424242;
+  --neutral-900: #212121;
+
+  --secondary-50: #fffde7; /* Ejemplo de un tono claro de Pale Yellow */
+  --secondary-100: #fff9c4;
+  --secondary-200: #fff59d;
+  --secondary-300: #fff176;
+  --secondary-400: #ffee58;
+  --secondary-500: #ffeb3b; /* Pale Yellow Principal */
+  --secondary-600: #fdd835;
+  --secondary-700: #fbc02d;
+  --secondary-800: #f9a825;
+  --secondary-900: #f57f17;
+
+  --success: #4caf50;
+  --info: #2196f3;
+  --warning: #ff9800;
+  --danger: #f44336;
+}
+
+.bg-primary-50 {
+  background-color: var(--primary-50);
+}
+.bg-primary-100 {
+  background-color: var(--primary-100);
+}
+.bg-primary-200 {
+  background-color: var(--primary-200);
+}
+.bg-primary-300 {
+  background-color: var(--primary-300);
+}
+.bg-primary-400 {
+  background-color: var(--primary-400);
+}
+.bg-primary-500 {
+  background-color: var(--primary-500);
+}
+.bg-primary-600 {
+  background-color: var(--primary-600);
+}
+.bg-primary-700 {
+  background-color: var(--primary-700);
+}
+.bg-primary-800 {
+  background-color: var(--primary-800);
+}
+.bg-primary-900 {
+  background-color: var(--primary-900);
+}
+
+.bg-accent-50 {
+  background-color: var(--accent-50);
+}
+.bg-accent-100 {
+  background-color: var(--accent-100);
+}
+.bg-accent-200 {
+  background-color: var(--accent-200);
+}
+.bg-accent-300 {
+  background-color: var(--accent-300);
+}
+.bg-accent-400 {
+  background-color: var(--accent-400);
+}
+.bg-accent-500 {
+  background-color: var(--accent-500);
+}
+.bg-accent-600 {
+  background-color: var(--accent-600);
+}
+.bg-accent-700 {
+  background-color: var(--accent-700);
+}
+.bg-accent-800 {
+  background-color: var(--accent-800);
+}
+.bg-accent-900 {
+  background-color: var(--accent-900);
+}
+
+.bg-neutral-50 {
+  background-color: var(--neutral-50);
+}
+.bg-neutral-100 {
+  background-color: var(--neutral-100);
+}
+.bg-neutral-200 {
+  background-color: var(--neutral-200);
+}
+.bg-neutral-300 {
+  background-color: var(--neutral-300);
+}
+.bg-neutral-400 {
+  background-color: var(--neutral-400);
+}
+.bg-neutral-500 {
+  background-color: var(--neutral-500);
+}
+.bg-neutral-600 {
+  background-color: var(--neutral-600);
+}
+.bg-neutral-700 {
+  background-color: var(--neutral-700);
+}
+.bg-neutral-800 {
+  background-color: var(--neutral-800);
+}
+.bg-neutral-900 {
+  background-color: var(--neutral-900);
+}
+
+.bg-secondary-50 {
+  background-color: var(--secondary-50);
+}
+.bg-secondary-100 {
+  background-color: var(--secondary-100);
+}
+.bg-secondary-200 {
+  background-color: var(--secondary-200);
+}
+.bg-secondary-300 {
+  background-color: var(--secondary-300);
+}
+.bg-secondary-400 {
+  background-color: var(--secondary-400);
+}
+.bg-secondary-500 {
+  background-color: var(--secondary-500);
+}
+.bg-secondary-600 {
+  background-color: var(--secondary-600);
+}
+.bg-secondary-700 {
+  background-color: var(--secondary-700);
+}
+.bg-secondary-800 {
+  background-color: var(--secondary-800);
+}
+.bg-secondary-900 {
+  background-color: var(--secondary-900);
+}
+
+.bg-success {
+  background-color: var(--success);
+}
+.bg-info {
+  background-color: var(--info);
+}
+.bg-warning {
+  background-color: var(--warning);
+}
+.bg-danger {
+  background-color: var(--danger);
+}
+
+.border-primary-500 {
+  border-color: var(--primary-500);
+}
+.border-accent-500 {
+  border-color: var(--accent-500);
+}
+.border-neutral-500 {
+  border-color: var(--neutral-500);
+}
+.border-secondary-500 {
+  border-color: var(--secondary-500);
+}
+.border-success {
+  border-color: var(--success);
+}
+.border-info {
+  border-color: var(--info);
+}
+.border-warning {
+  border-color: var(--warning);
+}
+.border-danger {
+  border-color: var(--danger);
+}
+
+.bg-transparent.border-accent-500 {
+  --tw-border-opacity: 1;
+}
+.bg-transparent.border-secondary-500 {
+  --tw-border-opacity: 1;
+}
+.bg-transparent.border-neutral-500 {
+  --tw-border-opacity: 1;
+}
+.bg-transparent.border-success {
+  --tw-border-opacity: 1;
+}
+.bg-transparent.border-info {
+  --tw-border-opacity: 1;
+}
+.bg-transparent.border-warning {
+  --tw-border-opacity: 1;
+}
+.bg-transparent.border-danger {
+  --tw-border-opacity: 1;
+}
+
+a.text-primary-500 {
+  color: var(--primary-500);
+}
+a.hover\:text-primary-700:hover {
+  color: var(--primary-700);
+}
+a.text-accent-500 {
+  color: var(--accent-500);
+}
+a.hover\:text-accent-700:hover {
+  color: var(--accent-700);
+}
+
+button.bg-primary-500:hover {
+  background-color: color-mix(
+    in srgb,
+    var(--primary-500) 80%,
+    var(--neutral-900)
+  );
+}
+button.bg-accent-500:hover {
+  background-color: color-mix(
+    in srgb,
+    var(--accent-500) 80%,
+    var(--neutral-900)
+  );
+}
+button.bg-neutral-300:hover {
+  background-color: color-mix(
+    in srgb,
+    var(--neutral-300) 80%,
+    var(--neutral-900)
+  );
+}
+button.bg-secondary-500:hover {
+  background-color: color-mix(
+    in srgb,
+    var(--secondary-500) 80%,
+    var(--neutral-900)
+  );
+}
+button.bg-success:hover {
+  background-color: color-mix(in srgb, var(--success) 80%, var(--neutral-900));
+}
+button.bg-info:hover {
+  background-color: color-mix(in srgb, var(--info) 80%, var(--neutral-900));
+}
+button.bg-warning:hover {
+  background-color: color-mix(in srgb, var(--warning) 80%, var(--neutral-900));
+}
+button.bg-danger:hover {
+  background-color: color-mix(in srgb, var(--danger) 80%, var(--neutral-900));
+}
+
+.bg-transparent:hover.border-primary-500 {
+  background-color: var(--primary-500);
+  color: var(--neutral-50);
+}
+.bg-transparent:hover.border-accent-500 {
+  background-color: var(--accent-500);
+  color: var(--neutral-50);
+}
+.bg-transparent:hover.border-neutral-500 {
+  background-color: var(--neutral-500);
+  color: var(--neutral-50);
+}
+.bg-transparent:hover.border-secondary-500 {
+  background-color: var(--secondary-500);
+  color: var(--neutral-900);
+}
+.bg-transparent:hover.border-success {
+  background-color: var(--success);
+  color: var(--neutral-50);
+}
+.bg-transparent:hover.border-info {
+  background-color: var(--info);
+  color: var(--neutral-50);
+}
+.bg-transparent:hover.border-warning {
+  background-color: var(--warning);
+  color: var(--neutral-900);
+}
+.bg-transparent:hover.border-danger {
+  background-color: var(--danger);
+  color: var(--neutral-50);
+}

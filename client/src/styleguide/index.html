@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hero UI Styles (Simulated with Tailwind CSS)</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="base.css" />
+    <link rel="stylesheet" href="colors.css" />
+    <link rel="stylesheet" href="components.css" />
+  </head>
+  <body>
+    <h1 class="text-6xl font-bold mb-8">
+      Hero UI Styles (Simulated with Tailwind CSS)
+    </h1>
+
+    <div class="section">
+      <h2 class="text-2xl font-semibold">Main Color Palette (Tone 500)</h2>
+      <div class="color-palette">
+        <div class="color-swatch bg-primary-500">Primary</div>
+        <div class="color-swatch bg-accent-500">Accent</div>
+        <div class="color-swatch bg-neutral-500">Neutral</div>
+        <div class="color-swatch bg-secondary-500">Secondary</div>
+        <div class="color-swatch bg-success">Success</div>
+        <div class="color-swatch bg-info">Info</div>
+        <div class="color-swatch bg-warning">Warning</div>
+        <div class="color-swatch bg-danger">Danger</div>
+      </div>
+
+      <h2 class="text-2xl font-semibold">Full Color Palette</h2>
+      <h3 class="text-xl font-semibold mt-2">Primary (Teal Blue)</h3>
+      <div class="color-palette">
+        <div class="color-swatch bg-primary-50">50</div>
+        <div class="color-swatch bg-primary-100">100</div>
+        <div class="color-swatch bg-primary-200">200</div>
+        <div class="color-swatch bg-primary-300">300</div>
+        <div class="color-swatch bg-primary-400">400</div>
+        <div class="color-swatch bg-primary-500">500</div>
+        <div class="color-swatch bg-primary-600">600</div>
+        <div class="color-swatch bg-primary-700">700</div>
+        <div class="color-swatch bg-primary-800">800</div>
+        <div class="color-swatch bg-primary-900">900</div>
+      </div>
+      <h3 class="text-xl font-semibold mt-2">Accent (Lavender Purple)</h3>
+      <div class="color-palette">
+        <div class="color-swatch bg-accent-50">50</div>
+        <div class="color-swatch bg-accent-100">100</div>
+        <div class="color-swatch bg-accent-200">200</div>
+        <div class="color-swatch bg-accent-300">300</div>
+        <div class="color-swatch bg-accent-400">400</div>
+        <div class="color-swatch bg-accent-500">500</div>
+        <div class="color-swatch bg-accent-600">600</div>
+        <div class="color-swatch bg-accent-700">700</div>
+        <div class="color-swatch bg-accent-800">800</div>
+        <div class="color-swatch bg-accent-900">900</div>
+      </div>
+      <h3 class="text-xl font-semibold mt-2">Neutral (Gray)</h3>
+      <div class="color-palette">
+        <div class="color-swatch bg-neutral-50">50</div>
+        <div class="color-swatch bg-neutral-100">100</div>
+        <div class="color-swatch bg-neutral-200">200</div>
+        <div class="color-swatch bg-neutral-300">300</div>
+        <div class="color-swatch bg-neutral-400">400</div>
+        <div class="color-swatch bg-neutral-500">500</div>
+        <div class="color-swatch bg-neutral-600">600</div>
+        <div class="color-swatch bg-neutral-700">700</div>
+        <div class="color-swatch bg-neutral-800">800</div>
+        <div class="color-swatch bg-neutral-900">900</div>
+      </div>
+      <h3 class="text-xl font-semibold mt-2">Secondary (Pale Yellow)</h3>
+      <div class="color-palette">
+        <div class="color-swatch bg-secondary-50">50</div>
+        <div class="color-swatch bg-secondary-100">100</div>
+        <div class="color-swatch bg-secondary-200">200</div>
+        <div class="color-swatch bg-secondary-300">300</div>
+        <div class="color-swatch bg-secondary-400">400</div>
+        <div class="color-swatch bg-secondary-500">500</div>
+        <div class="color-swatch bg-secondary-600">600</div>
+        <div class="color-swatch bg-secondary-700">700</div>
+        <div class="color-swatch bg-secondary-800">800</div>
+        <div class="color-swatch bg-secondary-900">900</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="text-2xl font-semibold">Typography</h2>
+      <div class="example">
+        <h1 class="text-5xl font-bold">
+          Heading H1
+          <span class="text-gray-500 font-normal"
+            >Class: h1 text-5xl font-bold</span
+          >
+        </h1>
+        <h2 class="text-3xl font-semibold mt-4">
+          Heading H2
+          <span class="text-gray-500 font-normal"
+            >Class: h2 text-3xl font-semibold mt-4</span
+          >
+        </h2>
+        <h3 class="text-xl font-semibold mt-4">
+          Heading H3
+          <span class="text-gray-500 font-normal"
+            >Class: h3 text-xl font-semibold mt-4</span
+          >
+        </h3>
+        <p class="text-base mt-4">
+          This is a base paragraph text.
+          <span class="text-gray-500 font-normal">Class: text-base mt-4</span>
+        </p>
+        <p class="text-sm mt-2">
+          This is a small paragraph text.
+          <span class="text-gray-500 font-normal">Class: text-sm mt-2</span>
+        </p>
+        <p class="text-lg font-semibold mt-2">
+          This is a large and semibold paragraph text.
+          <span class="text-gray-500 font-normal"
+            >Classes: text-lg font-semibold mt-2</span
+          >
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="text-2xl font-semibold">Buttons</h2>
+      <div class="example">
+        <button
+          class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Primary
+        </button>
+        <button
+          class="bg-accent-500 hover:bg-accent-700 text-white font-bold py-2 px-4 rounded ml-2"
+        >
+          Accent
+        </button>
+        <button
+          class="bg-neutral-300 hover:bg-neutral-400 text-gray-800 font-bold py-2 px-4 rounded ml-2"
+        >
+          Neutral
+        </button>
+        <button
+          class="bg-secondary-500 hover:bg-secondary-700 text-gray-800 font-bold py-2 px-4 rounded ml-2"
+        >
+          Secondary
+        </button>
+        <button
+          class="bg-success hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2"
+        >
+          Success
+        </button>
+        <button
+          class="bg-info hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
+        >
+          Info
+        </button>
+        <button
+          class="bg-warning hover:bg-yellow-700 text-black font-bold py-2 px-4 rounded ml-2"
+        >
+          Warning
+        </button>
+        <button
+          class="bg-danger hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+        >
+          Danger
+        </button>
+
+        <button
+          class="bg-transparent hover:bg-primary-500 hover:text-white font-semibold py-2 px-4 border-2 border-primary-500 rounded ml-2"
+        >
+          Outline Primary
+        </button>
+        <button
+          class="bg-transparent hover:bg-accent-500 hover:text-white font-semibold py-2 px-4 border-2 border-accent-500 rounded ml-2"
+        >
+          Outline Accent
+        </button>
+        <button
+          class="bg-transparent hover:bg-neutral-500 hover:text-white font-semibold py-2 px-4 border-2 border-neutral-500 rounded ml-2"
+        >
+          Outline Neutral
+        </button>
+        <button
+          class="bg-transparent hover:bg-secondary-500 hover:text-gray-800 font-semibold py-2 px-4 border-2 border-secondary-500 rounded ml-2"
+        >
+          Outline Secondary
+        </button>
+        <button
+          class="bg-transparent hover:bg-green-500 hover:text-white font-semibold py-2 px-4 border-2 border-success rounded ml-2"
+        >
+          Outline Success
+        </button>
+        <button
+          class="bg-transparent hover:bg-blue-500 hover:text-white font-semibold py-2 px-4 border-2 border-info rounded ml-2"
+        >
+          Outline Info
+        </button>
+        <button
+          class="bg-transparent hover:bg-yellow-500 hover:text-black font-semibold py-2 px-4 border-2 border-warning rounded ml-2"
+        >
+          Outline Warning
+        </button>
+        <button
+          class="bg-transparent hover:bg-red-500 hover:text-white font-semibold py-2 px-4 border-2 border-danger rounded ml-2"
+        >
+          Outline Danger
+        </button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="text-2xl font-semibold">Links</h2>
+      <div class="example">
+        <a href="#" class="text-primary-500 hover:text-primary-700 underline"
+          >Primary Link
+          <span class="text-gray-500 font-normal"
+            >Classes: text-primary-500 ...</span
+          ></a
+        >
+        <a href="#" class="text-accent-500 hover:text-accent-700 underline ml-2"
+          >Accent Link
+          <span class="text-gray-500 font-normal"
+            >Classes: text-accent-500 ...</span
+          ></a
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="text-2xl font-semibold">Cards (Simulated)</h2>
+      <div class="example">
+        <div class="bg-white rounded-md shadow-md p-6 w-64">
+          <h3 class="text-xl font-semibold text-gray-800 mb-2">Card Title</h3>
+          <p class="text-gray-600 text-sm mb-4">
+            Card content. Can include text, images, etc.
+          </p>
+          <button
+            class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-3 rounded text-sm"
+          >
+            Action
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="text-2xl font-semibold">Navbar (Simulated)</h2>
+
+      <nav class="bg-primary-500 text-white py-4 px-6 rounded-md">
+        <div class="container mx-auto flex justify-between items-center">
+          <a href="#" class="font-bold text-xl">My App</a>
+          <div class="space-x-4">
+            <a href="#" class="hover:text-gray-200">Home</a>
+            <a href="#" class="hover:text-gray-200">Features</a>
+            <a href="#" class="hover:text-gray-200">Pricing</a>
+            <a href="#" class="hover:text-gray-200">Contact</a>
+          </div>
+        </div>
+      </nav>
+
+      <nav class="bg-accent-500 text-white py-4 px-6 rounded-md mt-4">
+        <div class="container mx-auto flex justify-between items-center">
+          <a href="#" class="font-bold text-xl">My App</a>
+          <div class="space-x-4">
+            <a href="#" class="hover:text-gray-200">Home</a>
+            <a href="#" class="hover:text-gray-200">Features</a>
+            <a href="#" class="hover:text-gray-200">Pricing</a>
+            <a href="#" class="hover:text-gray-200">Contact</a>
+          </div>
+        </div>
+      </nav>
+
+      <nav class="bg-neutral-500 text-white py-4 px-6 rounded-md mt-4">
+        <div class="container mx-auto flex justify-between items-center">
+          <a href="#" class="font-bold text-xl">My App</a>
+          <div class="space-x-4">
+            <a href="#" class="hover:text-gray-200">Home</a>
+            <a href="#" class="hover:text-gray-200">Features</a>
+            <a href="#" class="hover:text-gray-200">Pricing</a>
+            <a href="#" class="hover:text-gray-200">Contact</a>
+          </div>
+        </div>
+      </nav>
+
+      <nav class="bg-secondary-500 text-gray-800 py-4 px-6 rounded-md mt-4">
+        <div class="container mx-auto flex justify-between items-center">
+          <a href="#" class="font-bold text-xl">My App</a>
+          <div class="space-x-4">
+            <a href="#" class="hover:text-gray-600">Home</a>
+            <a href="#" class="hover:text-gray-600">Features</a>
+            <a href="#" class="hover:text-gray-600">Pricing</a>
+            <a href="#" class="hover:text-gray-600">Contact</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <div class="section">
+      <h2 class="text-2xl font-semibold">Labels</h2>
+      <div class="example">
+        <span
+          class="inline-block bg-primary-200 text-primary-800 font-semibold px-2 py-1 rounded-full text-sm"
+          >Primary</span
+        >
+        <span
+          class="inline-block bg-accent-200 text-accent-800 font-semibold px-2 py-1 rounded-full text-sm ml-2"
+          >Accent</span
+        >
+        <span
+          class="inline-block bg-neutral-200 text-neutral-800 font-semibold px-2 py-1 rounded-full text-sm ml-2"
+          >Neutral</span
+        >
+        <span
+          class="inline-block bg-secondary-200 text-secondary-800 font-semibold px-2 py-1 rounded-full text-sm ml-2"
+          >Secondary</span
+        >
+        <span
+          class="inline-block bg-success text-white font-semibold px-2 py-1 rounded-full text-sm ml-2"
+          >Success</span
+        >
+        <span
+          class="inline-block bg-info text-white font-semibold px-2 py-1 rounded-full text-sm ml-2"
+          >Info</span
+        >
+        <span
+          class="inline-block bg-warning text-black font-semibold px-2 py-1 rounded-full text-sm ml-2"
+          >Warning</span
+        >
+        <span
+          class="inline-block bg-danger text-white font-semibold px-2 py-1 rounded-full text-sm ml-2"
+          >Danger</span
+        >
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="text-2xl font-semibold">Chips</h2>
+      <div class="example">
+        <span class="chip bg-primary-200 text-primary-800">Primary</span>
+        <span class="chip bg-accent-200 text-accent-800">Accent</span>
+        <span class="chip bg-neutral-200 text-neutral-800">Neutral</span>
+        <span class="chip bg-secondary-200 text-secondary-800">Secondary</span>
+        <span class="chip bg-success text-white">Success</span>
+        <span class="chip bg-info text-white">Info</span>
+        <span class="chip bg-warning text-black">Warning</span>
+        <span class="chip bg-danger text-white">Danger</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="text-2xl font-semibold">
+        Tooltips (Simulated with Tailwind CSS)
+      </h2>
+      <div class="example">
+        <div class="tooltip">
+          Hover here
+          <span class="tooltiptext bg-neutral-800 text-white"
+            >I'm a tooltip!</span
+          >
+        </div>
+        <button
+          class="tooltip bg-accent-500 hover:bg-accent-700 text-white font-bold py-2 px-4 rounded ml-4"
+        >
+          Button with Tooltip
+          <span class="tooltiptext bg-accent-800 text-white"
+            >Important action</span
+          >
+        </button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="text-2xl font-semibold">Tabs (Simulated)</h2>
+      <div class="example">
+        <div class="border-b border-gray-200">
+          <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+            <!-- Active Tab -->
+            <button
+              class="whitespace-nowrap py-4 px-1 border-b-2 border-primary-500 font-medium text-sm text-primary-600"
+              aria-current="page"
+            >
+              My Account
+            </button>
+            <!-- Inactive Tab -->
+            <button
+              class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium text-sm"
+            >
+              Company
+            </button>
+            <!-- Inactive Tab -->
+            <button
+              class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium text-sm"
+            >
+              Team Members
+            </button>
+            <!-- Inactive Tab (Disabled example) -->
+            <button
+              class="whitespace-nowrap py-4 px-1 border-b-2 border-transparent text-gray-400 cursor-not-allowed font-medium text-sm"
+              disabled
+            >
+              Billing
+            </button>
+          </nav>
+        </div>
+        <!-- Tab Content (Illustrative - only one would be shown at a time in a real app) -->
+        <div class="mt-4 p-4 border rounded-md bg-white">
+          <h3 class="text-lg font-medium text-gray-900">My Account Content</h3>
+          <p class="mt-2 text-sm text-gray-500">
+            This is the content for the 'My Account' tab. In a real application,
+            only the active tab's content would be visible.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="text-2xl font-semibold">
+        Alerts (Simulated with Tailwind CSS)
+      </h2>
+      <div class="example">
+        <div class="alert alert-success text-white">
+          Success: The operation completed successfully.
+        </div>
+        <div class="alert alert-info text-white">
+          Info: This is an informative message.
+        </div>
+        <div class="alert alert-warning text-black">
+          Warning: Be careful with this action.
+        </div>
+        <div class="alert alert-danger text-white">
+          Error: There was a problem. Please try again.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

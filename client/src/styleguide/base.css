@@ -1,0 +1,56 @@
+:root {
+  --style-guide-color-black: #333;
+  --style-guide-color-white: #fff;
+  --style-guide-color-light-grey: #f9f9f9 --style-guide-color-grey: #ccc;
+  --style-guide-color-dark-gray: #555;
+  --style-guide-color-alpha-black: rgba(0, 0, 0, 0.5);
+}
+
+body {
+  font-family: sans-serif;
+  line-height: 1.6;
+  margin: 20px;
+  color: var(--style-guide-color-black);
+}
+
+h1,
+h2,
+h3 {
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+  color: var(--style-guide-color-dark-gray);
+}
+
+.section {
+  margin-bottom: 3em;
+  padding: 15px;
+  border: 1px solid var(--style-guide-color-grey);
+  border-radius: 8px;
+}
+
+.example {
+  margin-top: 1em;
+  padding: 10px;
+  border: 1px dashed var(--style-guide-color-grey);
+  border-radius: 4px;
+  background-color: var(--style-guide-color-light-grey);
+}
+
+.color-palette {
+  display: flex;
+  gap: 10px;
+  margin-top: 1em;
+}
+
+.color-swatch {
+  width: 80px;
+  height: 80px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--style-guide-color-white);
+  font-weight: bold;
+  font-size: 0.8rem;
+  text-shadow: 1px 1px 2px var(--style-guide-color-alpha-black);
+}
