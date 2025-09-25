@@ -16,12 +16,14 @@
   ],
   "scripts": {
     "base:init": "node ./config/scripts/index.mjs",
-    "build": "nest build",
+    "build:client": "pnpm --filter pocket-catalyst-web build",
+    "build:server": "nest build",
+    "build": "pnpm build:client && pnpm build:server",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
-    "lint": "eslint --fix",
+    "start:prod": "node dist/src/main",
+    "lint": "eslint --fix \"{src,client/src}/**/*.ts\" \"client/src/**/*.tsx\"",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -39,6 +41,7 @@
     "@nestjs/core": "^11.1.6",
     "@nestjs/mapped-types": "2.1.0",
     "@nestjs/platform-express": "^11.1.6",
+    "@nestjs/serve-static": "^5.0.3",
     "@nestjs/swagger": "^11.2.0",
     "@nestjs/typeorm": "^11.0.0",
     "class-transformer": "^0.5.1",
@@ -85,5 +88,6 @@
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.41.0",
     "yaml": "^2.8.1"
-  }
+  },
+  "workspaces": ["client", "packages/*"]
 }

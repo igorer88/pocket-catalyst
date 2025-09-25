@@ -1,5 +1,8 @@
+import { join } from 'node:path'
+
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
+import { ServeStaticModule } from '@nestjs/serve-static'
 
 import { apiConfig, dbConfig, getValidationSchema } from './config'
 import { DatabaseModule } from './database/database.module'
@@ -13,6 +16,11 @@ import { SharedModule } from './shared/shared.module'
       isGlobal: true,
       cache: true
     }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client', 'dist'),
+      exclude: ['/api/(.*)']
+    }),
+
     SharedModule,
     DatabaseModule
   ]
