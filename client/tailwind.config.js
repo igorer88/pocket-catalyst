@@ -1,4 +1,4 @@
-import { heroui } from '@heroui/react';
+import { heroui } from '@heroui/react'
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -7,10 +7,10 @@ export default {
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
     // Add the path to Hero UI components
-    './node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}',
+    './node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}'
   ],
   theme: {
-    extend: {},
+    extend: {}
   },
 
   darkMode: 'class',
@@ -31,7 +31,7 @@ export default {
               800: '#656567',
               900: '#404041',
               foreground: '#000',
-              DEFAULT: '#d4d4d8',
+              DEFAULT: '#d4d4d8'
             },
             primary: {
               50: '#f3e4f5',
@@ -45,7 +45,7 @@ export default {
               800: '#4a1354',
               900: '#2f0c35',
               foreground: '#fff',
-              DEFAULT: '#9c27b0',
+              DEFAULT: '#9c27b0'
             },
             secondary: {
               50: '#dff7fa',
@@ -59,7 +59,7 @@ export default {
               800: '#005965',
               900: '#003840',
               foreground: '#000',
-              DEFAULT: '#00bcd4',
+              DEFAULT: '#00bcd4'
             },
             success: {
               50: '#e2f8ec',
@@ -73,7 +73,7 @@ export default {
               800: '#0b5f30',
               900: '#073c1e',
               foreground: '#000',
-              DEFAULT: '#17c964',
+              DEFAULT: '#17c964'
             },
             warning: {
               50: '#fef4e4',
@@ -87,7 +87,7 @@ export default {
               800: '#744e11',
               900: '#4a320b',
               foreground: '#000',
-              DEFAULT: '#f5a524',
+              DEFAULT: '#f5a524'
             },
             danger: {
               50: '#fee1eb',
@@ -101,29 +101,29 @@ export default {
               800: '#73092e',
               900: '#49051d',
               foreground: '#000',
-              DEFAULT: '#f31260',
+              DEFAULT: '#f31260'
             },
             background: '#ffffff',
             foreground: '#000000',
             content1: {
               DEFAULT: '#ffffff',
-              foreground: '#000',
+              foreground: '#000'
             },
             content2: {
               DEFAULT: '#f4f4f5',
-              foreground: '#000',
+              foreground: '#000'
             },
             content3: {
               DEFAULT: '#e4e4e7',
-              foreground: '#000',
+              foreground: '#000'
             },
             content4: {
               DEFAULT: '#d4d4d8',
-              foreground: '#000',
+              foreground: '#000'
             },
             focus: '#006FEE',
-            overlay: '#000000',
-          },
+            overlay: '#000000'
+          }
         },
         dark: {
           colors: {
@@ -139,7 +139,7 @@ export default {
               800: '#e6e5e5',
               900: '#ffffff',
               foreground: '#000',
-              DEFAULT: '#807d7d',
+              DEFAULT: '#807d7d'
             },
             primary: {
               50: '#2f0c35',
@@ -153,7 +153,7 @@ export default {
               800: '#e1bee7',
               900: '#f3e4f5',
               foreground: '#fff',
-              DEFAULT: '#9c27b0',
+              DEFAULT: '#9c27b0'
             },
             secondary: {
               50: '#003840',
@@ -167,7 +167,7 @@ export default {
               800: '#b3ebf2',
               900: '#dff7fa',
               foreground: '#000',
-              DEFAULT: '#00bcd4',
+              DEFAULT: '#00bcd4'
             },
             success: {
               50: '#073c1e',
@@ -181,7 +181,7 @@ export default {
               800: '#b9efd1',
               900: '#e2f8ec',
               foreground: '#000',
-              DEFAULT: '#17c964',
+              DEFAULT: '#17c964'
             },
             warning: {
               50: '#4a320b',
@@ -195,7 +195,7 @@ export default {
               800: '#fce4bd',
               900: '#fef4e4',
               foreground: '#000',
-              DEFAULT: '#f5a524',
+              DEFAULT: '#f5a524'
             },
             danger: {
               50: '#49051d',
@@ -209,34 +209,34 @@ export default {
               800: '#fbb8cf',
               900: '#fee1eb',
               foreground: '#000',
-              DEFAULT: '#f31260',
+              DEFAULT: '#f31260'
             },
             background: '#000000',
             foreground: '#ffffff',
             content1: {
               DEFAULT: '#18181b',
-              foreground: '#fff',
+              foreground: '#fff'
             },
             content2: {
               DEFAULT: '#27272a',
-              foreground: '#fff',
+              foreground: '#fff'
             },
             content3: {
               DEFAULT: '#3f3f46',
-              foreground: '#fff',
+              foreground: '#fff'
             },
             content4: {
               DEFAULT: '#52525b',
-              foreground: '#fff',
+              foreground: '#fff'
             },
             focus: '#006FEE',
-            overlay: '#ffffff',
-          },
-        },
+            overlay: '#ffffff'
+          }
+        }
       },
       layout: {
-        disabledOpacity: '0.5',
-      },
-    }),
-  ],
-};
+        disabledOpacity: '0.5'
+      }
+    })
+  ]
+}
