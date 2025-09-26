@@ -147,6 +147,7 @@ export default [
       'build/*',
       'lib/*',
       'dist/**',
+      'config/scripts',
       'src/metadata.ts'
     ]
   },
