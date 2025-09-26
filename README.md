@@ -46,7 +46,6 @@ $ pnpm run test:e2e
 $ pnpm run test:cov
 ```
 
-
 ## License
 
 This project is [MIT licensed](./LICENSE).
