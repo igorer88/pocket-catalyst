@@ -112,14 +112,14 @@ const importSortRules = {
         ['^node:'],
         // Packages. `react` related packages come first.
         ['^react', '^@?\\w'],
-        // Internal packages.
-        ['^@/'],
-        // Side effect imports.
-        ['^\\u0000'],
+        // Internal packages and absolute imports.
+        ['^@/.*'],
         // Parent imports. Put `..` last.
         ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
         // Other relative imports. Put same-folder imports and `.` last.
-        ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$']
+        ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
+        // Side effect imports (e.g. `import './style.css'`)
+        ['^\\u0000', '^.+\\.?(css)$']
       ]
     }
   ],
