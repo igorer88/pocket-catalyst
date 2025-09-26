@@ -1,5 +1,5 @@
 services:
-   pocket-catalyst:
+  pocket-catalyst:
     restart: unless-stopped
     container_name: pocket-catalyst
     # image: ghcr.io/your-username/your-repo:your-tag  # Image from GitHub Container Registry
@@ -21,7 +21,7 @@ services:
       - database
     # entrypoint: ["sh", "-c", "infisical run"]
 
-   database:
+  database:
     image: postgres:latest
     container_name: postgres
     restart: unless-stopped

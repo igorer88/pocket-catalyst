@@ -1,6 +1,9 @@
-node_modules
-dist
-config/db
+node_modules/
+dist/
+/config/db
+src/metadata.ts
+
 *-lock.json           # package-lock.json
 *.lock                # yarn.lock and all others
 *-lock.{yaml,yml}     # pnpm lock and all others
+*-workspace.yml

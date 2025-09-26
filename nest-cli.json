@@ -5,13 +5,16 @@
   "compilerOptions": {
     "builder": "swc",
     "typeCheck": true,
-    "deleteOutDir": true,
-    "plugins": [
-      {
-        "name": "@nestjs/swagger",
-        "options": { "classValidatorShim": true, "introspectComments": true },
-        "afterDeclarations": true
-      }
-    ]
-  }
+    "deleteOutDir": true
+  },
+  "watchOptions": {
+    "ignore": ["node_modules", "dist", "src/metadata.ts"]
+  },
+  "plugins": [
+    {
+      "name": "@nestjs/swagger",
+      "options": { "classValidatorShim": true, "introspectComments": true },
+      "afterDeclarations": true
+    }
+  ]
 }
