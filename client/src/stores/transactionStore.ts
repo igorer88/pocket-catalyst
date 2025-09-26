@@ -1,13 +1,13 @@
 import { create } from 'zustand'
 
 export interface ApiTransaction {
-  id: string;
-  date: string;
-  category?: { id: string; title: string } | null;
-  description: string;
-  amount: string;
-  type: 'income' | 'expense';
-  account_currency?: string;
+  id: string
+  date: string
+  category?: { id: string; title: string } | null
+  description: string
+  amount: string
+  type: 'income' | 'expense'
+  account_currency?: string
 }
 
 const MOCK_API_TRANSACTIONS: ApiTransaction[] = [
@@ -18,7 +18,7 @@ const MOCK_API_TRANSACTIONS: ApiTransaction[] = [
     description: 'Monthly paycheck',
     amount: '5000.00',
     type: 'income',
-    account_currency: 'USD',
+    account_currency: 'USD'
   },
   {
     id: 'api_inc2',
@@ -27,7 +27,7 @@ const MOCK_API_TRANSACTIONS: ApiTransaction[] = [
     description: 'Web design project',
     amount: '750.00',
     type: 'income',
-    account_currency: 'USD',
+    account_currency: 'USD'
   },
   {
     id: 'api_exp1',
@@ -36,7 +36,7 @@ const MOCK_API_TRANSACTIONS: ApiTransaction[] = [
     description: 'Supermarket shopping',
     amount: '125.50',
     type: 'expense',
-    account_currency: 'USD',
+    account_currency: 'USD'
   },
   {
     id: 'api_exp2',
@@ -45,15 +45,15 @@ const MOCK_API_TRANSACTIONS: ApiTransaction[] = [
     description: 'Dinner with friends',
     amount: '60.00',
     type: 'expense',
-    account_currency: 'EUR',
-  },
+    account_currency: 'EUR'
+  }
 ]
 
 interface TransactionState {
-  transactions: ApiTransaction[];
-  isLoading: boolean;
-  error: string | null;
-  fetchTransactions: () => Promise<void>;
+  transactions: ApiTransaction[]
+  isLoading: boolean
+  error: string | null
+  fetchTransactions: () => Promise<void>
 }
 
 export const useTransactionStore = create<TransactionState>(set => ({
@@ -68,8 +68,8 @@ export const useTransactionStore = create<TransactionState>(set => ({
     } catch (err) {
       set({
         error: (err as Error).message || 'Failed to fetch transactions',
-        isLoading: false,
+        isLoading: false
       })
     }
-  },
+  }
 }))

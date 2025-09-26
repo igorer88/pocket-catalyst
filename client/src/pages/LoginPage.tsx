@@ -44,7 +44,7 @@ function LoginPage() {
             isRequired
             fullWidth
             classNames={{
-              input: 'dark:text-white',
+              input: 'dark:text-white'
             }}
           />
           <Input
@@ -56,7 +56,7 @@ function LoginPage() {
             isRequired
             fullWidth
             classNames={{
-              input: 'dark:text-white',
+              input: 'dark:text-white'
             }}
             endContent={
               <button

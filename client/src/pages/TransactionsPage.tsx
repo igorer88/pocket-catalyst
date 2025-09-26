@@ -6,7 +6,7 @@ import {
   ApiSubscription,
   ApiTransaction,
   useSubscriptionStore,
-  useTransactionStore,
+  useTransactionStore
 } from '@/stores'
 import { formatCurrency } from '@/utils'
 
@@ -14,7 +14,7 @@ const transactionsTableColumns = [
   { label: 'Date', key: 'date' },
   { label: 'Category', key: 'category' },
   { label: 'Description', key: 'description' },
-  { label: 'Amount', key: 'amount' },
+  { label: 'Amount', key: 'amount' }
 ]
 
 const subscriptionsTableColumns = [
@@ -23,7 +23,7 @@ const subscriptionsTableColumns = [
   { label: 'Amount', key: 'amount' },
   { label: 'Frequency', key: 'frequency' },
   { label: 'Next Payment', key: 'nextPayment' },
-  { label: 'Status', key: 'status' },
+  { label: 'Status', key: 'status' }
 ]
 
 const calculateTotal = (rows: Array<{ amount: string }>): number => {
@@ -38,13 +38,13 @@ function TransactionsPage() {
     transactions,
     isLoading: isLoadingTransactions,
     error: errorTransactions,
-    fetchTransactions,
+    fetchTransactions
   } = useTransactionStore()
   const {
     subscriptions,
     isLoading: isLoadingSubscriptions,
     error: errorSubscriptions,
-    fetchSubscriptions,
+    fetchSubscriptions
   } = useSubscriptionStore()
 
   useEffect(() => {
@@ -94,7 +94,7 @@ function TransactionsPage() {
                   amount: formatCurrency(
                     parseFloat(item.amount),
                     item.account_currency
-                  ),
+                  )
                 }))}
                 ariaLabel="Income table with dynamic content"
               />
@@ -125,7 +125,7 @@ function TransactionsPage() {
                   amount: formatCurrency(
                     parseFloat(item.amount),
                     item.account_currency
-                  ),
+                  )
                 }))}
                 ariaLabel="Expenses table with dynamic content"
               />
@@ -165,7 +165,7 @@ function TransactionsPage() {
                     item.frequency_unit.slice(1)
                   }(s)`,
                   nextPayment: item.next_due_date,
-                  status: item.is_active ? 'Active' : 'Paused',
+                  status: item.is_active ? 'Active' : 'Paused'
                 }))}
                 ariaLabel="Subscriptions table with dynamic content"
               />

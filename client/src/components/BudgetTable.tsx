@@ -5,31 +5,31 @@ import {
   TableCell,
   TableColumn,
   TableHeader,
-  TableRow,
+  TableRow
 } from '@heroui/react'
 
 interface Column {
-  key: string;
-  label: string;
+  key: string
+  label: string
 }
 
 interface Row {
-  key: string;
-  [key: string]: unknown;
+  key: string
+  [key: string]: unknown
 }
 
 interface BudgetTableProps {
-  columns: Column[];
-  rows: Row[];
-  ariaLabel: string;
-  isStriped?: boolean;
+  columns: Column[]
+  rows: Row[]
+  ariaLabel: string
+  isStriped?: boolean
 }
 
 function BudgetTable({
   columns,
   rows,
   ariaLabel,
-  isStriped = false,
+  isStriped = false
 }: BudgetTableProps) {
   return (
     <Table isStriped={isStriped} aria-label={ariaLabel}>

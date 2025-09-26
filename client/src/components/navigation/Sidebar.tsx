@@ -69,9 +69,11 @@ const Sidebar = () => {
       </div>
       <nav className="flex flex-col space-y-1">
         {navigationLinks.map(item => {
-          const hasChildren = item.children && item.children.length > 0 || false
+          const hasChildren =
+            (item.children && item.children.length > 0) || false
           const isSubmenuOpen = openSubmenus.includes(item.name)
-          const isParentActive = location.pathname === item.href ||
+          const isParentActive =
+            location.pathname === item.href ||
             (hasChildren &&
               item.children!.some(child =>
                 location.pathname.startsWith(child.href)

@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 import Header from '@/components/navigation/Header'
 
 interface MainLayoutProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {

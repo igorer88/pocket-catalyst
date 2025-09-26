@@ -7,12 +7,12 @@ import { ApiError } from '@/utils'
 import { useAuthStore } from './authStore'
 
 interface ProfileState {
-  profile: Profile | null;
-  isLoading: boolean;
-  error: string | null;
-  fetchProfile: () => Promise<void>;
-  setProfile: (profile: Profile | null) => void;
-  clearProfile: () => void;
+  profile: Profile | null
+  isLoading: boolean
+  error: string | null
+  fetchProfile: () => Promise<void>
+  setProfile: (profile: Profile | null) => void
+  clearProfile: () => void
 }
 
 export const useProfileStore = create<ProfileState>(set => ({
@@ -41,5 +41,5 @@ export const useProfileStore = create<ProfileState>(set => ({
   },
   clearProfile: () => {
     set({ profile: null, isLoading: false, error: null })
-  },
+  }
 }))

@@ -1,11 +1,11 @@
 import { ReactNode } from 'react'
 
 interface AuthLayoutProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 const AuthLayout: React.FC<AuthLayoutProps> = ({
-  children,
+  children
 }: AuthLayoutProps) => {
   return (
     <main className="flex items-center justify-center min-h-screen">

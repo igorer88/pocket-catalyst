@@ -5,13 +5,13 @@ import { apiClient } from '@/config'
 import { ApiError } from '@/utils'
 
 interface AccountsState {
-  isLoading: boolean;
-  error: string | null;
-  accounts: Account[] | null;
-  selectedAccount: Account | null;
-  fetchAccounts: () => Promise<void>;
-  setAccounts: (accounts: Account[]) => void;
-  setSelectedAccount: (account: Account | null) => void;
+  isLoading: boolean
+  error: string | null
+  accounts: Account[] | null
+  selectedAccount: Account | null
+  fetchAccounts: () => Promise<void>
+  setAccounts: (accounts: Account[]) => void
+  setSelectedAccount: (account: Account | null) => void
 }
 
 export const useAccountsStore = create<AccountsState>(set => ({
@@ -30,5 +30,5 @@ export const useAccountsStore = create<AccountsState>(set => ({
       set({ error: (err as ApiError).message, isLoading: false })
       console.error('Error fetching accounts:', err)
     }
-  },
+  }
 }))

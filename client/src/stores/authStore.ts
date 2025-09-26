@@ -7,35 +7,35 @@ import { ApiError } from '@/utils'
 import { useProfileStore } from './profileStore'
 
 interface LoginResponse {
-  access: string | null;
-  refresh: string | null;
+  access: string | null
+  refresh: string | null
 }
 
 interface AuthState {
-  isAuthenticated: boolean;
-  isLocked: boolean;
-  user: User | null;
-  authToken: string | null;
-  refreshToken: string | null;
-  isLoading: boolean;
-  error: string | null;
-  setIsAuthenticated: (status: boolean) => void;
-  setIsLocked: (status: boolean) => void;
-  login: (username: string, password: string) => Promise<boolean>;
-  logout: () => void;
-  checkAuth: () => void;
-  handleTokenRefresh: () => Promise<string | null>;
-  setUser: (userData: User | null) => void;
+  isAuthenticated: boolean
+  isLocked: boolean
+  user: User | null
+  authToken: string | null
+  refreshToken: string | null
+  isLoading: boolean
+  error: string | null
+  setIsAuthenticated: (status: boolean) => void
+  setIsLocked: (status: boolean) => void
+  login: (username: string, password: string) => Promise<boolean>
+  logout: () => void
+  checkAuth: () => void
+  handleTokenRefresh: () => Promise<string | null>
+  setUser: (userData: User | null) => void
 }
 
 const getInitialTokens = (): {
-  authToken: string | null;
-  refreshToken: string | null;
+  authToken: string | null
+  refreshToken: string | null
 } => {
   if (typeof window !== 'undefined') {
     return {
       authToken: localStorage.getItem('authToken'),
-      refreshToken: localStorage.getItem('refreshToken'),
+      refreshToken: localStorage.getItem('refreshToken')
     }
   }
   return { authToken: null, refreshToken: null }
@@ -65,7 +65,7 @@ export const useAuthStore = create<AuthState>((set, get) => {
       user: null,
       authToken: null,
       refreshToken: null,
-      error: null,
+      error: null
     })
     useProfileStore.getState().clearProfile()
   }
@@ -86,7 +86,7 @@ export const useAuthStore = create<AuthState>((set, get) => {
       try {
         const response = await apiClient.post<LoginResponse>('/token/', {
           username,
-          password,
+          password
         })
         const { access, refresh } = response.data
 
@@ -101,7 +101,7 @@ export const useAuthStore = create<AuthState>((set, get) => {
             authToken: access,
             refreshToken: refresh,
             isLoading: false,
-            error: null,
+            error: null
           })
 
           if (typeof window !== 'undefined') {
@@ -118,7 +118,7 @@ export const useAuthStore = create<AuthState>((set, get) => {
               first_name: '',
               last_name: '',
               date_joined: '',
-              is_active: true,
+              is_active: true
             }
             set({ user: userData })
           } else {
@@ -126,8 +126,7 @@ export const useAuthStore = create<AuthState>((set, get) => {
           }
           return true
         }
-          throw new Error('Invalid token response from server.')
-
+        throw new Error('Invalid token response from server.')
       } catch (err) {
         const errorMessage = (err as ApiError)?.message
         set({
@@ -136,7 +135,7 @@ export const useAuthStore = create<AuthState>((set, get) => {
           isAuthenticated: false,
           user: null,
           authToken: null,
-          refreshToken: null,
+          refreshToken: null
         })
         return false
       }
@@ -153,8 +152,8 @@ export const useAuthStore = create<AuthState>((set, get) => {
       try {
         console.log('Attempting to refresh token in authStore...')
         const response = await apiClient.post<{
-          access: string;
-          refresh?: string;
+          access: string
+          refresh?: string
         }>('/token/refresh/', { refresh: currentRefreshToken })
 
         const newAccessToken = response.data.access
@@ -192,7 +191,7 @@ export const useAuthStore = create<AuthState>((set, get) => {
                 first_name: '',
                 last_name: '',
                 date_joined: '',
-                is_active: true,
+                is_active: true
               }
               set({ user: userData })
             }
@@ -203,7 +202,7 @@ export const useAuthStore = create<AuthState>((set, get) => {
       } else {
         get().logout()
       }
-    },
+    }
   }
 })
 

@@ -1,21 +1,21 @@
 import { create } from 'zustand'
 
 interface GlobalState {
-  isLoading: boolean;
-  error: string | null;
-  isModalOpen: boolean;
-  theme: 'light' | 'dark';
-  isSidebarCollapsed: boolean;
-  isMobileSidebarOpen: boolean;
-  isFirstVisit: boolean;
-  setIsLoading: (loading: boolean) => void;
-  setError: (error: string | null) => void;
-  openModal: () => void;
-  closeModal: () => void;
-  setTheme: (theme: 'light' | 'dark') => void;
-  toggleSidebar: () => void;
-  toggleMobileSidebar: (isOpen?: boolean) => void;
-  setFirstVisit: () => void;
+  isLoading: boolean
+  error: string | null
+  isModalOpen: boolean
+  theme: 'light' | 'dark'
+  isSidebarCollapsed: boolean
+  isMobileSidebarOpen: boolean
+  isFirstVisit: boolean
+  setIsLoading: (loading: boolean) => void
+  setError: (error: string | null) => void
+  openModal: () => void
+  closeModal: () => void
+  setTheme: (theme: 'light' | 'dark') => void
+  toggleSidebar: () => void
+  toggleMobileSidebar: (isOpen?: boolean) => void
+  setFirstVisit: () => void
 }
 
 export const useGlobalStore = create<GlobalState>(set => ({
@@ -36,7 +36,7 @@ export const useGlobalStore = create<GlobalState>(set => ({
   toggleMobileSidebar: isOpen =>
     set(state => ({
       isMobileSidebarOpen:
-        typeof isOpen === 'boolean' ? isOpen : !state.isMobileSidebarOpen,
+        typeof isOpen === 'boolean' ? isOpen : !state.isMobileSidebarOpen
     })),
-  setFirstVisit: () => set({ isFirstVisit: true }),
+  setFirstVisit: () => set({ isFirstVisit: true })
 }))

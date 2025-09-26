@@ -3,7 +3,7 @@ import { useCallback, useEffect } from 'react'
 import { useGlobalStore } from '@/stores/globalStore'
 
 const Themes = ['light', 'dark'] as const
-type Theme = (typeof Themes)[number];
+type Theme = (typeof Themes)[number]
 
 export const useTheme = (): [Theme, () => void] => {
   const theme = useGlobalStore(state => state.theme)

@@ -1,7 +1,7 @@
 import axios, {
   AxiosHeaders,
   AxiosRequestConfig,
-  AxiosRequestHeaders,
+  AxiosRequestHeaders
 } from 'axios'
 
 import { useAuthStore } from '@/stores/authStore'
@@ -11,12 +11,12 @@ import env from './environment'
 
 const apiClient = axios.create({
   baseURL: env.API_BASE_URL,
-  timeout: 10000,
+  timeout: 10000
 })
 
 interface RetryableAxiosRequestConfig extends AxiosRequestConfig {
-  _retry?: boolean;
-  headers?: AxiosRequestHeaders;
+  _retry?: boolean
+  headers?: AxiosRequestHeaders
 }
 
 apiClient.defaults.headers.common['Content-Type'] = 'application/json'
@@ -71,15 +71,14 @@ apiClient.interceptors.response.use(
             originalRequest.headers = newHeaders
             return apiClient(originalRequest as AxiosRequestConfig)
           }
-            console.error('Failed to refresh token (authStore returned null).')
-            return Promise.reject(
-              new ApiError(
-                'Session expired. Please login again.',
-                401,
-                error.response?.data
-              )
+          console.error('Failed to refresh token (authStore returned null).')
+          return Promise.reject(
+            new ApiError(
+              'Session expired. Please login again.',
+              401,
+              error.response?.data
             )
-
+          )
         } catch (refreshCatchError) {
           console.error(
             'Error during token refresh attempt:',
@@ -105,8 +104,7 @@ apiClient.interceptors.response.use(
     } else if (error instanceof Error) {
       return Promise.reject(new Error(error.message))
     }
-      return Promise.reject(new Error('An unexpected error occurred'))
-
+    return Promise.reject(new Error('An unexpected error occurred'))
   }
 )
 

@@ -8,12 +8,8 @@ import { classNames } from '@/utils'
 
 const DashboardLayout = () => {
   const isSidebarCollapsed = useGlobalStore(state => state.isSidebarCollapsed)
-  const isMobileSidebarOpen = useGlobalStore(
-    state => state.isMobileSidebarOpen
-  )
-  const toggleMobileSidebar = useGlobalStore(
-    state => state.toggleMobileSidebar
-  )
+  const isMobileSidebarOpen = useGlobalStore(state => state.isMobileSidebarOpen)
+  const toggleMobileSidebar = useGlobalStore(state => state.toggleMobileSidebar)
 
   return (
     <div className="flex h-screen">

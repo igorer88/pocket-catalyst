@@ -1,17 +1,17 @@
 import { create } from 'zustand'
 
 export interface ApiSubscription {
-  id: string;
-  description: string;
-  subscription_service?: { name: string } | null;
-  category?: { id: string; title: string } | null;
-  amount: string;
-  currency: string;
-  frequency_unit: 'day' | 'week' | 'month' | 'year';
-  frequency_value: number;
-  next_due_date: string;
-  is_active: boolean;
-  type: 'income' | 'expense';
+  id: string
+  description: string
+  subscription_service?: { name: string } | null
+  category?: { id: string; title: string } | null
+  amount: string
+  currency: string
+  frequency_unit: 'day' | 'week' | 'month' | 'year'
+  frequency_value: number
+  next_due_date: string
+  is_active: boolean
+  type: 'income' | 'expense'
 }
 
 const MOCK_API_SUBSCRIPTIONS: ApiSubscription[] = [
@@ -26,7 +26,7 @@ const MOCK_API_SUBSCRIPTIONS: ApiSubscription[] = [
     frequency_value: 1,
     next_due_date: '2023-11-01',
     is_active: true,
-    type: 'expense',
+    type: 'expense'
   },
   {
     id: 'api_sub2',
@@ -39,7 +39,7 @@ const MOCK_API_SUBSCRIPTIONS: ApiSubscription[] = [
     frequency_value: 1,
     next_due_date: '2023-11-15',
     is_active: true,
-    type: 'expense',
+    type: 'expense'
   },
   {
     id: 'api_sub3',
@@ -51,15 +51,15 @@ const MOCK_API_SUBSCRIPTIONS: ApiSubscription[] = [
     frequency_value: 1,
     next_due_date: '2023-11-10',
     is_active: false,
-    type: 'expense',
-  },
+    type: 'expense'
+  }
 ]
 
 interface SubscriptionState {
-  subscriptions: ApiSubscription[];
-  isLoading: boolean;
-  error: string | null;
-  fetchSubscriptions: () => Promise<void>;
+  subscriptions: ApiSubscription[]
+  isLoading: boolean
+  error: string | null
+  fetchSubscriptions: () => Promise<void>
 }
 
 export const useSubscriptionStore = create<SubscriptionState>(set => ({
@@ -74,8 +74,8 @@ export const useSubscriptionStore = create<SubscriptionState>(set => ({
     } catch (err) {
       set({
         error: (err as Error).message || 'Failed to fetch subscriptions',
-        isLoading: false,
+        isLoading: false
       })
     }
-  },
+  }
 }))

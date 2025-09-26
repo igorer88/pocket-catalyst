@@ -6,14 +6,14 @@ import { ChevronRightIcon, HomeIcon } from '@heroicons/react/20/solid'
 import { NavigationLink, navigationLinks } from '@/router/NavigationLinks'
 
 export interface BreadcrumbItem {
-  name: string;
-  href?: string;
+  name: string
+  href?: string
   icon?: ForwardRefExoticComponent<
     Omit<SVGProps<SVGSVGElement>, 'ref'> & {
-      title?: string | undefined;
-      titleId?: string | undefined;
+      title?: string | undefined
+      titleId?: string | undefined
     } & RefAttributes<SVGSVGElement>
-  >;
+  >
 }
 
 const generateBreadcrumbs = (
@@ -31,7 +31,7 @@ const generateBreadcrumbs = (
   breadcrumbs.push({
     name: 'Dashboard',
     href: pathname === '/dashboard' ? undefined : '/dashboard',
-    icon: HomeIcon,
+    icon: HomeIcon
   })
 
   if (pathname === '/dashboard') {

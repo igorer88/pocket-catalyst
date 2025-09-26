@@ -20,6 +20,6 @@ export const formatCurrency = (
 
   return value.toLocaleString(locale, {
     style: 'currency',
-    currency: displayCurrency,
+    currency: displayCurrency
   })
 }

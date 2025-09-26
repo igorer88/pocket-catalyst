@@ -6,14 +6,14 @@ import {
   ChevronDoubleRightIcon,
   Cog6ToothIcon,
   MoonIcon,
-  SunIcon,
+  SunIcon
 } from '@heroicons/react/24/outline'
 import {
   Button,
   Navbar,
   NavbarBrand,
   NavbarContent,
-  NavbarItem,
+  NavbarItem
 } from '@heroui/react'
 
 import { env } from '@/config'
@@ -25,9 +25,7 @@ import { AcmeLogo } from './Sidebar'
 const Header = () => {
   const [theme, toggleTheme] = useTheme()
   const toggleSidebar = useGlobalStore(state => state.toggleSidebar)
-  const toggleMobileSidebar = useGlobalStore(
-    state => state.toggleMobileSidebar
-  )
+  const toggleMobileSidebar = useGlobalStore(state => state.toggleMobileSidebar)
   const isSidebarCollapsed = useGlobalStore(state => state.isSidebarCollapsed)
   const logout = useAuthStore(state => state.logout)
   const isAuthenticated = useAuthStore(state => state.isAuthenticated)
