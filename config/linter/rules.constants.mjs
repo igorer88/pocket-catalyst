@@ -87,6 +87,45 @@ const eslintImportOrderRules = {
   ]
 }
 
+/** Has the rules for simple-import-sort plugin lint
+ * @constant
+ * @example
+ *     // eslint.config.mjs
+ *    import { importSortRules } from './src/config/lint/index.mjs';
+ *
+ *    export default {
+ *        ...
+ *        rules: {
+ *            // some other rules
+ *            ...importSortRules
+ *            // some other rules
+ *        },
+ *        ...
+ *    }
+ */
+const importSortRules = {
+  'simple-import-sort/imports': [
+    'error',
+    {
+      groups: [
+        // Node.js built-ins.
+        ['^node:'],
+        // Packages. `react` related packages come first.
+        ['^react', '^@?\\w'],
+        // Internal packages.
+        ['^@/'],
+        // Side effect imports.
+        ['^\\u0000'],
+        // Parent imports. Put `..` last.
+        ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
+        // Other relative imports. Put same-folder imports and `.` last.
+        ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$']
+      ]
+    }
+  ],
+  'simple-import-sort/exports': 'error'
+}
+
 /**
  * Has the rules for node plugin lint
  * @constant
@@ -164,6 +203,7 @@ const typescriptEslintRules = {
 export {
   eslintBaseRules,
   eslintImportOrderRules,
+  importSortRules,
   eslintNodeRules,
   typescriptEslintRules
 }
