@@ -1,9 +1,0 @@
-minimumReleaseAge: 1440 # 24 hours
-
-ignoredBuiltDependencies:
-  - esbuild
-
-onlyBuiltDependencies:
-  - '@heroui/shared-utils'
-  - '@parcel/watcher'
-  - '@tailwindcss/oxide'

@@ -1,6 +1,0 @@
-node_modules
-dist
-*-lock.json           # package-lock.json
-*.lock                # yarn.lock and all others
-*-lock.yaml
-*-workspace.yml
