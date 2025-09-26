@@ -1,12 +1,13 @@
-packages:
-  - 'client'
-  - 'packages/*'
-
 minimumReleaseAge: 1440 # 24 hours
 
+packages:
+  - client
+  - packages/*
+
+ignoredBuiltDependencies:
+  - esbuild
+
 onlyBuiltDependencies:
-  - '@nestjs/core'
-  - '@scarf/scarf'
-  - '@swc/core'
-  - sqlite3
-  - unrs-resolver
+  - '@heroui/shared-utils'
+  - '@parcel/watcher'
+  - '@tailwindcss/oxide'
