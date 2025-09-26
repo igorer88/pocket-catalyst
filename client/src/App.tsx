@@ -1,12 +1,12 @@
-import { useTheme } from './hooks/useTheme';
-import AppRouter from './router/AppRouter';
+import { useTheme } from './hooks/useTheme'
+import AppRouter from './router/AppRouter'
 
-import './App.css';
+import './App.css'
 
 function App() {
-  useTheme();
+  useTheme()
 
-  return <AppRouter />;
+  return <AppRouter />
 }
 
-export default App;
+export default App

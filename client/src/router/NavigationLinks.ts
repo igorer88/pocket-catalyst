@@ -1,16 +1,16 @@
-import { ForwardRefExoticComponent, RefAttributes, SVGProps } from 'react';
+import { ForwardRefExoticComponent, RefAttributes, SVGProps } from 'react'
 import {
   ArrowsRightLeftIcon as ArrowsRightLeftIconOutline,
   ChartPieIcon as ChartPieIconOutline,
   HomeIcon as HomeIconOutline,
   WalletIcon as WalletIconOutline,
-} from '@heroicons/react/24/outline';
+} from '@heroicons/react/24/outline'
 import {
   ArrowsRightLeftIcon as ArrowsRightLeftIconSolid,
   ChartPieIcon as ChartPieIconSolid,
   HomeIcon as HomeIconSolid,
   WalletIcon as WalletIconSolid,
-} from '@heroicons/react/24/solid';
+} from '@heroicons/react/24/solid'
 
 export interface NavigationLink {
   name: string;
@@ -76,4 +76,4 @@ export const navigationLinks: NavigationLink[] = [
       solid: ChartPieIconSolid,
     }
   },
-];
+]

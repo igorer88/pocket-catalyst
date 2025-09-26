@@ -9,5 +9,5 @@
  * passed as arguments, separated by a space.
  */
 export const classNames = (...classes: string[]) => {
-  return classes.filter(Boolean).join(' ');
-};
+  return classes.filter(Boolean).join(' ')
+}

@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
+import { ReactNode } from 'react'
 
-import Header from '@/components/navigation/Header';
+import Header from '@/components/navigation/Header'
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -12,7 +12,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       <Header />
       <div className="py-4 px-6">{children}</div>
     </main>
-  );
-};
+  )
+}
 
-export default MainLayout;
+export default MainLayout

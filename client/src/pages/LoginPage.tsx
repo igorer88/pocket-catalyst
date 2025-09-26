@@ -1,31 +1,30 @@
-import { FormEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import { FormEvent, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'
+import { Button, Card, CardBody, CardHeader, Input } from '@heroui/react'
 
-import { Button, Card, CardBody, CardHeader, Input } from '@heroui/react';
-
-import { useAuthStore } from '@/stores/authStore';
+import { useAuthStore } from '@/stores/authStore'
 
 function LoginPage() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
 
-  const togglePasswordVisibility = () => setShowPassword(!showPassword);
+  const togglePasswordVisibility = () => setShowPassword(!showPassword)
 
-  const { error, isLoading, isAuthenticated, login } = useAuthStore();
-  const navigate = useNavigate();
+  const { error, isLoading, isAuthenticated, login } = useAuthStore()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (isAuthenticated) {
-      void navigate('/');
+      void navigate('/')
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate])
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    void login(username, password);
-  };
+    event.preventDefault()
+    void login(username, password)
+  }
 
   return (
     <Card className="w-full max-w-md">
@@ -81,7 +80,7 @@ function LoginPage() {
         </form>
       </CardBody>
     </Card>
-  );
+  )
 }
 
-export default LoginPage;
+export default LoginPage

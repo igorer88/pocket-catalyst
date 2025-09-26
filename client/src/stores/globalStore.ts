@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create } from 'zustand'
 
 interface GlobalState {
   isLoading: boolean;
@@ -39,4 +39,4 @@ export const useGlobalStore = create<GlobalState>(set => ({
         typeof isOpen === 'boolean' ? isOpen : !state.isMobileSidebarOpen,
     })),
   setFirstVisit: () => set({ isFirstVisit: true }),
-}));
+}))

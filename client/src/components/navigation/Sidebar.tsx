@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
+import { useEffect, useState } from 'react'
+import { NavLink } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
 
-import { env } from '@/config';
-import { navigationLinks } from '@/router/NavigationLinks';
-import { useGlobalStore } from '@/stores';
-import { classNames } from '@/utils';
+import { env } from '@/config'
+import { navigationLinks } from '@/router/NavigationLinks'
+import { useGlobalStore } from '@/stores'
+import { classNames } from '@/utils'
 
-import SidebarItemIcon from './SidebarItemIcon';
+import SidebarItemIcon from './SidebarItemIcon'
 
 export const AcmeLogo = () => {
   return (
@@ -20,39 +20,39 @@ export const AcmeLogo = () => {
         fillRule="evenodd"
       />
     </svg>
-  );
-};
+  )
+}
 
 const Sidebar = () => {
-  const location = useLocation();
+  const location = useLocation()
 
-  const isSidebarCollapsed = useGlobalStore(state => state.isSidebarCollapsed);
+  const isSidebarCollapsed = useGlobalStore(state => state.isSidebarCollapsed)
 
   const [openSubmenus, setOpenSubmenus] = useState<string[]>(() => {
     const activeParentOnLoad = navigationLinks.find(
       item =>
         item.children &&
         item.children.some(child => location.pathname.startsWith(child.href))
-    );
-    return activeParentOnLoad ? [activeParentOnLoad.name] : [];
-  });
+    )
+    return activeParentOnLoad ? [activeParentOnLoad.name] : []
+  })
 
   useEffect(() => {
     const activeParent = navigationLinks.find(
       item =>
         item.children &&
         item.children.some(child => location.pathname.startsWith(child.href))
-    );
-    setOpenSubmenus(activeParent ? [activeParent.name] : []);
-  }, [location.pathname]);
+    )
+    setOpenSubmenus(activeParent ? [activeParent.name] : [])
+  }, [location.pathname])
 
   const toggleSubmenu = (name: string) => {
     setOpenSubmenus(prevOpenSubmenus => {
       return prevOpenSubmenus.includes(name)
         ? prevOpenSubmenus.filter(n => n !== name)
-        : [name];
-    });
-  };
+        : [name]
+    })
+  }
 
   return (
     <div className="flex flex-col h-full">
@@ -69,13 +69,13 @@ const Sidebar = () => {
       </div>
       <nav className="flex flex-col space-y-1">
         {navigationLinks.map(item => {
-          const hasChildren = item.children && item.children.length > 0 || false;
-          const isSubmenuOpen = openSubmenus.includes(item.name);
+          const hasChildren = item.children && item.children.length > 0 || false
+          const isSubmenuOpen = openSubmenus.includes(item.name)
           const isParentActive = location.pathname === item.href ||
             (hasChildren &&
               item.children!.some(child =>
                 location.pathname.startsWith(child.href)
-              ));
+              ))
 
           return (
             <div key={item.name}>
@@ -101,8 +101,8 @@ const Sidebar = () => {
                   <button
                     type="button"
                     onClick={e => {
-                      e.preventDefault();
-                      toggleSubmenu(item.name);
+                      e.preventDefault()
+                      toggleSubmenu(item.name)
                     }}
                     className="ml-auto text-current hover:text-primary p-1 rounded-full"
                     aria-label={
@@ -140,11 +140,11 @@ const Sidebar = () => {
                 </div>
               )}
             </div>
-          );
+          )
         })}
       </nav>
     </div>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Sidebar

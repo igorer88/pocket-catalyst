@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create } from 'zustand'
 
 export interface ApiSubscription {
   id: string;
@@ -53,7 +53,7 @@ const MOCK_API_SUBSCRIPTIONS: ApiSubscription[] = [
     is_active: false,
     type: 'expense',
   },
-];
+]
 
 interface SubscriptionState {
   subscriptions: ApiSubscription[];
@@ -67,15 +67,15 @@ export const useSubscriptionStore = create<SubscriptionState>(set => ({
   isLoading: false,
   error: null,
   fetchSubscriptions: async () => {
-    set({ isLoading: true, error: null });
+    set({ isLoading: true, error: null })
     try {
-      await new Promise(resolve => setTimeout(resolve, 500));
-      set({ subscriptions: MOCK_API_SUBSCRIPTIONS, isLoading: false });
+      await new Promise(resolve => setTimeout(resolve, 500))
+      set({ subscriptions: MOCK_API_SUBSCRIPTIONS, isLoading: false })
     } catch (err) {
       set({
         error: (err as Error).message || 'Failed to fetch subscriptions',
         isLoading: false,
-      });
+      })
     }
   },
-}));
+}))

@@ -1,22 +1,21 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react'
+import { Spinner, Tab, Tabs } from '@heroui/react'
 
-import { Spinner, Tab, Tabs } from '@heroui/react';
-
-import BudgetTable from '@/components/BudgetTable';
+import BudgetTable from '@/components/BudgetTable'
 import {
   ApiSubscription,
   ApiTransaction,
   useSubscriptionStore,
   useTransactionStore,
-} from '@/stores';
-import { formatCurrency } from '@/utils';
+} from '@/stores'
+import { formatCurrency } from '@/utils'
 
 const transactionsTableColumns = [
   { label: 'Date', key: 'date' },
   { label: 'Category', key: 'category' },
   { label: 'Description', key: 'description' },
   { label: 'Amount', key: 'amount' },
-];
+]
 
 const subscriptionsTableColumns = [
   { label: 'Description', key: 'description' },
@@ -25,14 +24,14 @@ const subscriptionsTableColumns = [
   { label: 'Frequency', key: 'frequency' },
   { label: 'Next Payment', key: 'nextPayment' },
   { label: 'Status', key: 'status' },
-];
+]
 
 const calculateTotal = (rows: Array<{ amount: string }>): number => {
   return rows.reduce((sum, row) => {
-    const amountValue = parseFloat(row.amount);
-    return sum + (isNaN(amountValue) ? 0 : amountValue);
-  }, 0);
-};
+    const amountValue = parseFloat(row.amount)
+    return sum + (isNaN(amountValue) ? 0 : amountValue)
+  }, 0)
+}
 
 function TransactionsPage() {
   const {
@@ -40,40 +39,40 @@ function TransactionsPage() {
     isLoading: isLoadingTransactions,
     error: errorTransactions,
     fetchTransactions,
-  } = useTransactionStore();
+  } = useTransactionStore()
   const {
     subscriptions,
     isLoading: isLoadingSubscriptions,
     error: errorSubscriptions,
     fetchSubscriptions,
-  } = useSubscriptionStore();
+  } = useSubscriptionStore()
 
   useEffect(() => {
-    void fetchTransactions();
-    void fetchSubscriptions();
-  }, [fetchTransactions, fetchSubscriptions]);
+    void fetchTransactions()
+    void fetchSubscriptions()
+  }, [fetchTransactions, fetchSubscriptions])
 
   const incomeTransactions = useMemo(
     () => transactions.filter(t => t.type === 'income'),
     [transactions]
-  );
+  )
   const expenseTransactions = useMemo(
     () => transactions.filter(t => t.type === 'expense'),
     [transactions]
-  );
+  )
 
   const totalIncome = useMemo(
     () => calculateTotal(incomeTransactions),
     [incomeTransactions]
-  );
+  )
   const totalExpenses = useMemo(
     () => calculateTotal(expenseTransactions),
     [expenseTransactions]
-  );
+  )
   const totalSubscriptions = useMemo(
     () => calculateTotal(subscriptions.filter(s => s.type === 'expense')),
     [subscriptions]
-  );
+  )
 
   return (
     <div className="flex w-full flex-col">
@@ -179,7 +178,7 @@ function TransactionsPage() {
         </Tab>
       </Tabs>
     </div>
-  );
+  )
 }
 
-export default TransactionsPage;
+export default TransactionsPage

@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 import {
   ArrowLeftStartOnRectangleIcon,
   Bars3Icon,
@@ -7,43 +7,42 @@ import {
   Cog6ToothIcon,
   MoonIcon,
   SunIcon,
-} from '@heroicons/react/24/outline';
-
+} from '@heroicons/react/24/outline'
 import {
   Button,
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-} from '@heroui/react';
+} from '@heroui/react'
 
-import { env } from '@/config';
-import { useTheme } from '@/hooks/useTheme';
-import { useAuthStore, useGlobalStore } from '@/stores';
+import { env } from '@/config'
+import { useTheme } from '@/hooks/useTheme'
+import { useAuthStore, useGlobalStore } from '@/stores'
 
-import { AcmeLogo } from './Sidebar';
+import { AcmeLogo } from './Sidebar'
 
 const Header = () => {
-  const [theme, toggleTheme] = useTheme();
-  const toggleSidebar = useGlobalStore(state => state.toggleSidebar);
+  const [theme, toggleTheme] = useTheme()
+  const toggleSidebar = useGlobalStore(state => state.toggleSidebar)
   const toggleMobileSidebar = useGlobalStore(
     state => state.toggleMobileSidebar
-  );
-  const isSidebarCollapsed = useGlobalStore(state => state.isSidebarCollapsed);
-  const logout = useAuthStore(state => state.logout);
-  const isAuthenticated = useAuthStore(state => state.isAuthenticated);
-  const navigate = useNavigate();
+  )
+  const isSidebarCollapsed = useGlobalStore(state => state.isSidebarCollapsed)
+  const logout = useAuthStore(state => state.logout)
+  const isAuthenticated = useAuthStore(state => state.isAuthenticated)
+  const navigate = useNavigate()
 
   const handleLogout = () => {
-    logout();
-  };
+    logout()
+  }
 
   const handleSettings = () => {
-    void navigate('/dashboard/settings');
+    void navigate('/dashboard/settings')
     if (!isSidebarCollapsed) {
-      toggleSidebar();
+      toggleSidebar()
     }
-  };
+  }
 
   return (
     <>
@@ -129,6 +128,6 @@ const Header = () => {
         </NavbarContent>
       </Navbar>
     </>
-  );
-};
-export default Header;
+  )
+}
+export default Header

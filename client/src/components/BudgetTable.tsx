@@ -6,7 +6,7 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-} from '@heroui/react';
+} from '@heroui/react'
 
 interface Column {
   key: string;
@@ -55,7 +55,7 @@ function BudgetTable({
         )}
       </TableBody>
     </Table>
-  );
+  )
 }
 
-export default BudgetTable;
+export default BudgetTable

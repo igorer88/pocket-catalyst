@@ -1,4 +1,4 @@
-import { Card, CardBody, CardHeader } from '@heroui/react';
+import { Card, CardBody, CardHeader } from '@heroui/react'
 
 function HomePage() {
   return (
@@ -11,7 +11,7 @@ function HomePage() {
         <p>More summary information will be displayed here soon.</p>
       </CardBody>
     </Card>
-  );
+  )
 }
 
-export default HomePage;
+export default HomePage

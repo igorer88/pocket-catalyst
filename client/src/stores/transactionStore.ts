@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create } from 'zustand'
 
 export interface ApiTransaction {
   id: string;
@@ -47,7 +47,7 @@ const MOCK_API_TRANSACTIONS: ApiTransaction[] = [
     type: 'expense',
     account_currency: 'EUR',
   },
-];
+]
 
 interface TransactionState {
   transactions: ApiTransaction[];
@@ -61,15 +61,15 @@ export const useTransactionStore = create<TransactionState>(set => ({
   isLoading: false,
   error: null,
   fetchTransactions: async () => {
-    set({ isLoading: true, error: null });
+    set({ isLoading: true, error: null })
     try {
-      await new Promise(resolve => setTimeout(resolve, 500));
-      set({ transactions: MOCK_API_TRANSACTIONS, isLoading: false });
+      await new Promise(resolve => setTimeout(resolve, 500))
+      set({ transactions: MOCK_API_TRANSACTIONS, isLoading: false })
     } catch (err) {
       set({
         error: (err as Error).message || 'Failed to fetch transactions',
         isLoading: false,
-      });
+      })
     }
   },
-}));
+}))

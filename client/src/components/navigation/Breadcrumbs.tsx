@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import { ForwardRefExoticComponent, RefAttributes, SVGProps } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
-import { ChevronRightIcon, HomeIcon } from '@heroicons/react/20/solid';
+import { useEffect, useState } from 'react'
+import { ForwardRefExoticComponent, RefAttributes, SVGProps } from 'react'
+import { NavLink, useLocation } from 'react-router-dom'
+import { ChevronRightIcon, HomeIcon } from '@heroicons/react/20/solid'
 
-import { NavigationLink, navigationLinks } from '@/router/NavigationLinks';
+import { NavigationLink, navigationLinks } from '@/router/NavigationLinks'
 
 export interface BreadcrumbItem {
   name: string;
@@ -20,11 +20,11 @@ const generateBreadcrumbs = (
   pathname: string,
   navLinks: NavigationLink[]
 ): BreadcrumbItem[] => {
-  const breadcrumbs: BreadcrumbItem[] = [];
-  const pathParts = pathname.split('/').filter(Boolean);
+  const breadcrumbs: BreadcrumbItem[] = []
+  const pathParts = pathname.split('/').filter(Boolean)
 
   if (pathParts.length === 0 || pathParts[0] !== 'dashboard') {
-    return [];
+    return []
   }
 
   // Root breadcrumb
@@ -32,52 +32,52 @@ const generateBreadcrumbs = (
     name: 'Dashboard',
     href: pathname === '/dashboard' ? undefined : '/dashboard',
     icon: HomeIcon,
-  });
+  })
 
   if (pathname === '/dashboard') {
-    return breadcrumbs;
+    return breadcrumbs
   }
 
-  let currentLevelLinks = navLinks;
-  let currentPath = '/dashboard';
+  let currentLevelLinks = navLinks
+  let currentPath = '/dashboard'
 
   for (let i = 1; i < pathParts.length; i++) {
-    currentPath += `/${pathParts[i]}`;
+    currentPath += `/${pathParts[i]}`
 
-    const foundLink = currentLevelLinks.find(link => link.href === currentPath);
+    const foundLink = currentLevelLinks.find(link => link.href === currentPath)
 
     if (foundLink) {
       breadcrumbs.push({
         name: foundLink.name,
         href: pathname === foundLink.href ? undefined : foundLink.href,
         icon: foundLink.icon?.outline
-      });
-      currentLevelLinks = foundLink.children || [];
+      })
+      currentLevelLinks = foundLink.children || []
     } else {
       if (i === pathParts.length - 1) {
         const lastSegmentName =
           pathParts[i].charAt(0).toUpperCase() +
-          pathParts[i].slice(1).replace(/-/g, ' ');
-        breadcrumbs.push({ name: lastSegmentName });
+          pathParts[i].slice(1).replace(/-/g, ' ')
+        breadcrumbs.push({ name: lastSegmentName })
       }
-      break;
+      break
     }
   }
-  return breadcrumbs;
-};
+  return breadcrumbs
+}
 
 const Breadcrumbs = () => {
-  const location = useLocation();
-  const [crumbs, setCrumbs] = useState<BreadcrumbItem[]>([]);
+  const location = useLocation()
+  const [crumbs, setCrumbs] = useState<BreadcrumbItem[]>([])
 
   useEffect(() => {
-    const newCrumbs = generateBreadcrumbs(location.pathname, navigationLinks);
-    setCrumbs(newCrumbs);
-  }, [location.pathname]);
+    const newCrumbs = generateBreadcrumbs(location.pathname, navigationLinks)
+    setCrumbs(newCrumbs)
+  }, [location.pathname])
 
   // Don't show breadcrumbs if it's just "Dashboard" (current page) or empty
   if (crumbs.length === 0 || (crumbs.length === 1 && !crumbs[0].href)) {
-    return null;
+    return null
   }
 
   return (
@@ -119,7 +119,7 @@ const Breadcrumbs = () => {
         ))}
       </ol>
     </nav>
-  );
-};
+  )
+}
 
-export default Breadcrumbs;
+export default Breadcrumbs

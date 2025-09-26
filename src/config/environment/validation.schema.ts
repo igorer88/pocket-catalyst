@@ -1,6 +1,7 @@
 import Joi from 'joi'
 
 import { Environment } from '../enums'
+
 import { dbFolder } from './db.config'
 
 export const getValidationSchema = (): Joi.ObjectSchema => {

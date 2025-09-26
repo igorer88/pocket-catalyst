@@ -1,15 +1,14 @@
-import { useEffect } from 'react';
+import { useEffect } from 'react'
+import { Card, CardBody, CardHeader, Chip, Spinner } from '@heroui/react'
 
-import { Card, CardBody, CardHeader, Chip, Spinner } from '@heroui/react';
-
-import { useProfileStore } from '@/stores/profileStore';
+import { useProfileStore } from '@/stores/profileStore'
 
 function SettingsPage() {
-  const { profile, isLoading, error, fetchProfile } = useProfileStore();
+  const { profile, isLoading, error, fetchProfile } = useProfileStore()
 
   useEffect(() => {
-    void fetchProfile();
-  }, [fetchProfile]);
+    void fetchProfile()
+  }, [fetchProfile])
 
   return (
     <Card>
@@ -43,7 +42,7 @@ function SettingsPage() {
         )}{' '}
       </CardBody>
     </Card>
-  );
+  )
 }
 
-export default SettingsPage;
+export default SettingsPage

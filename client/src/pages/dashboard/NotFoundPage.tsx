@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 const DashboardNotFoundPage = () => {
   return (
@@ -14,7 +14,7 @@ const DashboardNotFoundPage = () => {
         Go to Dashboard Home
       </Link>
     </div>
-  );
-};
+  )
+}
 
-export default DashboardNotFoundPage;
+export default DashboardNotFoundPage

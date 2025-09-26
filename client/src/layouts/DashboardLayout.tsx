@@ -1,19 +1,19 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom'
 
-import Breadcrumbs from '@/components/navigation/Breadcrumbs';
-import Header from '@/components/navigation/Header';
-import Sidebar from '@/components/navigation/Sidebar';
-import { useGlobalStore } from '@/stores/globalStore';
-import { classNames } from '@/utils';
+import Breadcrumbs from '@/components/navigation/Breadcrumbs'
+import Header from '@/components/navigation/Header'
+import Sidebar from '@/components/navigation/Sidebar'
+import { useGlobalStore } from '@/stores/globalStore'
+import { classNames } from '@/utils'
 
 const DashboardLayout = () => {
-  const isSidebarCollapsed = useGlobalStore(state => state.isSidebarCollapsed);
+  const isSidebarCollapsed = useGlobalStore(state => state.isSidebarCollapsed)
   const isMobileSidebarOpen = useGlobalStore(
     state => state.isMobileSidebarOpen
-  );
+  )
   const toggleMobileSidebar = useGlobalStore(
     state => state.toggleMobileSidebar
-  );
+  )
 
   return (
     <div className="flex h-screen">
@@ -49,7 +49,7 @@ const DashboardLayout = () => {
         </main>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default DashboardLayout;
+export default DashboardLayout

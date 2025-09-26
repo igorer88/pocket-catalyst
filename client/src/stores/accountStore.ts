@@ -1,8 +1,8 @@
-import { create } from 'zustand';
+import { create } from 'zustand'
 
-import { Account } from '@/@types';
-import { apiClient } from '@/config';
-import { ApiError } from '@/utils';
+import { Account } from '@/@types'
+import { apiClient } from '@/config'
+import { ApiError } from '@/utils'
 
 interface AccountsState {
   isLoading: boolean;
@@ -22,13 +22,13 @@ export const useAccountsStore = create<AccountsState>(set => ({
   setAccounts: accounts => set({ accounts }),
   setSelectedAccount: account => set({ selectedAccount: account }),
   fetchAccounts: async () => {
-    set({ isLoading: true, error: null });
+    set({ isLoading: true, error: null })
     try {
-      const response = await apiClient.get<Account[]>('/accounts/');
-      set({ accounts: response.data, isLoading: false });
+      const response = await apiClient.get<Account[]>('/accounts/')
+      set({ accounts: response.data, isLoading: false })
     } catch (err: unknown) {
-      set({ error: (err as ApiError).message, isLoading: false });
-      console.error('Error fetching accounts:', err);
+      set({ error: (err as ApiError).message, isLoading: false })
+      console.error('Error fetching accounts:', err)
     }
   },
-}));
+}))

@@ -1,5 +1,5 @@
-import { NavigationLink } from '@/router/NavigationLinks';
-import { classNames } from '@/utils';
+import { NavigationLink } from '@/router/NavigationLinks'
+import { classNames } from '@/utils'
 
 interface SidebarItemIconProps {
     iconDefinition?: NavigationLink['icon'];
@@ -13,19 +13,19 @@ const SidebarItemIcon: React.FC<SidebarItemIconProps> = ({
     isSidebarCollapsed,
 }) => {
     if (!iconDefinition) {
-        return null;
+        return null
     }
 
-    const solidIcon = iconDefinition.solid;
-    const outlineIcon = iconDefinition.outline;
+    const solidIcon = iconDefinition.solid
+    const outlineIcon = iconDefinition.outline
 
-    const shouldUseSolidIcon = isParentActive && solidIcon;
+    const shouldUseSolidIcon = isParentActive && solidIcon
     const IconComponent = shouldUseSolidIcon
         ? solidIcon
-        : outlineIcon;
+        : outlineIcon
 
     if (!IconComponent) {
-        return null;
+        return null
     }
 
     return (
@@ -39,7 +39,7 @@ const SidebarItemIcon: React.FC<SidebarItemIconProps> = ({
             )}
             aria-hidden="true"
         />
-    );
-};
+    )
+}
 
-export default SidebarItemIcon;
+export default SidebarItemIcon
