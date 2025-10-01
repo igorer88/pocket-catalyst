@@ -1,0 +1,91 @@
+{
+  "navigation": {
+    "overview": "Overview",
+    "transactions": "Transactions",
+    "list": "List",
+    "addNew": "Add New",
+    "recurring": "Recurring",
+    "accounts": "Accounts",
+    "myAccounts": "My Accounts",
+    "accountTypes": "Account Types",
+    "budgets": "Budgets"
+  },
+  "pages": {
+    "home": {
+      "title": "Dashboard Overview",
+      "welcome": "Welcome to your budget manager dashboard!",
+      "summary": "More summary information will be displayed here soon."
+    },
+    "login": {
+      "title": "Login",
+      "devMode": "Development Mode",
+      "demoCredentials": "Demo credentials: demo / demo",
+      "quickDemo": "Quick Demo",
+      "usernameOrEmail": "Username or Email",
+      "usernamePlaceholder": "Enter your username or email",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "hidePassword": "Hide password",
+      "showPassword": "Show password",
+      "loggingIn": "Logging in..."
+    },
+    "transactions": {
+      "ariaLabel": "Budget Information",
+      "income": "Income",
+      "loadingIncome": "Loading income...",
+      "incomeTableAria": "Income table with dynamic content",
+      "totalIncome": "Total Income:",
+      "expenses": "Expenses",
+      "loadingExpenses": "Loading expenses...",
+      "expensesTableAria": "Expenses table with dynamic content",
+      "totalExpenses": "Total Expenses:",
+      "subscriptions": "Subscriptions",
+      "loadingSubscriptions": "Loading subscriptions...",
+      "subscriptionsTableAria": "Subscriptions table with dynamic content",
+      "totalSubscriptions": "Total Subscriptions:",
+      "date": "Date",
+      "category": "Category",
+      "description": "Description",
+      "amount": "Amount",
+      "frequency": "Frequency",
+      "nextPayment": "Next Payment",
+      "status": "Status",
+      "active": "Active",
+      "paused": "Paused"
+    },
+    "notFound": {
+      "title": "404",
+      "message": "Oops! The page you're looking for inside the dashboard doesn't exist.",
+      "goHome": "Go to Dashboard Home"
+    },
+    "settings": {
+      "title": "Settings",
+      "loadingProfile": "Loading profile...",
+      "error": "Error loading profile:",
+      "username": "Username:",
+      "displayCurrency": "Display Currency:"
+    }
+  },
+  "components": {
+    "header": {
+      "toggleSidebar": "Toggle sidebar",
+      "openSidebar": "Open sidebar",
+      "switchToDark": "Switch to dark theme",
+      "switchToLight": "Switch to light theme",
+      "settings": "Settings",
+      "logout": "Logout"
+    },
+    "sidebar": {
+      "collapseSubmenu": "Collapse submenu",
+      "expandSubmenu": "Expand submenu"
+    },
+    "breadcrumbs": {
+      "ariaLabel": "Breadcrumb",
+      "dashboard": "Dashboard"
+    }
+  },
+  "common": {
+    "error": "Error: ",
+    "notAvailable": "N/A"
+  }
+}

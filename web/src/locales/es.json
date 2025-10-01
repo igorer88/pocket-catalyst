@@ -1,0 +1,91 @@
+{
+  "navigation": {
+    "overview": "Resumen",
+    "transactions": "Transacciones",
+    "list": "Lista",
+    "addNew": "Añadir Nuevo",
+    "recurring": "Recurrente",
+    "accounts": "Cuentas",
+    "myAccounts": "Mis Cuentas",
+    "accountTypes": "Tipos de Cuenta",
+    "budgets": "Presupuestos"
+  },
+  "pages": {
+    "home": {
+      "title": "Resumen del Dashboard",
+      "welcome": "¡Bienvenido a tu dashboard de gestión de presupuestos!",
+      "summary": "Más información de resumen se mostrará aquí pronto."
+    },
+    "login": {
+      "title": "Iniciar Sesión",
+      "devMode": "Modo de Desarrollo",
+      "demoCredentials": "Credenciales de demostración: demo / demo",
+      "quickDemo": "Demostración Rápida",
+      "usernameOrEmail": "Usuario o Correo Electrónico",
+      "usernamePlaceholder": "Introduce tu usuario o correo electrónico",
+      "password": "Contraseña",
+      "passwordPlaceholder": "Introduce tu contraseña",
+      "hidePassword": "Ocultar contraseña",
+      "showPassword": "Mostrar contraseña",
+      "loggingIn": "Iniciando sesión..."
+    },
+    "transactions": {
+      "ariaLabel": "Información de Presupuesto",
+      "income": "Ingresos",
+      "loadingIncome": "Cargando ingresos...",
+      "incomeTableAria": "Tabla de ingresos con contenido dinámico",
+      "totalIncome": "Ingresos Totales:",
+      "expenses": "Gastos",
+      "loadingExpenses": "Cargando gastos...",
+      "expensesTableAria": "Tabla de gastos con contenido dinámico",
+      "totalExpenses": "Gastos Totales:",
+      "subscriptions": "Suscripciones",
+      "loadingSubscriptions": "Cargando suscripciones...",
+      "subscriptionsTableAria": "Tabla de suscripciones con contenido dinámico",
+      "totalSubscriptions": "Suscripciones Totales:",
+      "date": "Fecha",
+      "category": "Categoría",
+      "description": "Descripción",
+      "amount": "Monto",
+      "frequency": "Frecuencia",
+      "nextPayment": "Próximo Pago",
+      "status": "Estado",
+      "active": "Activo",
+      "paused": "Pausado"
+    },
+    "notFound": {
+      "title": "404",
+      "message": "¡Vaya! La página que buscas dentro del dashboard no existe.",
+      "goHome": "Ir al Inicio del Dashboard"
+    },
+    "settings": {
+      "title": "Configuración",
+      "loadingProfile": "Cargando perfil...",
+      "error": "Error al cargar el perfil:",
+      "username": "Usuario:",
+      "displayCurrency": "Moneda de Visualización:"
+    }
+  },
+  "components": {
+    "header": {
+      "toggleSidebar": "Alternar barra lateral",
+      "openSidebar": "Abrir barra lateral",
+      "switchToDark": "Cambiar a tema oscuro",
+      "switchToLight": "Cambiar a tema claro",
+      "settings": "Configuración",
+      "logout": "Cerrar Sesión"
+    },
+    "sidebar": {
+      "collapseSubmenu": "Contraer submenú",
+      "expandSubmenu": "Expandir submenú"
+    },
+    "breadcrumbs": {
+      "ariaLabel": "Miga de pan",
+      "dashboard": "Dashboard"
+    }
+  },
+  "common": {
+    "error": "Error: ",
+    "notAvailable": "N/D"
+  }
+}
