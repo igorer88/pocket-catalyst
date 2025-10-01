@@ -90,7 +90,9 @@ const Breadcrumbs = (): JSX.Element | null => {
   return (
     <nav
       className="flex px-4 md:px-6 py-3 text-sm border-divider"
-      aria-label={intl.formatMessage({ id: 'components.breadcrumbs.ariaLabel' })}
+      aria-label={intl.formatMessage({
+        id: 'components.breadcrumbs.ariaLabel'
+      })}
     >
       <ol role="list" className="flex items-center space-x-1">
         {crumbs.map((crumb, index) => (
