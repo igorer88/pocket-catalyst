@@ -17,7 +17,7 @@ import { apiConfig, dbConfig, getValidationSchema } from './config'
       cache: true
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'client', 'dist'),
+      rootPath: join(__dirname, '..', 'web', 'dist'),
       exclude: ['/api/(.*)']
     }),
 
