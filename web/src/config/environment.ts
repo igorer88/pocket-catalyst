@@ -1,8 +1,15 @@
 const env = {
-  APP_NAME: import.meta.env.VITE_APP_NAME,
+  // App configuration - hardcoded values
+  APP_NAME: 'Pocket Catalyst',
   APP_LOCALE: import.meta.env.VITE_APP_LOCALE || 'en-US',
   APP_CURRENCY: import.meta.env.VITE_APP_CURRENCY || 'USD',
-  API_BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api'
-}
+
+  // API configuration - base URL already includes /api
+  API_BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api',
+
+  // Development mode check
+  isDevelopment: import.meta.env.MODE === 'development',
+  isProduction: import.meta.env.MODE === 'production'
+} as const
 
 export default env
