@@ -3,11 +3,9 @@ import { heroui } from '@heroui/react'
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    // Add paths to all of your template files
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
-    // Add the path to Hero UI components
-    './node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}'
+    './node_modules/@heroui/theme/dist/**/*.{js,mjs,ts,jsx,tsx}'
   ],
   theme: {
     extend: {}
