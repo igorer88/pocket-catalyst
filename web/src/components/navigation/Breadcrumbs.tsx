@@ -1,4 +1,4 @@
-import { useEffect, useState } => from 'react'
+import { useEffect, useState } from 'react'
 import { ForwardRefExoticComponent, RefAttributes, SVGProps } from 'react'
 import { useIntl } from 'react-intl'
 import { NavLink, useLocation } from 'react-router-dom'
