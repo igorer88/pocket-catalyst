@@ -82,7 +82,8 @@ ENV NODE_ENV=production
 # Copy only production dependencies and build artifacts
 COPY --from=build /app/package.json /app/pnpm-lock.yaml /app/pnpm-workspace.yaml ./
 COPY --from=build /app/${UI_FOLDER}/package.json ./${UI_FOLDER}/
-RUN pnpm install --prod -r --offline
+ENV CI=true
+RUN pnpm fetch && pnpm install --prod -r --offline
 # Copy build artifacts
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/${UI_FOLDER}/dist ./dist/${UI_FOLDER}/dist
