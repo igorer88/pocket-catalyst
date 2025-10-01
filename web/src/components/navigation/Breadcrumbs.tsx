@@ -68,7 +68,7 @@ const generateBreadcrumbs = (
   return breadcrumbs
 }
 
-const Breadcrumbs = (): JSX.Element | null => {
+const Breadcrumbs = () => {
   const location = useLocation()
   const intl = useIntl()
   const [crumbs, setCrumbs] = useState<BreadcrumbItem[]>([])
