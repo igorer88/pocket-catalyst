@@ -148,7 +148,12 @@ export default [
       'lib/*',
       'dist/**',
       'config/scripts',
-      'src/metadata.ts'
+      'src/metadata.ts',
+      '**/node_modules/**',
+      '**/coverage/**',
+      '*-lock.json',
+      '*-lock.yaml',
+      '*.lock',
     ]
   },
   ...recommendedTypeScriptConfigs,
