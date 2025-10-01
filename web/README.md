@@ -60,7 +60,7 @@ export default tseslint.config({
 The frontend uses the following environment variables for configuration:
 
 #### App Configuration
-- `VITE_APP_LOCALE`: Application locale (default: "en-US")  
+- `VITE_APP_LOCALE`: Application locale (default: "en-US")
 - `VITE_APP_CURRENCY`: Default currency (default: "USD")
 
 #### API Configuration
