@@ -10,10 +10,6 @@ Pocket Catalyst is a web-based application for managing personal finances. It fe
 - **Routing**: [React Router 7](https://reactrouter.com/)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 
-## Production Environment
-
-This project is configured to run with Docker. By default, it uses a **SQLite** database, which is suitable for demos and local testing. For production environments, it is recommended to configure a **PostgreSQL** database.
-
 ## Environment Variables
 
 To configure the application, copy the `.env.example` file to `.env` and fill in the necessary values. Ensure you set a strong secret key for security.
@@ -24,6 +20,29 @@ cp .env.example .env
 
 - `NODE_ENV`: Set to `development` for local development or `production` for production builds.
 - `BUILD_STAGE`: Use `dev` for development builds or `prod` for production builds, especially when working with Docker Compose.
+- `API_SECRET_KEY`: A secret key used for various security purposes (e.g., JWT signing). **Required**.
+
+### Database Configuration
+
+The application supports both PostgreSQL and SQLite databases. You can select the database driver using the `DB_DRIVER` environment variable.
+
+- `DB_DRIVER`: Specifies the database driver to use. Set to `postgres` for PostgreSQL or `sqlite` for SQLite. Defaults to `sqlite`.
+
+#### SQLite Configuration (Default)
+
+When `DB_DRIVER=sqlite`:
+
+- `DB_SQLITE_PATH`: The path to the SQLite database file (e.g., `./db/pc.sqlite3`). Defaults to `./config/db/pc.sqlite3`.
+
+#### PostgreSQL Configuration (Recommended for Production)
+
+When `DB_DRIVER=postgres`:
+
+- `DB_HOST`: The hostname or IP address of the PostgreSQL server.
+- `DB_PORT`: The port of the PostgreSQL server (default: `5432`).
+- `DB_NAME`: The name of the PostgreSQL database.
+- `DB_USER`: The username for connecting to the PostgreSQL database.
+- `DB_PASSWORD`: The password for connecting to the PostgreSQL database.
 
 ### Frontend Configuration
 
@@ -32,6 +51,10 @@ The frontend uses the following environment variables for configuration:
 - `VITE_APP_LOCALE`: Application locale (default: "en-US")
 - `VITE_APP_CURRENCY`: Default currency (default: "USD")
 - `VITE_API_BASE_URL`: Base URL for API communication including /api path (default: "<http://localhost:3000/api>")
+
+## Production Environment
+
+This project is configured to run with Docker. By default, it uses a **SQLite** database, which is suitable for demos and local testing. For production environments, it is recommended to configure a **PostgreSQL** database.
 
 ### Building and Running with Docker
 
