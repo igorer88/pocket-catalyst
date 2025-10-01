@@ -1,4 +1,4 @@
-import { env } from '@/config'
+import { environment } from '@/config'
 
 /**
  * The `formatCurrency` function in TypeScript formats a number as a currency value.
@@ -15,8 +15,8 @@ export const formatCurrency = (
   value: number,
   currencyCode?: string
 ): string => {
-  const locale = env.APP_LOCALE
-  const displayCurrency = currencyCode || env.APP_CURRENCY
+  const locale = environment.APP_LOCALE
+  const displayCurrency = currencyCode || environment.APP_CURRENCY
 
   return value.toLocaleString(locale, {
     style: 'currency',

@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 import { User } from '@/@types'
-import { apiClient } from '@/config'
+import { apiClient, environment } from '@/config'
 import { ApiError } from '@/utils'
 
 import { useProfileStore } from './profileStore'
@@ -83,24 +83,60 @@ export const useAuthStore = create<AuthState>((set, get) => {
     login: async (username, password) => {
       set({ isLoading: true, error: null })
 
-      if (username === 'demo' && password === 'demo') {
+      // Development mode: allow demo login
+      if (
+        environment.isDevelopment &&
+        username === 'demo' &&
+        password === 'demo'
+      ) {
+        const demoUser: User = {
+          id: 1,
+          username: 'demo',
+          email: 'demo@example.com',
+          first_name: 'Demo',
+          last_name: 'User',
+          date_joined: '2023-01-01T00:00:00Z',
+          is_active: true
+        }
+
         set({
           isAuthenticated: true,
-          user: {
-            id: 1,
-            username: 'demo',
-            email: 'demo@example.com',
-            first_name: 'Demo',
-            last_name: 'User',
-            date_joined: '2023-01-01T00:00:00Z',
-            is_active: true
-          },
-          authToken: 'demo_token',
-          refreshToken: 'demo_refresh_token',
+          user: demoUser,
+          authToken: 'demo_token_' + Date.now(),
+          refreshToken: 'demo_refresh_token_' + Date.now(),
           isLoading: false,
           error: null
         })
+
+        // Store demo tokens in localStorage for persistence
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('authToken', `demo_token_${Date.now()}`)
+          localStorage.setItem(
+            'refreshToken',
+            `demo_refresh_token_${Date.now()}`
+          )
+          localStorage.setItem('userData', JSON.stringify(demoUser))
+        }
+
+        console.log('🚀 Demo login successful - Development Mode')
         return true
+      }
+
+      // Development mode: provide helpful error message for demo credentials in production
+      if (
+        !environment.isDevelopment &&
+        username === 'demo' &&
+        password === 'demo'
+      ) {
+        set({
+          error: 'Demo credentials are only available in development mode.',
+          isLoading: false,
+          isAuthenticated: false,
+          user: null,
+          authToken: null,
+          refreshToken: null
+        })
+        return false
       }
 
       try {
@@ -141,6 +177,10 @@ export const useAuthStore = create<AuthState>((set, get) => {
               is_active: true
             }
             set({ user: userData })
+
+            if (typeof window !== 'undefined') {
+              localStorage.setItem('userData', JSON.stringify(userData))
+            }
           } else {
             set({ user: null })
           }
@@ -148,7 +188,9 @@ export const useAuthStore = create<AuthState>((set, get) => {
         }
         throw new Error('Invalid token response from server.')
       } catch (err) {
-        const errorMessage = (err as ApiError)?.message
+        const errorMessage =
+          (err as ApiError)?.message ||
+          'Login failed. Please check your credentials.'
         set({
           error: errorMessage,
           isLoading: false,

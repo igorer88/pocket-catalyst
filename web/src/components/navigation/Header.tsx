@@ -16,7 +16,7 @@ import {
   NavbarItem
 } from '@heroui/react'
 
-import { env } from '@/config'
+import { environment } from '@/config'
 import { useTheme } from '@/hooks/useTheme'
 import { useAuthStore, useGlobalStore } from '@/stores'
 
@@ -74,7 +74,7 @@ const Header = () => {
           </NavbarItem>
           <NavbarBrand className="md:hidden">
             <AcmeLogo />
-            <p className="font-bold text-inherit ml-2">{env.APP_NAME}</p>
+            <p className="font-bold text-inherit ml-2">{environment.APP_NAME}</p>
           </NavbarBrand>
         </NavbarContent>
         <NavbarContent justify="end">

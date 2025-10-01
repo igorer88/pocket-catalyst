@@ -1,16 +1,17 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'
-import { Button, Card, CardBody, CardHeader, Input } from '@heroui/react'
+import { Button, Card, CardBody, CardHeader, Chip,Input } from '@heroui/react'
 
+import { environment } from '@/config'
 import { useAuthStore } from '@/stores/authStore'
 
-function LoginPage() {
+const LoginPage: React.FC = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
 
-  const togglePasswordVisibility = () => setShowPassword(!showPassword)
+  const togglePasswordVisibility = (): void => setShowPassword(!showPassword)
 
   const { error, isLoading, isAuthenticated, login } = useAuthStore()
   const navigate = useNavigate()
@@ -26,6 +27,12 @@ function LoginPage() {
     void login(username, password)
   }
 
+  const handleDemoLogin = (): void => {
+    setUsername('demo')
+    setPassword('demo')
+    void login('demo', 'demo')
+  }
+
   return (
     <Card className="w-full max-w-md">
       <CardHeader className="flex justify-center">
@@ -34,6 +41,27 @@ function LoginPage() {
         </h1>
       </CardHeader>
       <CardBody>
+        {environment.isDevelopment && (
+          <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+            <div className="flex items-center justify-between">
+              <div>
+                <Chip size="sm" color="primary" variant="flat">Development Mode</Chip>
+                <p className="text-sm text-blue-700 dark:text-blue-300 mt-1">
+                  Demo credentials: demo / demo
+                </p>
+              </div>
+              <Button
+                size="sm"
+                color="primary"
+                variant="light"
+                onPress={handleDemoLogin}
+                isDisabled={isLoading}
+              >
+                Quick Demo
+              </Button>
+            </div>
+          </div>
+        )}
         <form onSubmit={handleSubmit} className="space-y-6">
           <Input
             label="Username or Email"

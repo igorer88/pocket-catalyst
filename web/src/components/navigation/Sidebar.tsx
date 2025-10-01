@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
 
-import { env } from '@/config'
+import { environment } from '@/config'
 import { navigationLinks } from '@/router/NavigationLinks'
 import { useGlobalStore } from '@/stores'
 import { classNames } from '@/utils'
@@ -64,7 +64,7 @@ const Sidebar = () => {
       >
         <AcmeLogo />
         {!isSidebarCollapsed && (
-          <p className="ml-3 font-semibold text-foreground">{env.APP_NAME}</p>
+          <p className="ml-3 font-semibold text-foreground">{environment.APP_NAME}</p>
         )}
       </div>
       <nav className="flex flex-col space-y-1">
