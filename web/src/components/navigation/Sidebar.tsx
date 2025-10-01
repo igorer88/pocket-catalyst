@@ -64,7 +64,9 @@ const Sidebar = () => {
       >
         <AcmeLogo />
         {!isSidebarCollapsed && (
-          <p className="ml-3 font-semibold text-foreground">{environment.APP_NAME}</p>
+          <p className="ml-3 font-semibold text-foreground">
+            {environment.APP_NAME}
+          </p>
         )}
       </div>
       <nav className="flex flex-col space-y-1">

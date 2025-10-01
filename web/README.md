@@ -60,10 +60,12 @@ export default tseslint.config({
 The frontend uses the following environment variables for configuration:
 
 #### App Configuration
+
 - `VITE_APP_LOCALE`: Application locale (default: "en-US")
 - `VITE_APP_CURRENCY`: Default currency (default: "USD")
 
 #### API Configuration
+
 - `VITE_API_BASE_URL`: Base URL for API communication including /api path (default: "http://localhost:3000/api")
 
 ### Development Server
@@ -77,6 +79,7 @@ The development server runs on port 5173 and proxies API requests to the backend
 ### API Client Configuration
 
 The API client uses the complete base URL directly:
+
 - Environment variable: `VITE_API_BASE_URL=http://localhost:3000/api`
 - API client baseURL: `http://localhost:3000/api` (used directly)
 

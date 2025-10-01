@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'
-import { Button, Card, CardBody, CardHeader, Chip,Input } from '@heroui/react'
+import { Button, Card, CardBody, CardHeader, Chip, Input } from '@heroui/react'
 
 import { environment } from '@/config'
 import { useAuthStore } from '@/stores/authStore'
@@ -45,7 +45,9 @@ const LoginPage: React.FC = () => {
           <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
             <div className="flex items-center justify-between">
               <div>
-                <Chip size="sm" color="primary" variant="flat">Development Mode</Chip>
+                <Chip size="sm" color="primary" variant="flat">
+                  Development Mode
+                </Chip>
                 <p className="text-sm text-blue-700 dark:text-blue-300 mt-1">
                   Demo credentials: demo / demo
                 </p>

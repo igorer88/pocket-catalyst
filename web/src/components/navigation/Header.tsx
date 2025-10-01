@@ -74,7 +74,9 @@ const Header = () => {
           </NavbarItem>
           <NavbarBrand className="md:hidden">
             <AcmeLogo />
-            <p className="font-bold text-inherit ml-2">{environment.APP_NAME}</p>
+            <p className="font-bold text-inherit ml-2">
+              {environment.APP_NAME}
+            </p>
           </NavbarBrand>
         </NavbarContent>
         <NavbarContent justify="end">
