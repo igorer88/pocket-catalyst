@@ -150,10 +150,7 @@ export default [
       'config/scripts',
       'src/metadata.ts',
       '**/node_modules/**',
-      '**/coverage/**',
-      '*-lock.json',
-      '*-lock.yaml',
-      '*.lock',
+      '**/coverage/**'
     ]
   },
   ...recommendedTypeScriptConfigs,
