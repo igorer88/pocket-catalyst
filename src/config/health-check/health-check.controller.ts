@@ -6,7 +6,7 @@ import { HealthCheckService } from './health-check.service'
 export class HealthCheckController {
   constructor(private readonly healthCheckService: HealthCheckService) {}
 
-  @Get('')
+  @Get()
   async checkAppStatus(): Promise<{ status: string }> {
     return { status: 'Ok' }
   }
