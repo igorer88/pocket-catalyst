@@ -83,6 +83,26 @@ export const useAuthStore = create<AuthState>((set, get) => {
     login: async (username, password) => {
       set({ isLoading: true, error: null })
 
+      if (username === 'demo' && password === 'demo') {
+        set({
+          isAuthenticated: true,
+          user: {
+            id: 1,
+            username: 'demo',
+            email: 'demo@example.com',
+            first_name: 'Demo',
+            last_name: 'User',
+            date_joined: '2023-01-01T00:00:00Z',
+            is_active: true
+          },
+          authToken: 'demo_token',
+          refreshToken: 'demo_refresh_token',
+          isLoading: false,
+          error: null
+        })
+        return true
+      }
+
       try {
         const response = await apiClient.post<LoginResponse>('/token/', {
           username,

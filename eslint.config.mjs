@@ -21,7 +21,7 @@ import {
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-const __uiFolder = 'client'
+const __uiFolder = 'web'
 
 const tsFiles = ['{src,tests}/**/*.ts']
 const tsxFiles = [`${__uiFolder}/src/**/*.{ts,tsx}`]

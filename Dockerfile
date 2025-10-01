@@ -2,7 +2,7 @@
 
 # Define build arguments for Node.js version, pnpm registry, system user, and group ID
 ARG APP_NAME=pocket-catalyst
-ARG UI_FOLDER=client
+ARG UI_FOLDER=web
 ARG NODE_VERSION=lts-alpine
 ARG NPM_REGISTRY=https://registry.npmjs.org/
 ARG YARN_REGISTRY=https://registry.npmjs.org/
