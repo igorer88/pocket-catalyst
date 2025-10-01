@@ -1,4 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react'
+import { FormattedMessage, useIntl } from 'react-intl'
 import { useNavigate } from 'react-router-dom'
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'
 import { Button, Card, CardBody, CardHeader, Chip, Input } from '@heroui/react'
@@ -10,6 +11,7 @@ const LoginPage: React.FC = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const intl = useIntl()
 
   const togglePasswordVisibility = (): void => setShowPassword(!showPassword)
 
@@ -37,7 +39,7 @@ const LoginPage: React.FC = () => {
     <Card className="w-full max-w-md">
       <CardHeader className="flex justify-center">
         <h1 className="text-2xl font-bold text-center text-gray-800 dark:text-white">
-          Login
+          <FormattedMessage id="pages.login.title" />
         </h1>
       </CardHeader>
       <CardBody>
@@ -46,10 +48,10 @@ const LoginPage: React.FC = () => {
             <div className="flex items-center justify-between">
               <div>
                 <Chip size="sm" color="primary" variant="flat">
-                  Development Mode
+                  <FormattedMessage id="pages.login.devMode" />
                 </Chip>
                 <p className="text-sm text-blue-700 dark:text-blue-300 mt-1">
-                  Demo credentials: demo / demo
+                  <FormattedMessage id="pages.login.demoCredentials" />
                 </p>
               </div>
               <Button
@@ -59,18 +61,20 @@ const LoginPage: React.FC = () => {
                 onPress={handleDemoLogin}
                 isDisabled={isLoading}
               >
-                Quick Demo
+                <FormattedMessage id="pages.login.quickDemo" />
               </Button>
             </div>
           </div>
         )}
         <form onSubmit={handleSubmit} className="space-y-6">
           <Input
-            label="Username or Email"
+            label={intl.formatMessage({ id: 'pages.login.usernameOrEmail' })}
             type="text"
             value={username}
             onValueChange={setUsername}
-            placeholder="Enter your username or email"
+            placeholder={intl.formatMessage({
+              id: 'pages.login.usernamePlaceholder'
+            })}
             isRequired
             fullWidth
             classNames={{
@@ -78,11 +82,13 @@ const LoginPage: React.FC = () => {
             }}
           />
           <Input
-            label="Password"
+            label={intl.formatMessage({ id: 'pages.login.password' })}
             type={showPassword ? 'text' : 'password'}
             value={password}
             onValueChange={setPassword}
-            placeholder="Enter your password"
+            placeholder={intl.formatMessage({
+              id: 'pages.login.passwordPlaceholder'
+            })}
             isRequired
             fullWidth
             classNames={{
@@ -93,7 +99,11 @@ const LoginPage: React.FC = () => {
                 className="focus:outline-none"
                 type="button"
                 onClick={togglePasswordVisibility}
-                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                aria-label={intl.formatMessage({
+                  id: showPassword
+                    ? 'pages.login.hidePassword'
+                    : 'pages.login.showPassword'
+                })}
               >
                 {showPassword ? (
                   <EyeSlashIcon className="w-5 h-5 text-gray-500" />
@@ -105,7 +115,11 @@ const LoginPage: React.FC = () => {
           />
           {error && <p className="text-danger text-sm">{error}</p>}
           <Button type="submit" color="primary" isLoading={isLoading} fullWidth>
-            {isLoading ? 'Logging in...' : 'Login'}
+            {isLoading ? (
+              <FormattedMessage id="pages.login.loggingIn" />
+            ) : (
+              <FormattedMessage id="pages.login.title" />
+            )}
           </Button>
         </form>
       </CardBody>

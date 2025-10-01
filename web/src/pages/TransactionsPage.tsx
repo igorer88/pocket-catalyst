@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from 'react'
+import { FormattedMessage, type IntlShape, useIntl } from 'react-intl'
 import { Spinner, Tab, Tabs } from '@heroui/react'
 
 import BudgetTable from '@/components/BudgetTable'
@@ -10,20 +11,51 @@ import {
 } from '@/stores'
 import { formatCurrency } from '@/utils'
 
-const transactionsTableColumns = [
-  { label: 'Date', key: 'date' },
-  { label: 'Category', key: 'category' },
-  { label: 'Description', key: 'description' },
-  { label: 'Amount', key: 'amount' }
+const transactionsTableColumns = (
+  intl: IntlShape
+): { label: string; key: string }[] => [
+  { label: intl.formatMessage({ id: 'pages.transactions.date' }), key: 'date' },
+  {
+    label: intl.formatMessage({ id: 'pages.transactions.category' }),
+    key: 'category'
+  },
+  {
+    label: intl.formatMessage({ id: 'pages.transactions.description' }),
+    key: 'description'
+  },
+  {
+    label: intl.formatMessage({ id: 'pages.transactions.amount' }),
+    key: 'amount'
+  }
 ]
 
-const subscriptionsTableColumns = [
-  { label: 'Description', key: 'description' },
-  { label: 'Category', key: 'category' },
-  { label: 'Amount', key: 'amount' },
-  { label: 'Frequency', key: 'frequency' },
-  { label: 'Next Payment', key: 'nextPayment' },
-  { label: 'Status', key: 'status' }
+const subscriptionsTableColumns = (
+  intl: IntlShape
+): { label: string; key: string }[] => [
+  {
+    label: intl.formatMessage({ id: 'pages.transactions.description' }),
+    key: 'description'
+  },
+  {
+    label: intl.formatMessage({ id: 'pages.transactions.category' }),
+    key: 'category'
+  },
+  {
+    label: intl.formatMessage({ id: 'pages.transactions.amount' }),
+    key: 'amount'
+  },
+  {
+    label: intl.formatMessage({ id: 'pages.transactions.frequency' }),
+    key: 'frequency'
+  },
+  {
+    label: intl.formatMessage({ id: 'pages.transactions.nextPayment' }),
+    key: 'nextPayment'
+  },
+  {
+    label: intl.formatMessage({ id: 'pages.transactions.status' }),
+    key: 'status'
+  }
 ]
 
 const calculateTotal = (rows: Array<{ amount: string }>): number => {
@@ -34,6 +66,7 @@ const calculateTotal = (rows: Array<{ amount: string }>): number => {
 }
 
 function TransactionsPage() {
+  const intl = useIntl()
   const {
     transactions,
     isLoading: isLoadingTransactions,
@@ -76,16 +109,30 @@ function TransactionsPage() {
 
   return (
     <div className="flex w-full flex-col">
-      <Tabs aria-label="Budget Information" color="primary">
-        <Tab key="income" title="Income">
+      <Tabs
+        aria-label={intl.formatMessage({ id: 'pages.transactions.ariaLabel' })}
+        color="primary"
+      >
+        <Tab
+          key="income"
+          title={intl.formatMessage({ id: 'pages.transactions.income' })}
+        >
           <div className="space-y-4">
-            {isLoadingTransactions && <Spinner label="Loading income..." />}
+            {isLoadingTransactions && (
+              <Spinner
+                label={intl.formatMessage({
+                  id: 'pages.transactions.loadingIncome'
+                })}
+              />
+            )}
             {errorTransactions && (
-              <p className="text-danger">Error: {errorTransactions}</p>
+              <p className="text-danger">
+                <FormattedMessage id="common.error" /> {errorTransactions}
+              </p>
             )}
             {!isLoadingTransactions && !errorTransactions && (
               <BudgetTable
-                columns={transactionsTableColumns}
+                columns={transactionsTableColumns(intl)}
                 rows={incomeTransactions.map((item: ApiTransaction) => ({
                   key: item.id,
                   date: item.date,
@@ -96,11 +143,13 @@ function TransactionsPage() {
                     item.account_currency
                   )
                 }))}
-                ariaLabel="Income table with dynamic content"
+                ariaLabel={intl.formatMessage({
+                  id: 'pages.transactions.incomeTableAria'
+                })}
               />
             )}
             <div className="text-right font-semibold text-lg">
-              Total Income:{' '}
+              <FormattedMessage id="pages.transactions.totalIncome" />{' '}
               {formatCurrency(
                 totalIncome,
                 incomeTransactions[0]?.account_currency
@@ -108,15 +157,26 @@ function TransactionsPage() {
             </div>
           </div>
         </Tab>
-        <Tab key="expenses" title="Expenses">
+        <Tab
+          key="expenses"
+          title={intl.formatMessage({ id: 'pages.transactions.expenses' })}
+        >
           <div className="space-y-4">
-            {isLoadingTransactions && <Spinner label="Loading expenses..." />}
+            {isLoadingTransactions && (
+              <Spinner
+                label={intl.formatMessage({
+                  id: 'pages.transactions.loadingExpenses'
+                })}
+              />
+            )}
             {errorTransactions && (
-              <p className="text-danger">Error: {errorTransactions}</p>
+              <p className="text-danger">
+                <FormattedMessage id="common.error" /> {errorTransactions}
+              </p>
             )}
             {!isLoadingTransactions && !errorTransactions && (
               <BudgetTable
-                columns={transactionsTableColumns}
+                columns={transactionsTableColumns(intl)}
                 rows={expenseTransactions.map((item: ApiTransaction) => ({
                   key: item.id,
                   date: item.date,
@@ -127,11 +187,13 @@ function TransactionsPage() {
                     item.account_currency
                   )
                 }))}
-                ariaLabel="Expenses table with dynamic content"
+                ariaLabel={intl.formatMessage({
+                  id: 'pages.transactions.expensesTableAria'
+                })}
               />
             )}
             <div className="text-right font-semibold text-lg">
-              Total Expenses:{' '}
+              <FormattedMessage id="pages.transactions.totalExpenses" />{' '}
               {formatCurrency(
                 totalExpenses,
                 expenseTransactions[0]?.account_currency
@@ -139,17 +201,28 @@ function TransactionsPage() {
             </div>
           </div>
         </Tab>
-        <Tab key="subscriptions" title="Subscriptions">
+        <Tab
+          key="subscriptions"
+          title={intl.formatMessage({
+            id: 'pages.transactions.subscriptions'
+          })}
+        >
           <div className="space-y-4">
             {isLoadingSubscriptions && (
-              <Spinner label="Loading subscriptions..." />
+              <Spinner
+                label={intl.formatMessage({
+                  id: 'pages.transactions.loadingSubscriptions'
+                })}
+              />
             )}
             {errorSubscriptions && (
-              <p className="text-danger">Error: {errorSubscriptions}</p>
+              <p className="text-danger">
+                <FormattedMessage id="common.error" /> {errorSubscriptions}
+              </p>
             )}
             {!isLoadingSubscriptions && !errorSubscriptions && (
               <BudgetTable
-                columns={subscriptionsTableColumns}
+                columns={subscriptionsTableColumns(intl)}
                 rows={subscriptions.map((item: ApiSubscription) => ({
                   key: item.id,
                   description: item.subscription_service
@@ -165,13 +238,19 @@ function TransactionsPage() {
                     item.frequency_unit.slice(1)
                   }(s)`,
                   nextPayment: item.next_due_date,
-                  status: item.is_active ? 'Active' : 'Paused'
+                  status: item.is_active ? (
+                    <FormattedMessage id="pages.transactions.active" />
+                  ) : (
+                    <FormattedMessage id="pages.transactions.paused" />
+                  )
                 }))}
-                ariaLabel="Subscriptions table with dynamic content"
+                ariaLabel={intl.formatMessage({
+                  id: 'pages.transactions.subscriptionsTableAria'
+                })}
               />
             )}
             <div className="text-right font-semibold text-lg">
-              Total Subscriptions:{' '}
+              <FormattedMessage id="pages.transactions.totalSubscriptions" />{' '}
               {formatCurrency(totalSubscriptions, subscriptions[0]?.currency)}
             </div>
           </div>

@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } => from 'react'
 import { ForwardRefExoticComponent, RefAttributes, SVGProps } from 'react'
+import { useIntl } from 'react-intl'
 import { NavLink, useLocation } from 'react-router-dom'
 import { ChevronRightIcon, HomeIcon } from '@heroicons/react/20/solid'
 
@@ -18,7 +19,8 @@ export interface BreadcrumbItem {
 
 const generateBreadcrumbs = (
   pathname: string,
-  navLinks: NavigationLink[]
+  navLinks: NavigationLink[],
+  intl: ReturnType<typeof useIntl>
 ): BreadcrumbItem[] => {
   const breadcrumbs: BreadcrumbItem[] = []
   const pathParts = pathname.split('/').filter(Boolean)
@@ -29,7 +31,7 @@ const generateBreadcrumbs = (
 
   // Root breadcrumb
   breadcrumbs.push({
-    name: 'Dashboard',
+    name: intl.formatMessage({ id: 'components.breadcrumbs.dashboard' }),
     href: pathname === '/dashboard' ? undefined : '/dashboard',
     icon: HomeIcon
   })
@@ -66,14 +68,19 @@ const generateBreadcrumbs = (
   return breadcrumbs
 }
 
-const Breadcrumbs = () => {
+const Breadcrumbs = (): JSX.Element | null => {
   const location = useLocation()
+  const intl = useIntl()
   const [crumbs, setCrumbs] = useState<BreadcrumbItem[]>([])
 
   useEffect(() => {
-    const newCrumbs = generateBreadcrumbs(location.pathname, navigationLinks)
+    const newCrumbs = generateBreadcrumbs(
+      location.pathname,
+      navigationLinks,
+      intl
+    )
     setCrumbs(newCrumbs)
-  }, [location.pathname])
+  }, [location.pathname, intl])
 
   // Don't show breadcrumbs if it's just "Dashboard" (current page) or empty
   if (crumbs.length === 0 || (crumbs.length === 1 && !crumbs[0].href)) {
@@ -83,7 +90,7 @@ const Breadcrumbs = () => {
   return (
     <nav
       className="flex px-4 md:px-6 py-3 text-sm border-divider"
-      aria-label="Breadcrumb"
+      aria-label={intl.formatMessage({ id: 'components.breadcrumbs.ariaLabel' })}
     >
       <ol role="list" className="flex items-center space-x-1">
         {crumbs.map((crumb, index) => (
