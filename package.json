@@ -26,7 +26,7 @@
     "start:dev": "pnpm dev:server",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/src/main",
-    "lint": "eslint --fix --format=stylish \"{src,client,config}/**/*.{ts,tsx,mjs,js}\" --ignore-path .gitignore",
+    "lint": "eslint --fix --format=stylish \"{src,client,config}/**/*.{ts,tsx,mjs,js}\" --ignore-pattern .gitignore",
     "format": "prettier --write .",
     "test": "jest",
     "test:watch": "jest --watch",
