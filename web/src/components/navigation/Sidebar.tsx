@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
 
 import { environment } from '@/config'
-import { navigationLinks } from '@/router/NavigationLinks'
+import { getNavigationLinks } from '@/router/NavigationLinks'
 import { useGlobalStore } from '@/stores'
 import { classNames } from '@/utils'
 
@@ -25,11 +26,12 @@ export const AcmeLogo = () => {
 
 const Sidebar = () => {
   const location = useLocation()
+  const { t } = useTranslation()
 
   const isSidebarCollapsed = useGlobalStore(state => state.isSidebarCollapsed)
 
   const [openSubmenus, setOpenSubmenus] = useState<string[]>(() => {
-    const activeParentOnLoad = navigationLinks.find(
+    const activeParentOnLoad = getNavigationLinks(t).find(
       item =>
         item.children &&
         item.children.some(child => location.pathname.startsWith(child.href))
@@ -38,15 +40,15 @@ const Sidebar = () => {
   })
 
   useEffect(() => {
-    const activeParent = navigationLinks.find(
+    const activeParent = getNavigationLinks(t).find(
       item =>
         item.children &&
         item.children.some(child => location.pathname.startsWith(child.href))
     )
     setOpenSubmenus(activeParent ? [activeParent.name] : [])
-  }, [location.pathname])
+  }, [location.pathname, t])
 
-  const toggleSubmenu = (name: string) => {
+  const toggleSubmenu = (name: string): void => {
     setOpenSubmenus(prevOpenSubmenus => {
       return prevOpenSubmenus.includes(name)
         ? prevOpenSubmenus.filter(n => n !== name)
@@ -70,7 +72,7 @@ const Sidebar = () => {
         )}
       </div>
       <nav className="flex flex-col space-y-1">
-        {navigationLinks.map(item => {
+        {getNavigationLinks(t).map(item => {
           const hasChildren =
             (item.children && item.children.length > 0) || false
           const isSubmenuOpen = openSubmenus.includes(item.name)
@@ -110,7 +112,9 @@ const Sidebar = () => {
                     }}
                     className="ml-auto text-current hover:text-primary p-1 rounded-full"
                     aria-label={
-                      isSubmenuOpen ? 'Collapse submenu' : 'Expand submenu'
+                      isSubmenuOpen
+                        ? t('components.sidebar.collapseSubmenu')
+                        : t('components.sidebar.expandSubmenu')
                     }
                   >
                     {isSubmenuOpen ? (

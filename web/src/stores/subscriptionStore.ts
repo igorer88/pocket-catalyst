@@ -3,42 +3,42 @@ import { create } from 'zustand'
 export interface ApiSubscription {
   id: string
   description: string
-  subscription_service?: { name: string } | null
+  subscriptionService?: { name: string } | null
   category?: { id: string; title: string } | null
   amount: string
   currency: string
-  frequency_unit: 'day' | 'week' | 'month' | 'year'
-  frequency_value: number
-  next_due_date: string
-  is_active: boolean
+  frequencyUnit: 'day' | 'week' | 'month' | 'year'
+  frequencyValue: number
+  nextDueDate: string
+  isActive: boolean
   type: 'income' | 'expense'
 }
 
 const MOCK_API_SUBSCRIPTIONS: ApiSubscription[] = [
   {
     id: 'api_sub1',
-    subscription_service: { name: 'Netflix' },
+    subscriptionService: { name: 'Netflix' },
     description: 'Premium Plan',
     category: { id: 'cat_entertainment', title: 'Entertainment' },
     amount: '19.99',
     currency: 'USD',
-    frequency_unit: 'month',
-    frequency_value: 1,
-    next_due_date: '2023-11-01',
-    is_active: true,
+    frequencyUnit: 'month',
+    frequencyValue: 1,
+    nextDueDate: '2023-11-01',
+    isActive: true,
     type: 'expense'
   },
   {
     id: 'api_sub2',
-    subscription_service: { name: 'Spotify' },
+    subscriptionService: { name: 'Spotify' },
     description: 'Family Plan',
     category: { id: 'cat_music', title: 'Music' },
     amount: '15.99',
     currency: 'USD',
-    frequency_unit: 'month',
-    frequency_value: 1,
-    next_due_date: '2023-11-15',
-    is_active: true,
+    frequencyUnit: 'month',
+    frequencyValue: 1,
+    nextDueDate: '2023-11-15',
+    isActive: true,
     type: 'expense'
   },
   {
@@ -47,10 +47,10 @@ const MOCK_API_SUBSCRIPTIONS: ApiSubscription[] = [
     category: { id: 'cat_health', title: 'Health' },
     amount: '50.00',
     currency: 'USD',
-    frequency_unit: 'month',
-    frequency_value: 1,
-    next_due_date: '2023-11-10',
-    is_active: false,
+    frequencyUnit: 'month',
+    frequencyValue: 1,
+    nextDueDate: '2023-11-10',
+    isActive: false,
     type: 'expense'
   }
 ]

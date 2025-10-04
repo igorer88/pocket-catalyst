@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react'
-import { FormattedMessage, type IntlShape, useIntl } from 'react-intl'
+import { useTranslation } from 'react-i18next'
 import { Spinner, Tab, Tabs } from '@heroui/react'
 
 import BudgetTable from '@/components/BudgetTable'
@@ -11,72 +11,71 @@ import {
 } from '@/stores'
 import { formatCurrency } from '@/utils'
 
+interface Row {
+  key: string
+  [key: string]: unknown
+}
+
 const transactionsTableColumns = (
-  intl: IntlShape
+  t: ReturnType<typeof useTranslation>['t']
 ): { label: string; key: string }[] => [
-  { label: intl.formatMessage({ id: 'pages.transactions.date' }), key: 'date' },
-  {
-    label: intl.formatMessage({ id: 'pages.transactions.category' }),
-    key: 'category'
-  },
-  {
-    label: intl.formatMessage({ id: 'pages.transactions.description' }),
-    key: 'description'
-  },
-  {
-    label: intl.formatMessage({ id: 'pages.transactions.amount' }),
-    key: 'amount'
-  }
+  { label: t('pages.transactions.date'), key: 'date' },
+  { label: t('pages.transactions.category'), key: 'category' },
+  { label: t('pages.transactions.description'), key: 'description' },
+  { label: t('pages.transactions.amount'), key: 'amount' }
 ]
 
 const subscriptionsTableColumns = (
-  intl: IntlShape
+  t: ReturnType<typeof useTranslation>['t']
 ): { label: string; key: string }[] => [
-  {
-    label: intl.formatMessage({ id: 'pages.transactions.description' }),
-    key: 'description'
-  },
-  {
-    label: intl.formatMessage({ id: 'pages.transactions.category' }),
-    key: 'category'
-  },
-  {
-    label: intl.formatMessage({ id: 'pages.transactions.amount' }),
-    key: 'amount'
-  },
-  {
-    label: intl.formatMessage({ id: 'pages.transactions.frequency' }),
-    key: 'frequency'
-  },
-  {
-    label: intl.formatMessage({ id: 'pages.transactions.nextPayment' }),
-    key: 'nextPayment'
-  },
-  {
-    label: intl.formatMessage({ id: 'pages.transactions.status' }),
-    key: 'status'
-  }
+  { label: t('pages.transactions.description'), key: 'description' },
+  { label: t('pages.transactions.category'), key: 'category' },
+  { label: t('pages.transactions.amount'), key: 'amount' },
+  { label: t('pages.transactions.frequency'), key: 'frequency' },
+  { label: t('pages.transactions.nextPayment'), key: 'nextPayment' },
+  { label: t('pages.transactions.status'), key: 'status' }
 ]
 
-const calculateTotal = (rows: Array<{ amount: string }>): number => {
-  return rows.reduce((sum, row) => {
-    const amountValue = parseFloat(row.amount)
-    return sum + (isNaN(amountValue) ? 0 : amountValue)
-  }, 0)
+const formatTransactionRows = (transactions: ApiTransaction[]): Row[] => {
+  return transactions.map((transaction, index) => ({
+    key: index.toString(),
+    date: transaction.date,
+    category: transaction.category?.title || 'N/A',
+    description: transaction.description,
+    amount: `${transaction.amount} ${transaction.accountCurrency || 'USD'}`
+  }))
 }
 
-function TransactionsPage() {
-  const intl = useIntl()
+const formatSubscriptionRows = (
+  subscriptions: ApiSubscription[],
+  t: any
+): Row[] => {
+  return subscriptions.map((subscription, index) => ({
+    key: index.toString(),
+    description: subscription.description,
+    category: subscription.category?.title || 'N/A',
+    amount: `${subscription.amount} ${subscription.currency}`,
+    frequency: `${subscription.frequencyValue} ${subscription.frequencyUnit}(s)`,
+    nextPayment: subscription.nextDueDate,
+    status: subscription.isActive
+      ? t('pages.transactions.active')
+      : t('pages.transactions.paused')
+  }))
+}
+
+const TransactionsPage = () => {
+  const { t } = useTranslation()
   const {
     transactions,
-    isLoading: isLoadingTransactions,
     error: errorTransactions,
+    isLoading: loadingTransactions,
     fetchTransactions
   } = useTransactionStore()
+
   const {
     subscriptions,
-    isLoading: isLoadingSubscriptions,
     error: errorSubscriptions,
+    isLoading: loadingSubscriptions,
     fetchSubscriptions
   } = useSubscriptionStore()
 
@@ -85,174 +84,167 @@ function TransactionsPage() {
     void fetchSubscriptions()
   }, [fetchTransactions, fetchSubscriptions])
 
-  const incomeTransactions = useMemo(
-    () => transactions.filter(t => t.type === 'income'),
-    [transactions]
-  )
-  const expenseTransactions = useMemo(
-    () => transactions.filter(t => t.type === 'expense'),
-    [transactions]
-  )
+  const totalIncome = useMemo(() => {
+    return transactions
+      .filter(t => parseFloat(t.amount) > 0)
+      .reduce((sum, t) => sum + parseFloat(t.amount), 0)
+  }, [transactions])
 
-  const totalIncome = useMemo(
-    () => calculateTotal(incomeTransactions),
-    [incomeTransactions]
-  )
-  const totalExpenses = useMemo(
-    () => calculateTotal(expenseTransactions),
-    [expenseTransactions]
-  )
-  const totalSubscriptions = useMemo(
-    () => calculateTotal(subscriptions.filter(s => s.type === 'expense')),
-    [subscriptions]
-  )
+  const totalExpenses = useMemo(() => {
+    return transactions
+      .filter(t => parseFloat(t.amount) < 0)
+      .reduce((sum, t) => sum + Math.abs(parseFloat(t.amount)), 0)
+  }, [transactions])
+
+  const totalSubscriptions = useMemo(() => {
+    return subscriptions.reduce((sum, s) => sum + parseFloat(s.amount), 0)
+  }, [subscriptions])
+
+  const incomeData = useMemo(() => {
+    const incomeTransactions = transactions.filter(
+      t => parseFloat(t.amount) > 0
+    )
+    return formatTransactionRows(incomeTransactions)
+  }, [transactions])
+
+  const expenseData = useMemo(() => {
+    const expenseTransactions = transactions.filter(
+      t => parseFloat(t.amount) < 0
+    )
+    return formatTransactionRows(expenseTransactions)
+  }, [transactions])
+
+  const subscriptionData = useMemo(() => {
+    return formatSubscriptionRows(subscriptions, t)
+  }, [subscriptions, t])
 
   return (
-    <div className="flex w-full flex-col">
+    <div
+      className="space-y-6"
+      role="region"
+      aria-label={t('pages.transactions.ariaLabel')}
+    >
       <Tabs
-        aria-label={intl.formatMessage({ id: 'pages.transactions.ariaLabel' })}
-        color="primary"
+        variant="underlined"
+        classNames={{
+          tabList:
+            'gap-6 w-full relative rounded-none p-0 border-b border-divider',
+          cursor: 'w-full bg-primary-500',
+          tab: 'max-w-fit px-0 h-12',
+          tabContent: 'group-data-[selected=true]:text-primary-500'
+        }}
       >
         <Tab
           key="income"
-          title={intl.formatMessage({ id: 'pages.transactions.income' })}
+          title={
+            <div className="flex items-center space-x-2">
+              <span>{t('pages.transactions.income')}</span>
+            </div>
+          }
         >
           <div className="space-y-4">
-            {isLoadingTransactions && (
-              <Spinner
-                label={intl.formatMessage({
-                  id: 'pages.transactions.loadingIncome'
-                })}
-              />
+            {loadingTransactions ? (
+              <div className="flex justify-center items-center py-8">
+                <Spinner size="lg" />
+                <span className="ml-2">
+                  {t('pages.transactions.loadingIncome')}
+                </span>
+              </div>
+            ) : errorTransactions ? (
+              <div className="text-red-600 p-4 bg-red-50 rounded">
+                {t('common.error')} {errorTransactions}
+              </div>
+            ) : (
+              <>
+                <BudgetTable
+                  rows={incomeData}
+                  columns={transactionsTableColumns(t)}
+                  ariaLabel={t('pages.transactions.incomeTableAria')}
+                />
+                <div className="flex justify-end">
+                  <p className="text-lg font-semibold text-green-600">
+                    {t('pages.transactions.totalIncome')}{' '}
+                    {formatCurrency(totalIncome, 'USD')}
+                  </p>
+                </div>
+              </>
             )}
-            {errorTransactions && (
-              <p className="text-danger">
-                <FormattedMessage id="common.error" /> {errorTransactions}
-              </p>
-            )}
-            {!isLoadingTransactions && !errorTransactions && (
-              <BudgetTable
-                columns={transactionsTableColumns(intl)}
-                rows={incomeTransactions.map((item: ApiTransaction) => ({
-                  key: item.id,
-                  date: item.date,
-                  category: item.category?.title || 'N/A',
-                  description: item.description,
-                  amount: formatCurrency(
-                    parseFloat(item.amount),
-                    item.account_currency
-                  )
-                }))}
-                ariaLabel={intl.formatMessage({
-                  id: 'pages.transactions.incomeTableAria'
-                })}
-              />
-            )}
-            <div className="text-right font-semibold text-lg">
-              <FormattedMessage id="pages.transactions.totalIncome" />{' '}
-              {formatCurrency(
-                totalIncome,
-                incomeTransactions[0]?.account_currency
-              )}
-            </div>
           </div>
         </Tab>
+
         <Tab
           key="expenses"
-          title={intl.formatMessage({ id: 'pages.transactions.expenses' })}
+          title={
+            <div className="flex items-center space-x-2">
+              <span>{t('pages.transactions.expenses')}</span>
+            </div>
+          }
         >
           <div className="space-y-4">
-            {isLoadingTransactions && (
-              <Spinner
-                label={intl.formatMessage({
-                  id: 'pages.transactions.loadingExpenses'
-                })}
-              />
+            {loadingTransactions ? (
+              <div className="flex justify-center items-center py-8">
+                <Spinner size="lg" />
+                <span className="ml-2">
+                  {t('pages.transactions.loadingExpenses')}
+                </span>
+              </div>
+            ) : errorTransactions ? (
+              <div className="text-red-600 p-4 bg-red-50 rounded">
+                {t('common.error')} {errorTransactions}
+              </div>
+            ) : (
+              <>
+                <BudgetTable
+                  rows={expenseData}
+                  columns={transactionsTableColumns(t)}
+                  ariaLabel={t('pages.transactions.expensesTableAria')}
+                />
+                <div className="flex justify-end">
+                  <p className="text-lg font-semibold text-red-600">
+                    {t('pages.transactions.totalExpenses')}{' '}
+                    {formatCurrency(totalExpenses, 'USD')}
+                  </p>
+                </div>
+              </>
             )}
-            {errorTransactions && (
-              <p className="text-danger">
-                <FormattedMessage id="common.error" /> {errorTransactions}
-              </p>
-            )}
-            {!isLoadingTransactions && !errorTransactions && (
-              <BudgetTable
-                columns={transactionsTableColumns(intl)}
-                rows={expenseTransactions.map((item: ApiTransaction) => ({
-                  key: item.id,
-                  date: item.date,
-                  category: item.category?.title || 'N/A',
-                  description: item.description,
-                  amount: formatCurrency(
-                    parseFloat(item.amount),
-                    item.account_currency
-                  )
-                }))}
-                ariaLabel={intl.formatMessage({
-                  id: 'pages.transactions.expensesTableAria'
-                })}
-              />
-            )}
-            <div className="text-right font-semibold text-lg">
-              <FormattedMessage id="pages.transactions.totalExpenses" />{' '}
-              {formatCurrency(
-                totalExpenses,
-                expenseTransactions[0]?.account_currency
-              )}
-            </div>
           </div>
         </Tab>
+
         <Tab
           key="subscriptions"
-          title={intl.formatMessage({
-            id: 'pages.transactions.subscriptions'
-          })}
+          title={
+            <div className="flex items-center space-x-2">
+              <span>{t('pages.transactions.subscriptions')}</span>
+            </div>
+          }
         >
           <div className="space-y-4">
-            {isLoadingSubscriptions && (
-              <Spinner
-                label={intl.formatMessage({
-                  id: 'pages.transactions.loadingSubscriptions'
-                })}
-              />
+            {loadingSubscriptions ? (
+              <div className="flex justify-center items-center py-8">
+                <Spinner size="lg" />
+                <span className="ml-2">
+                  {t('pages.transactions.loadingSubscriptions')}
+                </span>
+              </div>
+            ) : errorSubscriptions ? (
+              <div className="text-red-600 p-4 bg-red-50 rounded">
+                {t('common.error')} {errorSubscriptions}
+              </div>
+            ) : (
+              <>
+                <BudgetTable
+                  rows={subscriptionData}
+                  columns={subscriptionsTableColumns(t)}
+                  ariaLabel={t('pages.transactions.subscriptionsTableAria')}
+                />
+                <div className="flex justify-end">
+                  <p className="text-lg font-semibold text-blue-600">
+                    {t('pages.transactions.totalSubscriptions')}{' '}
+                    {formatCurrency(totalSubscriptions, 'USD')}
+                  </p>
+                </div>
+              </>
             )}
-            {errorSubscriptions && (
-              <p className="text-danger">
-                <FormattedMessage id="common.error" /> {errorSubscriptions}
-              </p>
-            )}
-            {!isLoadingSubscriptions && !errorSubscriptions && (
-              <BudgetTable
-                columns={subscriptionsTableColumns(intl)}
-                rows={subscriptions.map((item: ApiSubscription) => ({
-                  key: item.id,
-                  description: item.subscription_service
-                    ? `${item.subscription_service.name}: ${item.description}`
-                    : item.description,
-                  category: item.category?.title || 'N/A',
-                  amount: formatCurrency(
-                    parseFloat(item.amount),
-                    item.currency
-                  ),
-                  frequency: `${item.frequency_value} ${
-                    item.frequency_unit.charAt(0).toUpperCase() +
-                    item.frequency_unit.slice(1)
-                  }(s)`,
-                  nextPayment: item.next_due_date,
-                  status: item.is_active ? (
-                    <FormattedMessage id="pages.transactions.active" />
-                  ) : (
-                    <FormattedMessage id="pages.transactions.paused" />
-                  )
-                }))}
-                ariaLabel={intl.formatMessage({
-                  id: 'pages.transactions.subscriptionsTableAria'
-                })}
-              />
-            )}
-            <div className="text-right font-semibold text-lg">
-              <FormattedMessage id="pages.transactions.totalSubscriptions" />{' '}
-              {formatCurrency(totalSubscriptions, subscriptions[0]?.currency)}
-            </div>
           </div>
         </Tab>
       </Tabs>

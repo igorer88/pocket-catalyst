@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
-import { FormattedMessage, useIntl } from 'react-intl'
+import { useTranslation } from 'react-i18next'
 import { Card, CardBody, CardHeader, Chip, Spinner } from '@heroui/react'
 
 import { useProfileStore } from '@/stores/profileStore'
 
 function SettingsPage() {
   const { profile, isLoading, error, fetchProfile } = useProfileStore()
-  const intl = useIntl()
+  const { t } = useTranslation()
 
   useEffect(() => {
     void fetchProfile()
@@ -15,46 +15,40 @@ function SettingsPage() {
   return (
     <Card>
       <CardHeader>
-        <h1 className="text-xl font-semibold">
-          <FormattedMessage id="pages.settings.title" />
-        </h1>
+        <h1 className="text-xl font-semibold">{t('pages.settings.title')}</h1>
       </CardHeader>
       <CardBody>
-        {isLoading && (
-          <div className="flex justify-center items-center py-8">
-            <Spinner
-              label={intl.formatMessage({
-                id: 'pages.settings.loadingProfile'
-              })}
-            />
+        {isLoading ? (
+          <div className="flex justify-center">
+            <Spinner />
+            <span className="ml-2">{t('pages.settings.loadingProfile')}</span>
           </div>
-        )}
-        {error && (
-          <div className="text-danger p-4 bg-danger-50 rounded-md">
-            <p className="font-semibold">
-              <FormattedMessage id="pages.settings.error" />
-            </p>
-            <p>{error}</p>
+        ) : error ? (
+          <div className="text-red-600">
+            {t('pages.settings.error')} {error}
           </div>
-        )}
-        {profile && !isLoading && !error && (
+        ) : (
           <div className="space-y-4">
-            <p>
-              <strong>
-                <FormattedMessage id="pages.settings.username" />
-              </strong>{' '}
-              {profile.username}
-            </p>
-            <p>
-              <strong>
-                <FormattedMessage id="pages.settings.displayCurrency" />
-              </strong>{' '}
-              <Chip color="primary" variant="flat">
-                {profile.display_currency}
-              </Chip>
-            </p>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                {t('pages.settings.username')}
+              </label>
+              <p className="mt-1 text-sm text-gray-900">
+                {profile?.username || t('common.notAvailable')}
+              </p>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                {t('pages.settings.displayCurrency')}
+              </label>
+              <div className="mt-1">
+                <Chip color="primary" variant="flat">
+                  {profile?.displayCurrency || t('common.notAvailable')}
+                </Chip>
+              </div>
+            </div>
           </div>
-        )}{' '}
+        )}
       </CardBody>
     </Card>
   )

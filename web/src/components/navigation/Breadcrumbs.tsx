@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { ForwardRefExoticComponent, RefAttributes, SVGProps } from 'react'
-import { useIntl } from 'react-intl'
+import { useTranslation } from 'react-i18next'
 import { NavLink, useLocation } from 'react-router-dom'
 import { ChevronRightIcon, HomeIcon } from '@heroicons/react/20/solid'
 
-import { NavigationLink, navigationLinks } from '@/router/NavigationLinks'
+import { getNavigationLinks, NavigationLink } from '@/router/NavigationLinks'
 
 export interface BreadcrumbItem {
   name: string
@@ -20,7 +20,7 @@ export interface BreadcrumbItem {
 const generateBreadcrumbs = (
   pathname: string,
   navLinks: NavigationLink[],
-  intl: ReturnType<typeof useIntl>
+  t: ReturnType<typeof useTranslation>['t']
 ): BreadcrumbItem[] => {
   const breadcrumbs: BreadcrumbItem[] = []
   const pathParts = pathname.split('/').filter(Boolean)
@@ -31,7 +31,7 @@ const generateBreadcrumbs = (
 
   // Root breadcrumb
   breadcrumbs.push({
-    name: intl.formatMessage({ id: 'components.breadcrumbs.dashboard' }),
+    name: t('components.breadcrumbs.dashboard'),
     href: pathname === '/dashboard' ? undefined : '/dashboard',
     icon: HomeIcon
   })
@@ -70,17 +70,17 @@ const generateBreadcrumbs = (
 
 const Breadcrumbs = () => {
   const location = useLocation()
-  const intl = useIntl()
+  const { t } = useTranslation()
   const [crumbs, setCrumbs] = useState<BreadcrumbItem[]>([])
 
   useEffect(() => {
     const newCrumbs = generateBreadcrumbs(
       location.pathname,
-      navigationLinks,
-      intl
+      getNavigationLinks(t),
+      t
     )
     setCrumbs(newCrumbs)
-  }, [location.pathname, intl])
+  }, [location.pathname, t])
 
   // Don't show breadcrumbs if it's just "Dashboard" (current page) or empty
   if (crumbs.length === 0 || (crumbs.length === 1 && !crumbs[0].href)) {
@@ -90,9 +90,7 @@ const Breadcrumbs = () => {
   return (
     <nav
       className="flex px-4 md:px-6 py-3 text-sm border-divider"
-      aria-label={intl.formatMessage({
-        id: 'components.breadcrumbs.ariaLabel'
-      })}
+      aria-label={t('components.breadcrumbs.ariaLabel')}
     >
       <ol role="list" className="flex items-center space-x-1">
         {crumbs.map((crumb, index) => (

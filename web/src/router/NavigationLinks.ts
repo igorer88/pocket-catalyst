@@ -11,6 +11,7 @@ import {
   HomeIcon as HomeIconSolid,
   WalletIcon as WalletIconSolid
 } from '@heroicons/react/24/solid'
+import { TFunction } from 'i18next'
 
 export interface NavigationLink {
   name: string
@@ -32,9 +33,9 @@ export interface NavigationLink {
   children?: NavigationLink[]
 }
 
-export const navigationLinks: NavigationLink[] = [
+export const getNavigationLinks = (t: TFunction): NavigationLink[] => [
   {
-    name: 'Overview',
+    name: t('navigation.overview'),
     href: '/dashboard',
     icon: {
       outline: HomeIconOutline,
@@ -42,33 +43,51 @@ export const navigationLinks: NavigationLink[] = [
     }
   },
   {
-    name: 'Transactions',
+    name: t('navigation.transactions'),
     href: '/dashboard/transactions',
     icon: {
       outline: ArrowsRightLeftIconOutline,
       solid: ArrowsRightLeftIconSolid
     },
     children: [
-      { name: 'List', href: '/dashboard/transactions' },
-      { name: 'Add New', href: '/dashboard/transactions/add' },
-      { name: 'Recurring', href: '/dashboard/subscriptions' }
+      {
+        name: t('navigation.list'),
+        href: '/dashboard/transactions'
+      },
+      {
+        name: t('navigation.addNew'),
+        href: '/dashboard/transactions/add'
+      },
+      {
+        name: t('navigation.recurring'),
+        href: '/dashboard/subscriptions'
+      }
     ]
   },
   {
-    name: 'Accounts',
+    name: t('navigation.accounts'),
     href: '/dashboard/accounts',
     icon: {
       outline: WalletIconOutline,
       solid: WalletIconSolid
     },
     children: [
-      { name: 'My Accounts', href: '/dashboard/accounts' },
-      { name: 'Add New', href: '/dashboard/accounts/add' },
-      { name: 'Account Types', href: '/dashboard/accounts/types' }
+      {
+        name: t('navigation.myAccounts'),
+        href: '/dashboard/accounts'
+      },
+      {
+        name: t('navigation.addNew'),
+        href: '/dashboard/accounts/add'
+      },
+      {
+        name: t('navigation.accountTypes'),
+        href: '/dashboard/accounts/types'
+      }
     ]
   },
   {
-    name: 'Budgets',
+    name: t('navigation.budgets'),
     href: '/dashboard/budgets',
     icon: {
       outline: ChartPieIconOutline,
@@ -76,3 +95,6 @@ export const navigationLinks: NavigationLink[] = [
     }
   }
 ]
+
+// Legacy export for backwards compatibility (deprecated)
+export const navigationLinks: NavigationLink[] = []

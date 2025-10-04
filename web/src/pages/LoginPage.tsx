@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react'
-import { FormattedMessage, useIntl } from 'react-intl'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'
 import { Button, Card, CardBody, CardHeader, Chip, Input } from '@heroui/react'
@@ -11,7 +11,7 @@ const LoginPage: React.FC = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
-  const intl = useIntl()
+  const { t } = useTranslation()
 
   const togglePasswordVisibility = (): void => setShowPassword(!showPassword)
 
@@ -39,7 +39,7 @@ const LoginPage: React.FC = () => {
     <Card className="w-full max-w-md">
       <CardHeader className="flex justify-center">
         <h1 className="text-2xl font-bold text-center text-gray-800 dark:text-white">
-          <FormattedMessage id="pages.login.title" />
+          {t('pages.login.title')}
         </h1>
       </CardHeader>
       <CardBody>
@@ -48,10 +48,10 @@ const LoginPage: React.FC = () => {
             <div className="flex items-center justify-between">
               <div>
                 <Chip size="sm" color="primary" variant="flat">
-                  <FormattedMessage id="pages.login.devMode" />
+                  {t('pages.login.devMode')}
                 </Chip>
                 <p className="text-sm text-blue-700 dark:text-blue-300 mt-1">
-                  <FormattedMessage id="pages.login.demoCredentials" />
+                  {t('pages.login.demoCredentials')}
                 </p>
               </div>
               <Button
@@ -61,65 +61,59 @@ const LoginPage: React.FC = () => {
                 onPress={handleDemoLogin}
                 isDisabled={isLoading}
               >
-                <FormattedMessage id="pages.login.quickDemo" />
+                {t('pages.login.quickDemo')}
               </Button>
             </div>
           </div>
         )}
         <form onSubmit={handleSubmit} className="space-y-6">
           <Input
-            label={intl.formatMessage({ id: 'pages.login.usernameOrEmail' })}
+            label={t('pages.login.usernameOrEmail')}
             type="text"
             value={username}
             onValueChange={setUsername}
-            placeholder={intl.formatMessage({
-              id: 'pages.login.usernamePlaceholder'
-            })}
+            placeholder={t('pages.login.usernamePlaceholder')}
             isRequired
-            fullWidth
-            classNames={{
-              input: 'dark:text-white'
-            }}
           />
           <Input
-            label={intl.formatMessage({ id: 'pages.login.password' })}
+            label={t('pages.login.password')}
             type={showPassword ? 'text' : 'password'}
             value={password}
             onValueChange={setPassword}
-            placeholder={intl.formatMessage({
-              id: 'pages.login.passwordPlaceholder'
-            })}
-            isRequired
-            fullWidth
-            classNames={{
-              input: 'dark:text-white'
-            }}
+            placeholder={t('pages.login.passwordPlaceholder')}
             endContent={
               <button
                 className="focus:outline-none"
                 type="button"
                 onClick={togglePasswordVisibility}
-                aria-label={intl.formatMessage({
-                  id: showPassword
+                aria-label={t(
+                  showPassword
                     ? 'pages.login.hidePassword'
                     : 'pages.login.showPassword'
-                })}
+                )}
               >
                 {showPassword ? (
-                  <EyeSlashIcon className="w-5 h-5 text-gray-500" />
+                  <EyeSlashIcon className="text-2xl text-default-400 pointer-events-none" />
                 ) : (
-                  <EyeIcon className="w-5 h-5 text-gray-500" />
+                  <EyeIcon className="text-2xl text-default-400 pointer-events-none" />
                 )}
               </button>
             }
+            isRequired
           />
-          {error && <p className="text-danger text-sm">{error}</p>}
-          <Button type="submit" color="primary" isLoading={isLoading} fullWidth>
-            {isLoading ? (
-              <FormattedMessage id="pages.login.loggingIn" />
-            ) : (
-              <FormattedMessage id="pages.login.title" />
-            )}
+          {error && (
+            <p className="text-sm text-danger" role="alert">
+              {error}
+            </p>
+          )}
+          <Button
+            color="primary"
+            type="submit"
+            className="w-full"
+            isLoading={isLoading}
+            isDisabled={!username.trim() || !password.trim()}
+          >
+            {isLoading ? t('pages.login.loggingIn') : t('pages.login.title')}
           </Button>
         </form>
       </CardBody>
