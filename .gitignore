@@ -4,6 +4,7 @@
 /**/node_modules
 /build
 /config/db/pg_data
+/resources
 *.tsbuildinfo
 
 # Logs
