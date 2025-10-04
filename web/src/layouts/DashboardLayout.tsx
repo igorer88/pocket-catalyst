@@ -15,8 +15,8 @@ const DashboardLayout = () => {
     <div className="flex h-screen">
       <aside
         className={classNames(
-          'hidden md:flex md:flex-col border-r border-divider transition-all duration-300 ease-in-out',
-          isSidebarCollapsed ? 'w-16' : 'w-72'
+          'hidden md:flex md:flex-col bg-content1 border-r border-divider transition-all duration-300 ease-in-out',
+          isSidebarCollapsed ? 'w-20' : 'w-72'
         )}
       >
         <Sidebar />
@@ -29,16 +29,14 @@ const DashboardLayout = () => {
             aria-hidden="true"
             onClick={() => toggleMobileSidebar(false)}
           />
-          <aside className="relative flex w-72 max-w-[calc(100%-3rem)] flex-col border-r border-divider bg-background p-4">
+          <aside className="relative flex w-72 max-w-[calc(100%-3rem)] flex-col border-r border-divider bg-content1 p-4">
             <Sidebar />
           </aside>
         </div>
       )}
 
       <div className="flex-1 flex flex-col overflow-hidden">
-        <div className="flex items-center">
-          <Header />
-        </div>
+        <Header />
         <Breadcrumbs />
         <main className="flex-1 p-4 md:p-6 lg:p-8 overflow-y-auto">
           <Outlet />
