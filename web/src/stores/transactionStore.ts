@@ -7,7 +7,7 @@ export interface ApiTransaction {
   description: string
   amount: string
   type: 'income' | 'expense'
-  account_currency?: string
+  accountCurrency?: string
 }
 
 const MOCK_API_TRANSACTIONS: ApiTransaction[] = [
@@ -18,7 +18,7 @@ const MOCK_API_TRANSACTIONS: ApiTransaction[] = [
     description: 'Monthly paycheck',
     amount: '5000.00',
     type: 'income',
-    account_currency: 'USD'
+    accountCurrency: 'USD'
   },
   {
     id: 'api_inc2',
@@ -27,7 +27,7 @@ const MOCK_API_TRANSACTIONS: ApiTransaction[] = [
     description: 'Web design project',
     amount: '750.00',
     type: 'income',
-    account_currency: 'USD'
+    accountCurrency: 'USD'
   },
   {
     id: 'api_exp1',
@@ -36,7 +36,7 @@ const MOCK_API_TRANSACTIONS: ApiTransaction[] = [
     description: 'Supermarket shopping',
     amount: '125.50',
     type: 'expense',
-    account_currency: 'USD'
+    accountCurrency: 'USD'
   },
   {
     id: 'api_exp2',
@@ -45,7 +45,7 @@ const MOCK_API_TRANSACTIONS: ApiTransaction[] = [
     description: 'Dinner with friends',
     amount: '60.00',
     type: 'expense',
-    account_currency: 'EUR'
+    accountCurrency: 'EUR'
   }
 ]
 
