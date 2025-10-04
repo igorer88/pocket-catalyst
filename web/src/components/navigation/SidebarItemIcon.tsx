@@ -28,11 +28,7 @@ const SidebarItemIcon: React.FC<SidebarItemIconProps> = ({
 
   return (
     <IconComponent
-      className={classNames(
-        'h-6 w-6 flex-shrink-0 text-current',
-        !shouldUseSolidIcon && outlineIcon ? 'group-hover:text-primary' : '',
-        isSidebarCollapsed ? 'mr-0' : 'mr-3'
-      )}
+      className="h-6 w-6 flex-shrink-0 text-current"
       aria-hidden="true"
     />
   )

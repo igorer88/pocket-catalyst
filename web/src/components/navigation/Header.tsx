@@ -2,8 +2,6 @@ import { useNavigate } from 'react-router-dom'
 import {
   ArrowLeftStartOnRectangleIcon,
   Bars3Icon,
-  ChevronDoubleLeftIcon,
-  ChevronDoubleRightIcon,
   Cog6ToothIcon,
   MoonIcon,
   SunIcon
@@ -24,9 +22,7 @@ import { AcmeLogo } from './Sidebar'
 
 const Header = () => {
   const [theme, toggleTheme] = useTheme()
-  const toggleSidebar = useGlobalStore(state => state.toggleSidebar)
   const toggleMobileSidebar = useGlobalStore(state => state.toggleMobileSidebar)
-  const isSidebarCollapsed = useGlobalStore(state => state.isSidebarCollapsed)
   const logout = useAuthStore(state => state.logout)
   const isAuthenticated = useAuthStore(state => state.isAuthenticated)
   const navigate = useNavigate()
@@ -37,29 +33,11 @@ const Header = () => {
 
   const handleSettings = () => {
     void navigate('/dashboard/settings')
-    if (!isSidebarCollapsed) {
-      toggleSidebar()
-    }
   }
 
   return (
     <>
-      <div className="hidden md:flex items-center px-2 border-b border-divider h-[65px]">
-        <Button
-          isIconOnly
-          variant="light"
-          onPress={toggleSidebar}
-          aria-label="Toggle sidebar"
-          className="text-foreground"
-        >
-          {isSidebarCollapsed ? (
-            <ChevronDoubleRightIcon className="w-5 h-5" />
-          ) : (
-            <ChevronDoubleLeftIcon className="w-5 h-5" />
-          )}
-        </Button>
-      </div>
-      <Navbar className="sticky top-0 z-50 backdrop-blur-md bg-transparent border-b border-divider flex-1">
+      <Navbar className="sticky top-0 z-50 backdrop-blur-md bg-transparent border-b border-divider w-full">
         <NavbarContent justify="start" className="pl-0">
           <NavbarItem className="md:hidden">
             <Button

@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
+import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon,ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
+import { Button } from '@heroui/react'
 
 import { environment } from '@/config'
 import { getNavigationLinks } from '@/router/NavigationLinks'
@@ -13,7 +14,7 @@ import SidebarItemIcon from './SidebarItemIcon'
 
 export const AcmeLogo = () => {
   return (
-    <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
+    <svg fill="none" height="36" viewBox="0 0 32 32" width="36" className="text-primary">
       <path
         clipRule="evenodd"
         d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
@@ -29,6 +30,7 @@ const Sidebar = () => {
   const { t } = useTranslation()
 
   const isSidebarCollapsed = useGlobalStore(state => state.isSidebarCollapsed)
+  const toggleSidebar = useGlobalStore(state => state.toggleSidebar)
 
   const [openSubmenus, setOpenSubmenus] = useState<string[]>(() => {
     const activeParentOnLoad = getNavigationLinks(t).find(
@@ -57,21 +59,47 @@ const Sidebar = () => {
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full relative">
+      {isSidebarCollapsed && (
+        <Button
+          isIconOnly
+          variant="light"
+          onPress={toggleSidebar}
+          aria-label="Expand sidebar"
+          className="absolute -right-3 top-[33px] z-10 bg-content1 border border-divider shadow-sm text-foreground"
+          size="sm"
+        >
+          <ChevronDoubleRightIcon className="w-4 h-4" />
+        </Button>
+      )}
       <div
         className={classNames(
-          'flex items-center py-4 mb-4 border-divider',
-          isSidebarCollapsed ? 'px-2 justify-center' : 'px-3'
+          'flex items-center py-4 mb-4',
+          isSidebarCollapsed ? 'px-2 justify-center' : 'px-6 justify-between'
         )}
       >
-        <AcmeLogo />
+        <div className={classNames('flex items-center', isSidebarCollapsed ? '' : 'gap-2')}>
+          <AcmeLogo />
+          {!isSidebarCollapsed && (
+            <h1 className="text-xl font-bold text-foreground">
+              {environment.APP_NAME}
+            </h1>
+          )}
+        </div>
         {!isSidebarCollapsed && (
-          <p className="ml-3 font-semibold text-foreground">
-            {environment.APP_NAME}
-          </p>
+          <Button
+            isIconOnly
+            variant="light"
+            onPress={toggleSidebar}
+            aria-label="Collapse sidebar"
+            className="text-foreground"
+            size="sm"
+          >
+            <ChevronDoubleLeftIcon className="w-4 h-4" />
+          </Button>
         )}
       </div>
-      <nav className="flex flex-col space-y-1">
+      <nav className="flex flex-col space-y-2 flex-1 p-4">
         {getNavigationLinks(t).map(item => {
           const hasChildren =
             (item.children && item.children.length > 0) || false
@@ -89,20 +117,32 @@ const Sidebar = () => {
                 to={item.href}
                 className={classNames(
                   isParentActive
-                    ? 'bg-primary/70 text-primary-foreground'
-                    : 'text-foreground-500 hover:bg-default-100 hover:text-foreground-700',
-                  'group flex items-center py-2 text-sm font-medium rounded-md',
-                  isSidebarCollapsed ? 'justify-center px-0 mx-0' : 'px-3 mx-5',
+                    ? 'bg-primary/10 text-primary font-semibold'
+                    : 'text-foreground hover:bg-content3',
+                  'group flex items-center text-sm rounded-lg transition-colors',
+                  isSidebarCollapsed
+                    ? 'justify-center w-12 h-12 p-0'
+                    : 'px-4 mx-4 py-2 gap-3',
                   hasChildren && !isSidebarCollapsed ? 'justify-between' : ''
                 )}
                 end={!hasChildren}
               >
-                <SidebarItemIcon
-                  iconDefinition={item.icon}
-                  isParentActive={isParentActive}
-                  isSidebarCollapsed={isSidebarCollapsed}
-                />
-                {!isSidebarCollapsed && <span>{item.name}</span>}
+                {isSidebarCollapsed ? (
+                  <SidebarItemIcon
+                    iconDefinition={item.icon}
+                    isParentActive={isParentActive}
+                    isSidebarCollapsed={isSidebarCollapsed}
+                  />
+                ) : (
+                  <>
+                    <SidebarItemIcon
+                      iconDefinition={item.icon}
+                      isParentActive={isParentActive}
+                      isSidebarCollapsed={isSidebarCollapsed}
+                    />
+                    <span>{item.name}</span>
+                  </>
+                )}
                 {hasChildren && !isSidebarCollapsed && (
                   <button
                     type="button"
@@ -110,7 +150,7 @@ const Sidebar = () => {
                       e.preventDefault()
                       toggleSubmenu(item.name)
                     }}
-                    className="ml-auto text-current hover:text-primary p-1 rounded-full"
+                    className="ml-auto text-current hover:text-primary p-1 rounded-full transition-colors"
                     aria-label={
                       isSubmenuOpen
                         ? t('components.sidebar.collapseSubmenu')
@@ -127,7 +167,7 @@ const Sidebar = () => {
               </NavLink>
 
               {hasChildren && isSubmenuOpen && !isSidebarCollapsed && (
-                <div className="flex flex-col pl-12 pr-3 space-y-1 mt-1">
+                <div className="flex flex-col pl-8 space-y-1 mt-1">
                   {item.children!.map(child => (
                     <NavLink
                       key={child.name}
@@ -135,9 +175,9 @@ const Sidebar = () => {
                       className={({ isActive: isChildActive }) =>
                         classNames(
                           isChildActive
-                            ? 'text-primary font-medium'
-                            : 'text-foreground-500 hover:text-primary',
-                          'flex items-center py-1 text-sm rounded-md px-2'
+                            ? 'text-primary font-semibold'
+                            : 'text-foreground hover:text-primary',
+                          'flex items-center py-2 text-sm rounded-lg px-3 transition-colors'
                         )
                       }
                       end
