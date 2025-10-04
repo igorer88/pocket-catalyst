@@ -1,5 +1,4 @@
 import { NavigationLink } from '@/router/NavigationLinks'
-import { classNames } from '@/utils'
 
 interface SidebarItemIconProps {
   iconDefinition?: NavigationLink['icon']
@@ -9,8 +8,7 @@ interface SidebarItemIconProps {
 
 const SidebarItemIcon: React.FC<SidebarItemIconProps> = ({
   iconDefinition,
-  isParentActive,
-  isSidebarCollapsed
+  isParentActive
 }) => {
   if (!iconDefinition) {
     return null

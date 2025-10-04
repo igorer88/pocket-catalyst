@@ -1,8 +1,10 @@
+import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 
 import Breadcrumbs from '@/components/navigation/Breadcrumbs'
 import Header from '@/components/navigation/Header'
 import Sidebar from '@/components/navigation/Sidebar'
+import { useIsTablet } from '@/hooks/useMediaQuery'
 import { useGlobalStore } from '@/stores/globalStore'
 import { classNames } from '@/utils'
 
@@ -10,13 +12,23 @@ const DashboardLayout = () => {
   const isSidebarCollapsed = useGlobalStore(state => state.isSidebarCollapsed)
   const isMobileSidebarOpen = useGlobalStore(state => state.isMobileSidebarOpen)
   const toggleMobileSidebar = useGlobalStore(state => state.toggleMobileSidebar)
+  const toggleSidebar = useGlobalStore(state => state.toggleSidebar)
+
+  const isTablet = useIsTablet()
+
+  // Auto-collapse sidebar on tablets for better space utilization
+  useEffect(() => {
+    if (isTablet && !isSidebarCollapsed) {
+      toggleSidebar()
+    }
+  }, [isTablet, isSidebarCollapsed, toggleSidebar])
 
   return (
     <div className="flex h-screen">
       <aside
         className={classNames(
           'hidden md:flex md:flex-col bg-content1 border-r border-divider transition-all duration-300 ease-in-out',
-          isSidebarCollapsed ? 'w-20' : 'w-72'
+          isSidebarCollapsed ? 'w-20' : 'lg:w-72 md:w-64'
         )}
       >
         <Sidebar />
@@ -29,7 +41,7 @@ const DashboardLayout = () => {
             aria-hidden="true"
             onClick={() => toggleMobileSidebar(false)}
           />
-          <aside className="relative flex w-72 max-w-[calc(100%-3rem)] flex-col border-r border-divider bg-content1 p-4">
+          <aside className="relative flex w-72 max-w-[calc(100%-3rem)] md:w-64 lg:w-72 flex-col border-r border-divider bg-content1 p-4">
             <Sidebar />
           </aside>
         </div>
