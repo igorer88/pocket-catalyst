@@ -82,10 +82,16 @@ export const updateDockerCompose = (
     }
 
     // Clean up empty top-level keys
-    if (composeFile.has('volumes') && composeFile.get('volumes')?.items.length === 0) {
+    if (
+      composeFile.has('volumes') &&
+      composeFile.get('volumes')?.items.length === 0
+    ) {
       composeFile.delete('volumes')
     }
-    if (composeFile.has('networks') && composeFile.get('networks')?.items.length === 0) {
+    if (
+      composeFile.has('networks') &&
+      composeFile.get('networks')?.items.length === 0
+    ) {
       composeFile.delete('networks')
     }
 
