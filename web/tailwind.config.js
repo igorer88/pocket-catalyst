@@ -21,17 +21,17 @@ export default {
               50: '#fafafa',
               100: '#f2f2f3',
               200: '#ebebec',
-              300: '#e3e3e6',
+              300: '#e5e7eb',
               400: '#dcdcdf',
               500: '#d4d4d8',
               600: '#afafb2',
               700: '#8a8a8c',
               800: '#656567',
-              900: '#404041',
-              foreground: '#000',
-              DEFAULT: '#d4d4d8'
+              900: '#1e1121',
+              foreground: '#1e1121',
+              DEFAULT: '#e5e7eb'
             },
-            primary: {
+             primary: {
               50: '#f3e4f5',
               100: '#e1bee7',
               200: '#d098d9',
@@ -101,23 +101,23 @@ export default {
               foreground: '#000',
               DEFAULT: '#f31260'
             },
-            background: '#ffffff',
-            foreground: '#000000',
+            background: '#f8f6f8',
+            foreground: '#1e1121',
             content1: {
               DEFAULT: '#ffffff',
-              foreground: '#000'
+              foreground: '#1e1121'
             },
             content2: {
-              DEFAULT: '#f4f4f5',
-              foreground: '#000'
+              DEFAULT: '#f8f6f8',
+              foreground: '#1e1121'
             },
             content3: {
-              DEFAULT: '#e4e4e7',
-              foreground: '#000'
+              DEFAULT: '#e5e7eb',
+              foreground: '#1e1121'
             },
             content4: {
               DEFAULT: '#d4d4d8',
-              foreground: '#000'
+              foreground: '#1e1121'
             },
             focus: '#006FEE',
             overlay: '#000000'
@@ -126,20 +126,20 @@ export default {
         dark: {
           colors: {
             default: {
-              50: '#1a1919',
-              100: '#333232',
-              200: '#4d4b4b',
-              300: '#666464',
-              400: '#807d7d',
-              500: '#999797',
-              600: '#b3b1b1',
-              700: '#cccbcb',
-              800: '#e6e5e5',
-              900: '#ffffff',
-              foreground: '#000',
-              DEFAULT: '#807d7d'
+              50: '#1e1121',
+              100: '#2a1a2e',
+              200: '#374151',
+              300: '#4b5563',
+              400: '#6b7280',
+              500: '#9ca3af',
+              600: '#d1d5db',
+              700: '#e5e7eb',
+              800: '#f3f4f6',
+              900: '#f8f6f8',
+              foreground: '#f8f6f8',
+              DEFAULT: '#374151'
             },
-            primary: {
+           primary: {
               50: '#2f0c35',
               100: '#4a1354',
               200: '#651972',
@@ -209,23 +209,23 @@ export default {
               foreground: '#000',
               DEFAULT: '#f31260'
             },
-            background: '#000000',
-            foreground: '#ffffff',
+            background: '#1e1121',
+            foreground: '#f8f6f8',
             content1: {
-              DEFAULT: '#18181b',
-              foreground: '#fff'
+              DEFAULT: '#2a1a2e',
+              foreground: '#f8f6f8'
             },
             content2: {
-              DEFAULT: '#27272a',
-              foreground: '#fff'
+              DEFAULT: '#374151',
+              foreground: '#f8f6f8'
             },
             content3: {
-              DEFAULT: '#3f3f46',
-              foreground: '#fff'
+              DEFAULT: '#4b5563',
+              foreground: '#f8f6f8'
             },
             content4: {
-              DEFAULT: '#52525b',
-              foreground: '#fff'
+              DEFAULT: '#6b7280',
+              foreground: '#f8f6f8'
             },
             focus: '#006FEE',
             overlay: '#ffffff'
