@@ -2,10 +2,16 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
-import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon,ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
+import {
+  ChevronDoubleLeftIcon,
+  ChevronDoubleRightIcon,
+  ChevronDownIcon,
+  ChevronUpIcon
+} from '@heroicons/react/24/outline'
 import { Button } from '@heroui/react'
 
 import { environment } from '@/config'
+import { useIsTablet } from '@/hooks/useMediaQuery'
 import { getNavigationLinks } from '@/router/NavigationLinks'
 import { useGlobalStore } from '@/stores'
 import { classNames } from '@/utils'
@@ -14,7 +20,13 @@ import SidebarItemIcon from './SidebarItemIcon'
 
 export const AcmeLogo = () => {
   return (
-    <svg fill="none" height="36" viewBox="0 0 32 32" width="36" className="text-primary">
+    <svg
+      fill="none"
+      height="36"
+      viewBox="0 0 32 32"
+      width="36"
+      className="text-primary"
+    >
       <path
         clipRule="evenodd"
         d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
@@ -31,6 +43,7 @@ const Sidebar = () => {
 
   const isSidebarCollapsed = useGlobalStore(state => state.isSidebarCollapsed)
   const toggleSidebar = useGlobalStore(state => state.toggleSidebar)
+  const isTablet = useIsTablet()
 
   const [openSubmenus, setOpenSubmenus] = useState<string[]>(() => {
     const activeParentOnLoad = getNavigationLinks(t).find(
@@ -60,7 +73,7 @@ const Sidebar = () => {
 
   return (
     <div className="flex flex-col h-full relative">
-      {isSidebarCollapsed && (
+      {isSidebarCollapsed && !isTablet && (
         <Button
           isIconOnly
           variant="light"
@@ -78,7 +91,12 @@ const Sidebar = () => {
           isSidebarCollapsed ? 'px-2 justify-center' : 'px-6 justify-between'
         )}
       >
-        <div className={classNames('flex items-center', isSidebarCollapsed ? '' : 'gap-2')}>
+        <div
+          className={classNames(
+            'flex items-center',
+            isSidebarCollapsed ? '' : 'gap-2'
+          )}
+        >
           <AcmeLogo />
           {!isSidebarCollapsed && (
             <h1 className="text-xl font-bold text-foreground">
@@ -86,7 +104,7 @@ const Sidebar = () => {
             </h1>
           )}
         </div>
-        {!isSidebarCollapsed && (
+        {!isSidebarCollapsed && !isTablet && (
           <Button
             isIconOnly
             variant="light"

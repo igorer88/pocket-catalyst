@@ -18,5 +18,6 @@ export function useMediaQuery(query: string): boolean {
 
 // Specific breakpoints for responsive design
 export const useIsDesktop = (): boolean => useMediaQuery('(min-width: 1024px)')
-export const useIsTablet = (): boolean => useMediaQuery('(min-width: 768px) and (max-width: 1023px)')
+export const useIsTablet = (): boolean =>
+  useMediaQuery('(min-width: 768px) and (max-width: 1023px)')
 export const useIsMobile = (): boolean => useMediaQuery('(max-width: 767px)')
