@@ -141,9 +141,11 @@ The ORM handles the conversion between `snake_case` database fields and `camelCa
 
 ### Lint and Formatting Guidelines
 
-**IMPORTANT**: Always run lint and formatting commands after making code changes to maintain code quality and consistency.
+**⚠️ CRITICAL: Always run lint and formatting commands after making ANY code changes to maintain code quality and consistency.**
 
 #### Required Commands After Code Changes
+
+**MANDATORY WORKFLOW - Execute in this exact order:**
 
 1. **Lint Check**: Always run linting to identify and fix code issues
 
@@ -157,11 +159,12 @@ The ORM handles the conversion between `snake_case` database fields and `camelCa
    pnpm run format
    ```
 
-3. **Fix Lint Issues**: Address all ESLint warnings and errors before committing:
-   - **Missing return types**: Add explicit return types to functions
-   - **Import sorting**: Use simple-import-sort for consistent imports
-   - **React rules**: Follow React hooks and component best practices
-   - **TypeScript rules**: Address type safety warnings
+3. **Build Verification**: Ensure no compilation errors
+   ```bash
+   pnpm run build
+   ```
+
+**🚨 IMPORTANT**: These commands MUST be executed after every code modification, no matter how small the change is.
 
 #### Common Lint Issues and Solutions
 
@@ -213,22 +216,24 @@ import { MyComponent } from './components'
 
 #### Pre-Commit Workflow
 
-Always execute this sequence before committing:
+**MANDATORY SEQUENCE - Never skip this:**
 
 ```bash
-# 1. Run linting and fix issues
+# 1. ALWAYS run linting first and fix all issues
 pnpm run lint
 
-# 2. Format code
+# 2. ALWAYS format code for consistency
 pnpm run format
 
-# 3. Build to ensure no compilation errors
+# 3. ALWAYS build to ensure no compilation errors
 pnpm run build
 
-# 4. Commit changes
+# 4. Only then commit changes
 git add .
 git commit -m "type: description"
 ```
+
+**🔥 RULE**: No code changes should ever be completed without running lint + format + build sequence.
 
 ### Commits
 
