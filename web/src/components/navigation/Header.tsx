@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import {
   ArrowLeftStartOnRectangleIcon,
+  BellIcon,
   Cog6ToothIcon,
   MoonIcon,
   SunIcon
@@ -33,6 +34,11 @@ const Header = () => {
     void navigate('/dashboard/settings')
   }
 
+  const handleNotifications = () => {
+    // TODO: Implement notifications functionality
+    console.log('Notifications clicked')
+  }
+
   return (
     <>
       <Navbar className="sticky top-0 z-50 backdrop-blur-md bg-transparent border-b border-divider w-full">
@@ -40,7 +46,7 @@ const Header = () => {
           <AcmeLogo />
           <p className="font-bold text-inherit ml-2">{environment.APP_NAME}</p>
         </NavbarBrand>
-        <NavbarContent className="ml-auto" justify="end">
+        <NavbarContent justify="end">
           <NavbarItem>
             <Button
               isIconOnly
@@ -60,6 +66,19 @@ const Header = () => {
               )}
             </Button>
           </NavbarItem>
+          {isAuthenticated && (
+            <NavbarItem className='hidden'>
+              <Button
+                isIconOnly
+                variant="light"
+                onPress={handleNotifications}
+                aria-label="Notifications"
+                className="text-foreground"
+              >
+                <BellIcon className="w-5 h-5" />
+              </Button>
+            </NavbarItem>
+          )}
           {isAuthenticated && (
             <NavbarItem>
               <Button
