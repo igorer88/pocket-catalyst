@@ -42,6 +42,10 @@ src/metadata.ts
 !.vscode/launch.json
 !.vscode/extensions.json
 
+# AI files
+Gemini.md
+CLAUDE.md
+
 # dotenv environment variable files
 .env
 .env.development.local
