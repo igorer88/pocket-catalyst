@@ -9,6 +9,7 @@ import {
   ChevronUpIcon
 } from '@heroicons/react/24/outline'
 import { Button } from '@heroui/react'
+import { AnimatePresence, motion } from 'framer-motion'
 
 import { environment } from '@/config'
 import { useIsTablet } from '@/hooks/useMediaQuery'
@@ -74,16 +75,29 @@ const Sidebar = () => {
   return (
     <div className="flex flex-col h-full relative">
       {isSidebarCollapsed && !isTablet && (
-        <Button
-          isIconOnly
-          variant="light"
-          onPress={toggleSidebar}
-          aria-label="Expand sidebar"
-          className="absolute -right-3 top-[33px] z-10 bg-content1 border border-divider shadow-sm text-foreground"
-          size="sm"
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          whileHover={{ scale: 1.1, rotate: 5 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{
+            type: 'spring',
+            stiffness: 300,
+            damping: 20
+          }}
         >
-          <ChevronDoubleRightIcon className="w-4 h-4" />
-        </Button>
+          <Button
+            isIconOnly
+            variant="light"
+            onPress={toggleSidebar}
+            aria-label="Expand sidebar"
+            className="absolute -right-3 top-[33px] z-10 bg-content1 border border-divider shadow-sm text-foreground"
+            size="sm"
+          >
+            <ChevronDoubleRightIcon className="w-4 h-4" />
+          </Button>
+        </motion.div>
       )}
       <div
         className={classNames(
@@ -98,23 +112,47 @@ const Sidebar = () => {
           )}
         >
           <AcmeLogo />
-          {!isSidebarCollapsed && (
-            <h1 className="text-xl font-bold text-foreground">
-              {environment.APP_NAME}
-            </h1>
-          )}
+          <AnimatePresence>
+            {!isSidebarCollapsed && (
+              <motion.h1
+                initial={{ opacity: 0, x: -10 }}
+                animate={{
+                  opacity: 1,
+                  x: 0,
+                  transition: { delay: 0.1, duration: 0.2 }
+                }}
+                exit={{ opacity: 0, x: -10, transition: { duration: 0.1 } }}
+                className="text-xl font-bold text-foreground whitespace-nowrap"
+              >
+                {environment.APP_NAME}
+              </motion.h1>
+            )}
+          </AnimatePresence>
         </div>
         {!isSidebarCollapsed && !isTablet && (
-          <Button
-            isIconOnly
-            variant="light"
-            onPress={toggleSidebar}
-            aria-label="Collapse sidebar"
-            className="text-foreground"
-            size="sm"
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            whileHover={{ scale: 1.1, rotate: -5 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{
+              type: 'spring',
+              stiffness: 300,
+              damping: 20
+            }}
           >
-            <ChevronDoubleLeftIcon className="w-4 h-4" />
-          </Button>
+            <Button
+              isIconOnly
+              variant="light"
+              onPress={toggleSidebar}
+              aria-label="Collapse sidebar"
+              className="text-foreground"
+              size="sm"
+            >
+              <ChevronDoubleLeftIcon className="w-4 h-4" />
+            </Button>
+          </motion.div>
         )}
       </div>
       <nav className="flex flex-col space-y-2 flex-1 p-4">
@@ -140,71 +178,87 @@ const Sidebar = () => {
                   'group flex items-center text-sm rounded-lg transition-colors',
                   isSidebarCollapsed
                     ? 'justify-center w-12 h-12 p-0'
-                    : 'px-4 mx-4 py-2 gap-3',
-                  hasChildren && !isSidebarCollapsed ? 'justify-between' : ''
+                    : 'px-4 mx-4 py-2 gap-3'
                 )}
                 end={!hasChildren}
               >
-                {isSidebarCollapsed ? (
-                  <SidebarItemIcon
-                    iconDefinition={item.icon}
-                    isParentActive={isParentActive}
-                    isSidebarCollapsed={isSidebarCollapsed}
-                  />
-                ) : (
-                  <>
-                    <SidebarItemIcon
-                      iconDefinition={item.icon}
-                      isParentActive={isParentActive}
-                      isSidebarCollapsed={isSidebarCollapsed}
-                    />
-                    <span>{item.name}</span>
-                  </>
-                )}
-                {hasChildren && !isSidebarCollapsed && (
-                  <button
-                    type="button"
-                    onClick={e => {
-                      e.preventDefault()
-                      toggleSubmenu(item.name)
-                    }}
-                    className="ml-auto text-current hover:text-primary p-1 rounded-full transition-colors"
-                    aria-label={
-                      isSubmenuOpen
-                        ? t('components.sidebar.collapseSubmenu')
-                        : t('components.sidebar.expandSubmenu')
-                    }
-                  >
-                    {isSubmenuOpen ? (
-                      <ChevronUpIcon className="h-4 w-4" />
-                    ) : (
-                      <ChevronDownIcon className="h-4 w-4" />
-                    )}
-                  </button>
-                )}
+                <SidebarItemIcon
+                  iconDefinition={item.icon}
+                  isParentActive={isParentActive}
+                  isSidebarCollapsed={isSidebarCollapsed}
+                />
+                <AnimatePresence>
+                  {!isSidebarCollapsed && (
+                    <motion.div
+                      className="flex-1 flex items-center justify-between"
+                      initial={{ opacity: 0, width: 0 }}
+                      animate={{
+                        opacity: 1,
+                        width: 'auto',
+                        transition: { delay: 0.1, duration: 0.2 }
+                      }}
+                      exit={{
+                        opacity: 0,
+                        width: 0,
+                        transition: { duration: 0.1 }
+                      }}
+                    >
+                      <span className="whitespace-nowrap">{item.name}</span>
+                      {hasChildren && (
+                        <button
+                          type="button"
+                          onClick={e => {
+                            e.preventDefault()
+                            toggleSubmenu(item.name)
+                          }}
+                          className="ml-auto text-current hover:text-primary p-1 rounded-full transition-colors cursor-pointer"
+                          aria-label={
+                            isSubmenuOpen
+                              ? t('components.sidebar.collapseSubmenu')
+                              : t('components.sidebar.expandSubmenu')
+                          }
+                        >
+                          {isSubmenuOpen ? (
+                            <ChevronUpIcon className="h-4 w-4" />
+                          ) : (
+                            <ChevronDownIcon className="h-4 w-4" />
+                          )}
+                        </button>
+                      )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </NavLink>
 
-              {hasChildren && isSubmenuOpen && !isSidebarCollapsed && (
-                <div className="flex flex-col pl-8 space-y-1 mt-1">
-                  {item.children!.map(child => (
-                    <NavLink
-                      key={child.name}
-                      to={child.href}
-                      className={({ isActive: isChildActive }) =>
-                        classNames(
-                          isChildActive
-                            ? 'text-primary font-semibold'
-                            : 'text-foreground hover:text-primary',
-                          'flex items-center py-2 text-sm rounded-lg px-3 transition-colors'
-                        )
-                      }
-                      end
-                    >
-                      <span>{child.name}</span>
-                    </NavLink>
-                  ))}
-                </div>
-              )}
+              <AnimatePresence>
+                {hasChildren && isSubmenuOpen && !isSidebarCollapsed && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex flex-col pl-8 space-y-1 mt-1 overflow-hidden"
+                  >
+                    {item.children!.map(child => (
+                      <NavLink
+                        key={child.name}
+                        to={child.href}
+                        className={({ isActive: isChildActive }) =>
+                          classNames(
+                            isChildActive
+                              ? 'text-primary font-semibold'
+                              : 'text-foreground hover:text-primary',
+                            'flex items-center py-2 text-sm rounded-lg px-3 transition-colors'
+                          )
+                        }
+                        end
+                      >
+                        <span>{child.name}</span>
+                      </NavLink>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           )
         })}

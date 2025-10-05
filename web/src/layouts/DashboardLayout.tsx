@@ -23,17 +23,22 @@ const DashboardLayout = () => {
   }, [isTablet, isSidebarCollapsed, toggleSidebar])
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen bg-background">
       <aside
         className={classNames(
-          'hidden md:flex md:flex-col bg-content1 border-r border-divider transition-all duration-300 ease-in-out',
-          isSidebarCollapsed ? 'w-20' : 'lg:w-72 md:w-20'
+          'hidden md:flex md:flex-col bg-content1 border-r border-divider transition-all duration-300 ease-in-out fixed h-full',
+          isSidebarCollapsed ? 'w-20' : 'w-72'
         )}
       >
         <Sidebar />
       </aside>
 
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div
+        className={classNames(
+          'flex-1 flex flex-col overflow-hidden transition-all duration-300 ease-in-out',
+          isSidebarCollapsed ? 'md:ml-20' : 'md:ml-72'
+        )}
+      >
         <Header />
         <Breadcrumbs />
         <main className="flex-1 p-4 md:p-6 lg:p-8 overflow-y-auto pb-20 md:pb-8">
