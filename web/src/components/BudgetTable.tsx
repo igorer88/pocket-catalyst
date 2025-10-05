@@ -30,7 +30,7 @@ function BudgetTable({
   rows,
   ariaLabel,
   isStriped = false
-}: BudgetTableProps) {
+}: BudgetTableProps): React.JSX.Element {
   return (
     <Table isStriped={isStriped} aria-label={ariaLabel}>
       <TableHeader columns={columns}>

@@ -19,7 +19,7 @@ import { environment } from '@/config'
 import { useTheme } from '@/hooks/useTheme'
 import { useAuthStore } from '@/stores'
 
-const Header = () => {
+const Header = (): React.JSX.Element => {
   const [theme, toggleTheme] = useTheme()
   const logout = useAuthStore(state => state.logout)
   const isAuthenticated = useAuthStore(state => state.isAuthenticated)

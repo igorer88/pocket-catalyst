@@ -9,7 +9,7 @@ import { useIsTablet } from '@/hooks/useMediaQuery'
 import { useGlobalStore } from '@/stores/globalStore'
 import { classNames } from '@/utils'
 
-const DashboardLayout = () => {
+const DashboardLayout = (): React.JSX.Element => {
   const isSidebarCollapsed = useGlobalStore(state => state.isSidebarCollapsed)
   const toggleSidebar = useGlobalStore(state => state.toggleSidebar)
 

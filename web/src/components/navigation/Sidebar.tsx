@@ -19,7 +19,7 @@ import { useGlobalStore } from '@/stores'
 import { classNames } from '@/utils'
 
 import SidebarItemIcon from './SidebarItemIcon'
-const Sidebar = () => {
+const Sidebar = (): React.JSX.Element => {
   const location = useLocation()
   const { t } = useTranslation()
 

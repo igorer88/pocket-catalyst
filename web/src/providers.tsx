@@ -7,6 +7,6 @@ export function Providers({
   children
 }: {
   children: React.ReactNode
-}) {
+}): React.JSX.Element {
   return <HeroUIProvider>{children}</HeroUIProvider>
 }

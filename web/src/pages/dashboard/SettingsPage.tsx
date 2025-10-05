@@ -4,7 +4,7 @@ import { Card, CardBody, CardHeader, Chip, Spinner } from '@heroui/react'
 
 import { useProfileStore } from '@/stores/profileStore'
 
-function SettingsPage() {
+function SettingsPage(): React.JSX.Element {
   const { profile, isLoading, error, fetchProfile } = useProfileStore()
   const { t } = useTranslation()
 

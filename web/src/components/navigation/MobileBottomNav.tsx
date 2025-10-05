@@ -6,7 +6,7 @@ import { classNames } from '@/utils'
 
 import SidebarItemIcon from './SidebarItemIcon'
 
-const MobileBottomNav = () => {
+const MobileBottomNav = (): React.JSX.Element => {
   const { t } = useTranslation()
   const location = useLocation()
 

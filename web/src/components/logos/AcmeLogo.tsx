@@ -1,4 +1,4 @@
-export const AcmeLogo = () => {
+export const AcmeLogo = (): React.JSX.Element => {
   return (
     <svg
       fill="none"

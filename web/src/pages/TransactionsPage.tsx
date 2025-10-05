@@ -63,7 +63,7 @@ const formatSubscriptionRows = (
   }))
 }
 
-const TransactionsPage = () => {
+const TransactionsPage = (): React.JSX.Element => {
   const { t } = useTranslation()
   const {
     transactions,

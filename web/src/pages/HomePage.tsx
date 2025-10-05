@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { Card, CardBody, CardHeader } from '@heroui/react'
 
-function HomePage() {
+function HomePage(): React.JSX.Element {
   const { t } = useTranslation()
 
   return (

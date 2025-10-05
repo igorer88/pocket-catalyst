@@ -3,7 +3,7 @@ import AppRouter from './router/AppRouter'
 
 import './App.css'
 
-function App() {
+function App(): React.JSX.Element {
   useTheme()
 
   return <AppRouter />

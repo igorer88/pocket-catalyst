@@ -9,12 +9,12 @@ import LoginPage from '@/pages/LoginPage'
 import TransactionsPage from '@/pages/TransactionsPage'
 import { useAuthStore } from '@/stores'
 
-const DashboardOverviewPage = () => <HomePage />
-const DashboardTransactionsPage = () => <TransactionsPage />
-const DashboardAccountsPage = () => <div>Accounts Page</div>
-const DashboardSettingsPage = () => <SettingsPage />
+const DashboardOverviewPage = (): React.JSX.Element => <HomePage />
+const DashboardTransactionsPage = (): React.JSX.Element => <TransactionsPage />
+const DashboardAccountsPage = (): React.JSX.Element => <div>Accounts Page</div>
+const DashboardSettingsPage = (): React.JSX.Element => <SettingsPage />
 
-const AppRouter = () => {
+const AppRouter = (): React.JSX.Element => {
   const { isAuthenticated } = useAuthStore()
 
   return (

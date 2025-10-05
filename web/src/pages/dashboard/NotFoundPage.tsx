@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
-const DashboardNotFoundPage = () => {
+const DashboardNotFoundPage = (): React.JSX.Element => {
   const { t } = useTranslation()
 
   return (
