@@ -224,7 +224,11 @@ const Sidebar = (): React.JSX.Element => {
                       <NavLink
                         key={child.name}
                         to={child.href}
-                        className={({ isActive: isChildActive }) =>
+                        className={({
+                          isActive: isChildActive
+                        }: {
+                          isActive: boolean
+                        }) =>
                           classNames(
                             isChildActive
                               ? 'text-primary font-semibold'

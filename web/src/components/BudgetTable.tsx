@@ -34,7 +34,7 @@ function BudgetTable({
   return (
     <Table isStriped={isStriped} aria-label={ariaLabel}>
       <TableHeader columns={columns}>
-        {column => (
+        {(column: Column) => (
           <TableColumn
             key={column.key}
             align={column.key === 'amount' ? 'end' : 'start'}
@@ -44,9 +44,9 @@ function BudgetTable({
         )}
       </TableHeader>
       <TableBody items={rows}>
-        {item => (
+        {(item: Row) => (
           <TableRow key={item.key}>
-            {columnKey => (
+            {(columnKey: string) => (
               <TableCell align={columnKey === 'amount' ? 'right' : 'left'}>
                 {getKeyValue(item, columnKey)}
               </TableCell>
