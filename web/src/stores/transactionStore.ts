@@ -60,7 +60,7 @@ export const useTransactionStore = create<TransactionState>(set => ({
   transactions: [],
   isLoading: false,
   error: null,
-  fetchTransactions: async () => {
+  fetchTransactions: async (): Promise<void> => {
     set({ isLoading: true, error: null })
     try {
       await new Promise(resolve => setTimeout(resolve, 500))

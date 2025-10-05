@@ -19,7 +19,7 @@ export const useProfileStore = create<ProfileState>(set => ({
   profile: null,
   isLoading: false,
   error: null,
-  fetchProfile: async () => {
+  fetchProfile: async (): Promise<void> => {
     if (!useAuthStore.getState().isAuthenticated) {
       console.log('User not authenticated, skipping profile fetch.')
       set({ profile: null, isLoading: false, error: null })
@@ -36,10 +36,10 @@ export const useProfileStore = create<ProfileState>(set => ({
       console.error('Error fetching profile:', err)
     }
   },
-  setProfile: profile => {
+  setProfile: (profile: Profile | null): void => {
     set({ profile: profile, isLoading: false, error: null })
   },
-  clearProfile: () => {
+  clearProfile: (): void => {
     set({ profile: null, isLoading: false, error: null })
   }
 }))

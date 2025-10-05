@@ -24,7 +24,7 @@ const LoginPage: React.FC = () => {
     }
   }, [isAuthenticated, navigate])
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault()
     void login(username, password)
   }

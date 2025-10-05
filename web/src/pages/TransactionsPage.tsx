@@ -48,7 +48,7 @@ const formatTransactionRows = (transactions: ApiTransaction[]): Row[] => {
 
 const formatSubscriptionRows = (
   subscriptions: ApiSubscription[],
-  t: any
+  t: ReturnType<typeof useTranslation>['t']
 ): Row[] => {
   return subscriptions.map((subscription, index) => ({
     key: index.toString(),

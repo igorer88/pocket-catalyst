@@ -54,7 +54,7 @@ const { authToken: initialAuthToken, refreshToken: initialRefreshToken } =
 const initialUser = getInitialUser()
 
 export const useAuthStore = create<AuthState>((set, get) => {
-  const internalLogout = () => {
+  const internalLogout = (): void => {
     if (typeof window !== 'undefined') {
       localStorage.removeItem('authToken')
       localStorage.removeItem('refreshToken')
@@ -78,9 +78,10 @@ export const useAuthStore = create<AuthState>((set, get) => {
     refreshToken: initialRefreshToken,
     isLoading: false,
     error: null,
-    setIsAuthenticated: status => set({ isAuthenticated: status }),
-    setIsLocked: status => set({ isLocked: status }),
-    login: async (username, password) => {
+    setIsAuthenticated: (status: boolean): void =>
+      set({ isAuthenticated: status }),
+    setIsLocked: (status: boolean): void => set({ isLocked: status }),
+    login: async (username: string, password: string): Promise<boolean> => {
       set({ isLoading: true, error: null })
 
       // Development mode: allow demo login
@@ -203,7 +204,7 @@ export const useAuthStore = create<AuthState>((set, get) => {
       }
     },
     logout: internalLogout,
-    setUser: userData => set({ user: userData }),
+    setUser: (userData: User | null): void => set({ user: userData }),
     handleTokenRefresh: async (): Promise<string | null> => {
       const currentRefreshToken = get().refreshToken
       if (!currentRefreshToken) {
@@ -236,7 +237,7 @@ export const useAuthStore = create<AuthState>((set, get) => {
         return null
       }
     },
-    checkAuth: () => {
+    checkAuth: (): void => {
       const { authToken, refreshToken } = getInitialTokens()
       if (authToken && refreshToken) {
         set({ isAuthenticated: true, authToken, refreshToken })

@@ -19,9 +19,10 @@ export const useAccountsStore = create<AccountsState>(set => ({
   selectedAccount: null,
   isLoading: false,
   error: null,
-  setAccounts: accounts => set({ accounts }),
-  setSelectedAccount: account => set({ selectedAccount: account }),
-  fetchAccounts: async () => {
+  setAccounts: (accounts: Account[]): void => set({ accounts }),
+  setSelectedAccount: (account: Account | null): void =>
+    set({ selectedAccount: account }),
+  fetchAccounts: async (): Promise<void> => {
     set({ isLoading: true, error: null })
     try {
       const response = await apiClient.get<Account[]>('/accounts/')

@@ -66,7 +66,7 @@ export const useSubscriptionStore = create<SubscriptionState>(set => ({
   subscriptions: [],
   isLoading: false,
   error: null,
-  fetchSubscriptions: async () => {
+  fetchSubscriptions: async (): Promise<void> => {
     set({ isLoading: true, error: null })
     try {
       await new Promise(resolve => setTimeout(resolve, 500))

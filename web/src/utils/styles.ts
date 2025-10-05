@@ -8,6 +8,6 @@
  * @returns The `classNames` function returns a string that concatenates all the non-empty strings
  * passed as arguments, separated by a space.
  */
-export const classNames = (...classes: string[]) => {
+export const classNames = (...classes: string[]): string => {
   return classes.filter(Boolean).join(' ')
 }

@@ -23,12 +23,12 @@ export const useGlobalStore = create<GlobalState>(set => ({
   theme: 'dark',
   isSidebarCollapsed: false,
   isFirstVisit: false,
-  setIsLoading: loading => set({ isLoading: loading }),
-  setError: error => set({ error: error }),
-  openModal: () => set({ isModalOpen: true }),
-  closeModal: () => set({ isModalOpen: false }),
-  setTheme: theme => set({ theme }),
-  toggleSidebar: () =>
+  setIsLoading: (loading: boolean): void => set({ isLoading: loading }),
+  setError: (error: string | null): void => set({ error: error }),
+  openModal: (): void => set({ isModalOpen: true }),
+  closeModal: (): void => set({ isModalOpen: false }),
+  setTheme: (theme: 'light' | 'dark'): void => set({ theme }),
+  toggleSidebar: (): void =>
     set(state => ({ isSidebarCollapsed: !state.isSidebarCollapsed })),
-  setFirstVisit: () => set({ isFirstVisit: true })
+  setFirstVisit: (): void => set({ isFirstVisit: true })
 }))
