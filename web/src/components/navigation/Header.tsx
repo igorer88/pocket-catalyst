@@ -67,7 +67,7 @@ const Header = () => {
             </Button>
           </NavbarItem>
           {isAuthenticated && (
-            <NavbarItem className='hidden'>
+            <NavbarItem className="hidden">
               <Button
                 isIconOnly
                 variant="light"

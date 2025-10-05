@@ -31,7 +31,7 @@ export default {
               foreground: '#1e1121',
               DEFAULT: '#e5e7eb'
             },
-             primary: {
+            primary: {
               50: '#f3e4f5',
               100: '#e1bee7',
               200: '#d098d9',
@@ -139,7 +139,7 @@ export default {
               foreground: '#f8f6f8',
               DEFAULT: '#374151'
             },
-           primary: {
+            primary: {
               50: '#2f0c35',
               100: '#4a1354',
               200: '#651972',

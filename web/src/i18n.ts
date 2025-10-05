@@ -1,5 +1,5 @@
-import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
+import i18n from 'i18next'
 
 import enMessages from './locales/en.json'
 import esMessages from './locales/es.json'
