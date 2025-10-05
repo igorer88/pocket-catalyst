@@ -14,11 +14,10 @@ import {
   NavbarItem
 } from '@heroui/react'
 
+import { AcmeLogo } from '@/components/logos/AcmeLogo'
 import { environment } from '@/config'
 import { useTheme } from '@/hooks/useTheme'
 import { useAuthStore } from '@/stores'
-
-import { AcmeLogo } from './Sidebar'
 
 const Header = () => {
   const [theme, toggleTheme] = useTheme()
@@ -26,15 +25,15 @@ const Header = () => {
   const isAuthenticated = useAuthStore(state => state.isAuthenticated)
   const navigate = useNavigate()
 
-  const handleLogout = () => {
+  const handleLogout = (): void => {
     logout()
   }
 
-  const handleSettings = () => {
+  const handleSettings = (): void => {
     void navigate('/dashboard/settings')
   }
 
-  const handleNotifications = () => {
+  const handleNotifications = (): void => {
     // TODO: Implement notifications functionality
     console.log('Notifications clicked')
   }
