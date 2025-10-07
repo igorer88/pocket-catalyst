@@ -155,7 +155,7 @@ const Sidebar = (): React.JSX.Element => {
                 className={classNames(
                   isParentActive
                     ? 'bg-primary/10 text-primary font-semibold'
-                    : 'text-foreground hover:bg-content3',
+                    : 'text-foreground hover:bg-secondary/10',
                   'group flex items-center text-sm rounded-lg transition-colors',
                   isSidebarCollapsed
                     ? 'justify-center w-12 h-12 p-0'
