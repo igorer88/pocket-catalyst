@@ -16,11 +16,24 @@ interface GlobalState {
   setFirstVisit: () => void
 }
 
+const getInitialTheme = (): 'light' | 'dark' => {
+  if (typeof window !== 'undefined') {
+    const storedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
+    if (storedTheme === 'light' || storedTheme === 'dark') {
+      return storedTheme
+    }
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark'
+    }
+  }
+  return 'dark'
+}
+
 export const useGlobalStore = create<GlobalState>(set => ({
   isLoading: true,
   error: null,
   isModalOpen: false,
-  theme: 'dark',
+  theme: getInitialTheme(),
   isSidebarCollapsed: false,
   isFirstVisit: false,
   setIsLoading: (loading: boolean): void => set({ isLoading: loading }),
