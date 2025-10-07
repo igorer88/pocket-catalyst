@@ -6,10 +6,10 @@ const DashboardNotFoundPage = (): React.JSX.Element => {
 
   return (
     <div className="flex flex-col items-center justify-center h-full text-center">
-      <h1 className="text-6xl font-bold text-slate-300">
+      <h1 className="text-6xl font-bold text-slate-500 dark:text-slate-300">
         {t('pages.notFound.title')}
       </h1>
-      <p className="mt-4 text-xl text-slate-300">
+      <p className="mt-4 text-xl text-slate-500 dark:text-slate-300">
         {t('pages.notFound.message')}
       </p>
       <Link
