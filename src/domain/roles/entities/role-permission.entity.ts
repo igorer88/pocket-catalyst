@@ -8,8 +8,8 @@ import {
   Unique
 } from 'typeorm'
 
-import { Permission } from './permission.entity'
-import { Role } from './role.entity'
+import type { Permission } from './permission.entity'
+import type { Role } from './role.entity'
 
 @Entity('RolePermissions')
 @Unique('PK_ROLE_PERMISSIONS', ['roleId', 'permissionId'])
@@ -25,11 +25,11 @@ export class RolePermission {
   @Column({ type: 'datetime', name: 'granted_at', default: () => 'now()' })
   grantedAt: Date
 
-  @ManyToOne(() => Role, role => role.rolePermissions)
+  @ManyToOne('Role')
   @JoinColumn({ name: 'role_id' })
   role: Role
 
-  @ManyToOne(() => Permission, permission => permission.rolePermissions)
+  @ManyToOne('Permission')
   @JoinColumn({ name: 'permission_id' })
   permission: Permission
 }

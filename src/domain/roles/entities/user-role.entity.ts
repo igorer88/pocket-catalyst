@@ -8,9 +8,9 @@ import {
   Unique
 } from 'typeorm'
 
-import { User } from '@/domain/users/entities/user.entity'
+import type { User } from '@/domain/users/entities'
 
-import { Role } from './role.entity'
+import type { Role } from './role.entity'
 
 @Entity('UserRoles')
 @Unique('PK_USER_ROLES', ['userId', 'roleId'])
@@ -26,11 +26,11 @@ export class UserRole {
   @Column({ type: 'datetime', name: 'assigned_at', default: () => 'now()' })
   assignedAt: Date
 
-  @ManyToOne(() => User, user => user.userRoles)
+  @ManyToOne('User')
   @JoinColumn({ name: 'user_id' })
   user: User
 
-  @ManyToOne(() => Role, role => role.userRoles)
+  @ManyToOne('Role')
   @JoinColumn({ name: 'role_id' })
   role: Role
 }
