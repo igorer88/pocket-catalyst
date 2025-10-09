@@ -195,7 +195,9 @@ const typescriptEslintRules = {
     'warn',
     {
       vars: 'all',
-      args: 'all'
+      args: 'all',
+      argsIgnorePattern: '^_', // Ignore arguments starting with _
+      varsIgnorePattern: '^_' // Ignore variables starting with _
     }
   ]
 }
