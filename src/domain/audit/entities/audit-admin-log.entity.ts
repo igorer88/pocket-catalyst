@@ -8,6 +8,7 @@ import {
 } from 'typeorm'
 
 import { User } from '@/domain/users/entities/user.entity'
+import { getCurrentTimestampFunction } from '@/shared/utils.helper'
 
 @Entity('AuditAdminLog')
 @Index('IDX_AUDIT_ADMIN_LOG_ACTOR_ID', ['actorId'])
@@ -27,7 +28,10 @@ export class AuditAdminLog {
   @Column({ type: 'text', nullable: true })
   details: string
 
-  @Column({ type: 'datetime', default: () => 'now()' })
+  @Column({
+    type: 'datetime',
+    default: () => getCurrentTimestampFunction()
+  })
   timestamp: Date
 
   @ManyToOne(() => User)

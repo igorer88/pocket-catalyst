@@ -9,6 +9,7 @@ import {
 } from 'typeorm'
 
 import type { User } from '@/domain/users/entities'
+import { getCurrentTimestampFunction } from '@/shared/utils.helper'
 
 import type { Role } from './role.entity'
 
@@ -23,7 +24,11 @@ export class UserRole {
   @PrimaryColumn({ type: 'uuid', name: 'role_id' })
   roleId: string
 
-  @Column({ type: 'datetime', name: 'assigned_at', default: () => 'now()' })
+  @Column({
+    type: 'datetime',
+    name: 'assigned_at',
+    default: () => getCurrentTimestampFunction()
+  })
   assignedAt: Date
 
   @ManyToOne('User')

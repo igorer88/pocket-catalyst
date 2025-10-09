@@ -8,6 +8,8 @@ import {
   Unique
 } from 'typeorm'
 
+import { getCurrentTimestampFunction } from '@/shared/utils.helper'
+
 import type { Permission } from './permission.entity'
 import type { Role } from './role.entity'
 
@@ -22,7 +24,11 @@ export class RolePermission {
   @PrimaryColumn({ type: 'uuid', name: 'permission_id' })
   permissionId: string
 
-  @Column({ type: 'datetime', name: 'granted_at', default: () => 'now()' })
+  @Column({
+    type: 'datetime',
+    name: 'granted_at',
+    default: () => getCurrentTimestampFunction()
+  })
   grantedAt: Date
 
   @ManyToOne('Role')
