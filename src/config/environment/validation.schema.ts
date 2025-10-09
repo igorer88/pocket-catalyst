@@ -17,7 +17,7 @@ export const getValidationSchema = (): Joi.ObjectSchema => {
       .valid('postgres', 'sqlite', 'mysql', 'mssql'),
     DB_SQLITE_PATH: Joi.string().when('DB_DRIVER', {
       is: 'sqlite',
-      then: Joi.string().default(`${dbFolder}/pc.sqlite3`),
+      then: Joi.string().default(`${dbFolder}/pocket-catalyst.sqlite3`),
       otherwise: Joi.optional()
     }),
     DB_HOST: Joi.string().when('DB_DRIVER', {

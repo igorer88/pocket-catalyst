@@ -22,4 +22,4 @@ export const dbConfig = registerAs('db', () => ({
 }))
 
 /** Folder to store the SQLite database file. */
-export const dbFolder = 'config/db'
+export const dbFolder = './db'
