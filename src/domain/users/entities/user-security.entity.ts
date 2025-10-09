@@ -9,6 +9,10 @@ import { User } from './user.entity'
 @Unique('UQ_USER_SECURITY_RECOVERY_EMAIL', ['recoveryEmail'])
 @Index('IDX_USER_SECURITY_USER_ID', ['user'])
 export class UserSecurity extends BaseEntity {
+  @OneToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
+  user: User
+
   @Column({ type: 'varchar', nullable: true, name: 'interface_lock_pin_hash' })
   interfaceLockPinHash: string
 
@@ -43,8 +47,4 @@ export class UserSecurity extends BaseEntity {
 
   @Column({ type: 'datetime', nullable: true, name: 'biometric_last_used' })
   biometricLastUsed: Date
-
-  @OneToOne(() => User)
-  @JoinColumn({ name: 'user_id' })
-  user: User
 }
