@@ -7,7 +7,7 @@ import { Role } from './entities'
 import { RoleTypes } from './enums'
 
 @Injectable()
-export class RolesRepository extends Repository<Role> {
+export class RoleRepository extends Repository<Role> {
   constructor(
     @InjectRepository(Role)
     private repository: Repository<Role>

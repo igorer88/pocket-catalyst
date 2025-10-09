@@ -2,7 +2,7 @@ import { Injectable, Logger, NotFoundException } from '@nestjs/common'
 
 import { CreateRoleDto, UpdateRoleDto } from './dto'
 import { Role } from './entities'
-import { RolesRepository } from './roles.repository'
+import { RoleRepository } from './roles.repository'
 
 @Injectable()
 export class RolesService {
@@ -11,7 +11,7 @@ export class RolesService {
     class: this.constructor.name
   }
 
-  constructor(private roleRepository: RolesRepository) {}
+  constructor(private roleRepository: RoleRepository) {}
 
   async create(createRoleDto: CreateRoleDto): Promise<Partial<Role>> {
     try {
@@ -68,9 +68,14 @@ export class RolesService {
 
   async recover(id: string): Promise<unknown> {
     try {
-      const role = await this.roleRepository.findOne({ where: { id }, withDeleted: true })
+      const role = await this.roleRepository.findOne({
+        where: { id },
+        withDeleted: true
+      })
       if (!role) {
-        throw new NotFoundException(`Role with ID "${id}" not found or already recovered.`)
+        throw new NotFoundException(
+          `Role with ID "${id}" not found or already recovered.`
+        )
       }
       return await this.roleRepository.recover(role)
     } catch (error) {
