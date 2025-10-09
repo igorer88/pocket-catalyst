@@ -10,6 +10,10 @@ interface LoginResponse {
   access: string | null
   refresh: string | null
 }
+interface TokenRefreshResponse {
+  access: string
+  refresh?: string
+}
 
 interface AuthState {
   isAuthenticated: boolean
@@ -214,10 +218,10 @@ export const useAuthStore = create<AuthState>((set, get) => {
 
       try {
         console.log('Attempting to refresh token in authStore...')
-        const response = await apiClient.post<{
-          access: string
-          refresh?: string
-        }>('/token/refresh/', { refresh: currentRefreshToken })
+        const response = await apiClient.post<TokenRefreshResponse>(
+          '/token/refresh/',
+          { refresh: currentRefreshToken }
+        )
 
         const newAccessToken = response.data.access
         set({ authToken: newAccessToken })
