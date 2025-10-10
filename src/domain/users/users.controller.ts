@@ -12,6 +12,10 @@ import {
   Post
 } from '@nestjs/common'
 
+import { UpdateProfileDto } from '@/domain/profiles/dto'
+import type { ProfileWithDeserializedSettings } from '@/domain/profiles/types'
+import type { DeleteResponse } from '@/shared/interfaces'
+
 import { User } from './entities/user.entity'
 import { CreateUserDto, SetRolesDto, UpdateUserDto } from './dto'
 import { UsersService } from './users.service'
@@ -53,11 +57,13 @@ export class UsersController {
   }
 
   @Delete(':id')
-  async remove(@Param('id', ParseUUIDPipe) id: string): Promise<string> {
+  async remove(
+    @Param('id', ParseUUIDPipe) id: string
+  ): Promise<DeleteResponse> {
     return await this.usersService.remove(id)
   }
 
-  @Get(':id/recover')
+  @Patch(':id/recover')
   async recover(@Param('id', ParseUUIDPipe) id: string): Promise<unknown> {
     return await this.usersService.recover(id)
   }
@@ -71,5 +77,34 @@ export class UsersController {
     const { roleIds } = setRolesDto
 
     return await this.usersService.setRoles(id, roleIds)
+  }
+
+  @Get(':id/profile')
+  async getProfile(
+    @Param('id', ParseUUIDPipe) id: string
+  ): Promise<ProfileWithDeserializedSettings> {
+    return await this.usersService.getProfile(id)
+  }
+
+  @Patch(':id/profile')
+  async updateProfile(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateProfileDto: UpdateProfileDto
+  ): Promise<ProfileWithDeserializedSettings> {
+    return await this.usersService.updateProfile(id, updateProfileDto)
+  }
+
+  @Delete(':id/profile')
+  async deleteProfile(
+    @Param('id', ParseUUIDPipe) id: string
+  ): Promise<DeleteResponse> {
+    return await this.usersService.deleteProfile(id)
+  }
+
+  @Patch(':id/profile/recover')
+  async recoverProfile(
+    @Param('id', ParseUUIDPipe) id: string
+  ): Promise<ProfileWithDeserializedSettings> {
+    return await this.usersService.recoverProfile(id)
   }
 }

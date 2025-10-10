@@ -1,12 +1,21 @@
 import {
   BadRequestException,
+  GoneException,
   Injectable,
   Logger,
   NotFoundException
 } from '@nestjs/common'
 
+import { defaultProfileExtraSettings, Defaults } from '@/config'
+import { ProfileRepository } from '@/domain/profiles/profiles.repository'
+import { ProfilesService } from '@/domain/profiles/profiles.service'
+import type {
+  ProfileUpdateData,
+  ProfileWithDeserializedSettings
+} from '@/domain/profiles/types'
 import { RoleRepository } from '@/domain/roles/roles.repository'
 import { UserRoleRepository } from '@/domain/roles/user-role.repository'
+import type { DeleteResponse } from '@/shared/interfaces'
 
 import { User } from './entities/user.entity'
 import { UserRepository } from './repositories/user.repository'
@@ -24,7 +33,9 @@ export class UsersService {
     private readonly userRepository: UserRepository,
     private readonly userSecurityRepository: UserSecurityRepository,
     private readonly roleRepository: RoleRepository,
-    private readonly userRoleRepository: UserRoleRepository
+    private readonly userRoleRepository: UserRoleRepository,
+    private readonly profileRepository: ProfileRepository,
+    private readonly profilesService: ProfilesService
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<Partial<User>> {
@@ -41,6 +52,15 @@ export class UsersService {
       passwordHash,
       isActive: true
     })
+
+    // Create profile for the user with default values
+    const profile = this.profileRepository.create({
+      user,
+      locale: Defaults.Locale,
+      displayCurrency: Defaults.DisplayCurrency,
+      extraSettings: JSON.stringify(defaultProfileExtraSettings)
+    })
+    await this.profileRepository.save(profile)
 
     // Return a partial user without sensitive information
     const { passwordHash: _, ...result } = user
@@ -92,14 +112,20 @@ export class UsersService {
     return result
   }
 
-  async remove(id: string): Promise<string> {
+  async remove(id: string): Promise<DeleteResponse> {
     const user = await this.userRepository.findOne({ where: { id } })
     if (!user) {
       throw new NotFoundException(`User with ID '${id}' not found`)
     }
     await this.userRepository.softRemove(user)
 
-    return `User removed: ${user.id}`
+    return {
+      statusCode: 200,
+      message: 'User deleted successfully',
+      resource: `users/${id}`,
+      deleted: true,
+      timestamp: new Date().toISOString()
+    }
   }
 
   async recover(id: string): Promise<Partial<User>> {
@@ -147,6 +173,117 @@ export class UsersService {
       // Return updated user without sensitive information
       const updatedUser = await this.findOne(userId)
       return updatedUser
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async getProfile(userId: string): Promise<ProfileWithDeserializedSettings> {
+    try {
+      const user = await this.userRepository.findOne({
+        where: { id: userId },
+        relations: ['profile']
+      })
+      if (!user || !user.profile) {
+        throw new NotFoundException(
+          `User or profile with ID '${userId}' not found`
+        )
+      }
+
+      return await this.profilesService.findProfile(user.profile.id)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async updateProfile(
+    userId: string,
+    updateData: ProfileUpdateData
+  ): Promise<ProfileWithDeserializedSettings> {
+    try {
+      const user = await this.userRepository.findOne({
+        where: { id: userId },
+        relations: ['profile']
+      })
+      if (!user || !user.profile) {
+        throw new NotFoundException(
+          `User or profile with ID '${userId}' not found`
+        )
+      }
+
+      return await this.profilesService.updateProfile(
+        user.profile.id,
+        updateData
+      )
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async deleteProfile(userId: string): Promise<DeleteResponse> {
+    try {
+      // Check if user exists
+      const user = await this.userRepository.findOne({ where: { id: userId } })
+      if (!user) {
+        throw new NotFoundException(`User with ID '${userId}' not found`)
+      }
+
+      // Check if profile is already deleted
+      const deletedProfile =
+        await this.profileRepository.findDeletedProfileByUserId(userId)
+      if (deletedProfile) {
+        throw new GoneException(
+          `Profile for user '${userId}' is already deleted`
+        )
+      }
+
+      // Check if active profile exists
+      const activeProfile =
+        await this.profileRepository.findActiveProfileByUserId(userId)
+      if (!activeProfile) {
+        throw new NotFoundException(`Profile for user '${userId}' not found`)
+      }
+
+      await this.profilesService.remove(activeProfile.id)
+
+      return {
+        statusCode: 200,
+        message: 'Profile deleted successfully',
+        resource: `users/${userId}/profile`,
+        deleted: true,
+        timestamp: new Date().toISOString()
+      }
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async recoverProfile(
+    userId: string
+  ): Promise<ProfileWithDeserializedSettings> {
+    try {
+      const user = await this.userRepository.findOne({ where: { id: userId } })
+      if (!user) {
+        throw new NotFoundException(`User with ID '${userId}' not found`)
+      }
+
+      const deletedProfile =
+        await this.profileRepository.findDeletedProfileByUserId(userId)
+
+      if (!deletedProfile) {
+        throw new NotFoundException(
+          `No deleted profile found for user '${userId}'`
+        )
+      }
+
+      const recoveredProfile = await this.profilesService.recover(
+        deletedProfile.id
+      )
+
+      return {
+        ...recoveredProfile,
+        extraSettings: JSON.parse(recoveredProfile.extraSettings)
+      }
     } catch (error) {
       throw error
     }
