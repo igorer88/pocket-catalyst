@@ -35,4 +35,20 @@ export class UserRepository extends Repository<User> {
       throw error
     }
   }
+
+  public async findUserWithRoles(id: string): Promise<User | undefined> {
+    const user = await this.repository.findOne({
+      where: { id },
+      relations: ['userRoles', 'userRoles.role']
+    })
+
+    return user
+  }
+
+  public async findAllUsersWithRoles(): Promise<User[]> {
+    const users = await this.repository.find({
+      relations: ['userRoles', 'userRoles.role']
+    })
+    return users
+  }
 }

@@ -1,6 +1,8 @@
+import { Exclude, Expose } from 'class-transformer'
 import { Column, Entity, OneToMany, OneToOne, Unique } from 'typeorm'
 
 import type { Profile } from '@/domain/profiles/entities/profile.entity'
+import type { Role } from '@/domain/roles/entities/role.entity'
 import type { UserRole } from '@/domain/roles/entities/user-role.entity'
 import { BaseEntity } from '@/shared/entities/base.entity'
 
@@ -12,6 +14,7 @@ export class User extends BaseEntity {
   @Column({ type: 'varchar', length: 50, unique: true })
   email: string
 
+  @Exclude()
   @Column({ type: 'varchar', name: 'password_hash' })
   passwordHash: string
 
@@ -24,6 +27,12 @@ export class User extends BaseEntity {
   @OneToOne('UserSecurity')
   userSecurity: UserSecurity
 
+  @Exclude()
   @OneToMany('UserRole', 'user')
   userRoles: UserRole[]
+
+  @Expose()
+  get roles(): Role[] {
+    return this.userRoles ? this.userRoles.map(userRole => userRole.role) : []
+  }
 }

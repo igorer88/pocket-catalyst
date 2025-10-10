@@ -63,25 +63,22 @@ export class UsersService {
     await this.profileRepository.save(profile)
 
     // Return a partial user without sensitive information
-    const { passwordHash: _, ...result } = user
-    return result
+    return user
   }
 
   async findAll(): Promise<Partial<User>[]> {
-    const users = await this.userRepository.find()
+    const users = await this.userRepository.findAllUsersWithRoles()
     return users.map(user => {
-      const { passwordHash: _passwordHash, ...result } = user
-      return result
+      return user
     })
   }
 
   async findOne(id: string): Promise<Partial<User>> {
-    const user = await this.userRepository.findOne({ where: { id } })
+    const user = await this.userRepository.findUserWithRoles(id)
     if (!user) {
       throw new NotFoundException(`User with ID '${id}' not found`)
     }
-    const { passwordHash: _passwordHash, ...result } = user
-    return result
+    return user
   }
 
   async update(
@@ -108,8 +105,7 @@ export class UsersService {
     }
 
     const updatedUser = await this.userRepository.updateUser(id, data)
-    const { passwordHash: _passwordHash, ...result } = updatedUser
-    return result
+    return updatedUser
   }
 
   async remove(id: string): Promise<DeleteResponse> {
@@ -140,8 +136,7 @@ export class UsersService {
         )
       }
       const recoveredUser = await this.userRepository.recover(user)
-      const { passwordHash: _passwordHash, ...result } = recoveredUser
-      return result
+      return recoveredUser
     } catch (error) {
       throw error
     }
@@ -171,8 +166,8 @@ export class UsersService {
       await Promise.all(userRolePromises)
 
       // Return updated user without sensitive information
-      const updatedUser = await this.findOne(userId)
-      return updatedUser
+      const updatedUser = await this.userRepository.findUserWithRoles(userId)
+      return updatedUser as Partial<User>
     } catch (error) {
       throw error
     }

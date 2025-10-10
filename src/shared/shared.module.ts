@@ -1,4 +1,9 @@
-import { Global, Module, Scope } from '@nestjs/common'
+import {
+  ClassSerializerInterceptor,
+  Global,
+  Module,
+  Scope
+} from '@nestjs/common'
 import { APP_INTERCEPTOR } from '@nestjs/core'
 
 import { ErrorModule } from './errors/error.module'
@@ -8,6 +13,10 @@ import { LoggingInterceptor } from './interceptors'
 @Module({
   imports: [ErrorModule],
   providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ClassSerializerInterceptor
+    },
     {
       provide: APP_INTERCEPTOR,
       scope: Scope.REQUEST,

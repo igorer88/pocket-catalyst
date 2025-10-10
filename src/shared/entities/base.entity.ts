@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer'
 import {
   CreateDateColumn,
   DeleteDateColumn,
@@ -15,6 +16,7 @@ export abstract class BaseEntity {
   @UpdateDateColumn({ type: 'datetime', name: 'updated_at' })
   updatedAt: Date
 
+  @Exclude()
   @DeleteDateColumn({ type: 'datetime', name: 'deleted_at', nullable: true })
   deletedAt: Date
 }
