@@ -1,4 +1,11 @@
-import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common'
+import {
+  ArgumentsHost,
+  BadRequestException,
+  Catch,
+  ExceptionFilter,
+  HttpException,
+  NotFoundException
+} from '@nestjs/common'
 import { Request, Response } from 'express'
 
 import { ErrorResponse } from './error.interface'
@@ -12,7 +19,26 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const ctx = host.switchToHttp()
     const response = ctx.getResponse<Response>()
     const request = ctx.getRequest<Request>()
-    const clientException = await this.errorService.handleException(exception)
+
+    // Handle pathToRegexp errors based on request type
+    let processedException = exception
+    if (
+      !(exception instanceof HttpException) &&
+      (exception as { message?: string }).message?.includes('pathToRegexp')
+    ) {
+      const contentType = request.headers['content-type'] || ''
+      const hasBody = ['POST', 'PUT', 'PATCH'].includes(request.method)
+      if (contentType.includes('json') && hasBody) {
+        processedException = new BadRequestException(
+          'Invalid JSON in request body'
+        )
+      } else {
+        processedException = new NotFoundException('Not Found')
+      }
+    }
+
+    const clientException =
+      await this.errorService.handleException(processedException)
 
     clientException.logError(request.ip)
 
