@@ -10,17 +10,11 @@ import {
   Post
 } from '@nestjs/common'
 
-import { CheckRoles } from './decorators'
-// import { JwtAuthGuard } from '@/domain/auth/guards'
 import { CreateRoleDto, UpdateRoleDto } from './dto'
 import type { Role } from './entities'
-import { RoleTypes } from './enums'
-// import { RolesGuard } from './guards'
 import { RolesService } from './roles.service'
 
 @Controller('roles')
-@CheckRoles(RoleTypes.ADMIN)
-// @UseGuards(JwtAuthGuard, RolesGuard)
 export class RolesController {
   private logger = new Logger(this.constructor.name)
 
@@ -61,7 +55,7 @@ export class RolesController {
     return await this.rolesService.remove(id)
   }
 
-  @Get(':id/recover')
+  @Patch(':id/recover')
   async recover(@Param('id', ParseUUIDPipe) id: string): Promise<unknown> {
     return await this.rolesService.recover(id)
   }
