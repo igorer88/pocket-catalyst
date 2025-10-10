@@ -6,6 +6,7 @@ import { ServeStaticModule } from '@nestjs/serve-static'
 
 import { HealthCheckModule } from './config/health-check/health-check.module'
 import { DatabaseModule } from './database/database.module'
+import { ProfilesModule } from './domain/profiles/profiles.module'
 import { UsersModule } from './domain/users/users.module'
 import { SharedModule } from './shared/shared.module'
 import { apiConfig, dbConfig, getValidationSchema } from './config'
@@ -22,11 +23,11 @@ import { apiConfig, dbConfig, getValidationSchema } from './config'
       rootPath: join(__dirname, '..', 'web', 'dist'),
       exclude: ['/api*', '/docs*', '/health*']
     }),
-
     SharedModule,
     DatabaseModule,
     HealthCheckModule,
-    UsersModule
+    UsersModule,
+    ProfilesModule
   ]
 })
 export class AppModule {
