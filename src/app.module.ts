@@ -21,7 +21,7 @@ import { apiConfig, dbConfig, getValidationSchema } from './config'
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'web', 'dist'),
-      exclude: ['/api*', '/docs*', '/health*']
+      exclude: ['/api/(.*)', '/docs/(.*)', '/health/(.*)']
     }),
     SharedModule,
     DatabaseModule,
