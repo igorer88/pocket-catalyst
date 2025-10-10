@@ -3,11 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { IsNull, Not, Repository } from 'typeorm'
 
 import { Profile } from './entities/profile.entity'
-import type {
-  ProfileSerializable,
-  ProfileUpdateData,
-  ProfileWithDeserializedSettings
-} from './types'
+import type { ProfileUpdateData } from './types'
 
 @Injectable()
 export class ProfileRepository extends Repository<Profile> {
@@ -23,20 +19,11 @@ export class ProfileRepository extends Repository<Profile> {
     return this.repository.save(profile)
   }
 
-  async findProfile(
-    id: string,
-    serializeExtraSettings = false
-  ): Promise<ProfileSerializable> {
+  async findProfile(id: string): Promise<Profile | undefined> {
     try {
       const profile = await this.repository.findOne({ where: { id } })
       if (!profile) {
         throw new Error(`Profile with ID ${id} not found`)
-      }
-      if (!serializeExtraSettings) {
-        return {
-          ...profile,
-          extraSettings: JSON.parse(profile.extraSettings)
-        }
       }
 
       return profile
@@ -70,7 +57,7 @@ export class ProfileRepository extends Repository<Profile> {
   async updateProfile(
     id: string,
     updateData: ProfileUpdateData
-  ): Promise<ProfileWithDeserializedSettings> {
+  ): Promise<Profile> {
     const { extraSettings, ...otherData } = updateData
     const dataToUpdate: Partial<Profile> = {
       ...otherData
@@ -82,9 +69,10 @@ export class ProfileRepository extends Repository<Profile> {
           : JSON.stringify(extraSettings)
     }
     await this.repository.update(id, dataToUpdate)
-    return this.findProfile(
-      id,
-      false
-    ) as unknown as ProfileWithDeserializedSettings
+    const updatedProfile = await this.repository.findOne({ where: { id } })
+    if (!updatedProfile) {
+      throw new Error(`Profile with ID ${id} not found after update`)
+    }
+    return updatedProfile
   }
 }

@@ -30,7 +30,9 @@ export class ProfilesController {
     type: Profile
   })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad Request.' })
-  async create(@Body() createProfileDto: CreateProfileDto): Promise<Profile> {
+  async create(
+    @Body() createProfileDto: CreateProfileDto
+  ): Promise<Partial<Profile>> {
     try {
       return await this.profilesService.create(createProfileDto)
     } catch (error) {
@@ -45,7 +47,7 @@ export class ProfilesController {
     description: 'Return all profiles.',
     type: [Profile]
   })
-  async findAll(): Promise<Profile[]> {
+  async findAll(): Promise<Partial<Profile>[]> {
     try {
       return await this.profilesService.findAll()
     } catch (error) {
@@ -66,7 +68,7 @@ export class ProfilesController {
   })
   async findOne(
     @Param('id', ParseUUIDPipe) id: string
-  ): Promise<Profile | undefined> {
+  ): Promise<Partial<Profile> | undefined> {
     try {
       return await this.profilesService.findOne(id)
     } catch (error) {
@@ -88,7 +90,7 @@ export class ProfilesController {
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateProfileDto: UpdateProfileDto
-  ): Promise<Profile | undefined> {
+  ): Promise<Partial<Profile>> {
     try {
       return await this.profilesService.update(id, updateProfileDto)
     } catch (error) {
@@ -128,9 +130,7 @@ export class ProfilesController {
     status: HttpStatus.NOT_FOUND,
     description: 'Profile not found.'
   })
-  async recover(
-    @Param('id', ParseUUIDPipe) id: string
-  ): Promise<Profile | undefined> {
+  async recover(@Param('id', ParseUUIDPipe) id: string): Promise<Profile> {
     try {
       return await this.profilesService.recover(id)
     } catch (error) {

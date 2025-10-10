@@ -1,4 +1,5 @@
 import { GoneException, Injectable, NotFoundException } from '@nestjs/common'
+import { plainToInstance } from 'class-transformer'
 
 import { Profile } from '@/domain/profiles/entities/profile.entity'
 import { ProfileRepository } from '@/domain/profiles/profiles.repository'
@@ -15,7 +16,7 @@ import { UpdateProfileDto } from './dto/update-profile.dto'
 export class ProfilesService {
   constructor(private readonly profileRepository: ProfileRepository) {}
 
-  async create(createProfileDto: CreateProfileDto): Promise<Profile> {
+  async create(createProfileDto: CreateProfileDto): Promise<Partial<Profile>> {
     try {
       const profileData: Partial<Profile> = {
         ...createProfileDto,
@@ -23,27 +24,29 @@ export class ProfilesService {
           ? JSON.stringify(createProfileDto.extraSettings)
           : undefined
       }
-      return await this.profileRepository.createProfile(profileData)
+      const profile = await this.profileRepository.createProfile(profileData)
+      return plainToInstance(Profile, profile)
     } catch (error) {
       throw error
     }
   }
 
-  async findAll(): Promise<Profile[]> {
+  async findAll(): Promise<Partial<Profile>[]> {
     try {
-      return await this.profileRepository.find()
+      const profiles = await this.profileRepository.find()
+      return plainToInstance(Profile, profiles)
     } catch (error) {
       throw error
     }
   }
 
-  async findOne(id: string): Promise<Profile> {
+  async findOne(id: string): Promise<Partial<Profile>> {
     try {
       const profile = await this.profileRepository.findOne({ where: { id } })
       if (!profile) {
         throw new NotFoundException(`Profile with ID ${id} not found`)
       }
-      return profile
+      return plainToInstance(Profile, profile)
     } catch (error) {
       throw error
     }
@@ -52,7 +55,7 @@ export class ProfilesService {
   async update(
     id: string,
     updateProfileDto: UpdateProfileDto
-  ): Promise<Profile> {
+  ): Promise<Partial<Profile>> {
     try {
       const profile = await this.findOne(id)
       const { extraSettings, ...otherData } = updateProfileDto
@@ -61,7 +64,8 @@ export class ProfilesService {
         updateData.extraSettings = JSON.stringify(extraSettings)
       }
       await this.profileRepository.update(id, updateData)
-      return { ...profile, ...updateData } as Profile
+      const updatedProfile = { ...profile, ...updateData } as Profile
+      return plainToInstance(Profile, updatedProfile)
     } catch (error) {
       throw error
     }
@@ -107,7 +111,7 @@ export class ProfilesService {
       }
 
       await this.profileRepository.restore(id)
-      return deletedProfile
+      return plainToInstance(Profile, deletedProfile)
     } catch (error) {
       throw error
     }
@@ -115,9 +119,14 @@ export class ProfilesService {
 
   async findProfile(id: string): Promise<ProfileWithDeserializedSettings> {
     try {
-      return (await this.profileRepository.findProfile(
-        id
-      )) as unknown as ProfileWithDeserializedSettings
+      const profile = await this.profileRepository.findProfile(id)
+      if (!profile) {
+        throw new NotFoundException(`Profile with ID ${id} not found`)
+      }
+      return {
+        ...plainToInstance(Profile, profile),
+        extraSettings: JSON.parse(profile.extraSettings)
+      }
     } catch (error) {
       throw error
     }
@@ -128,7 +137,14 @@ export class ProfilesService {
     updateData: ProfileUpdateData
   ): Promise<ProfileWithDeserializedSettings> {
     try {
-      return await this.profileRepository.updateProfile(id, updateData)
+      const updatedProfile = await this.profileRepository.updateProfile(
+        id,
+        updateData
+      )
+      return {
+        ...plainToInstance(Profile, updatedProfile),
+        extraSettings: JSON.parse(updatedProfile.extraSettings)
+      }
     } catch (error) {
       throw error
     }
