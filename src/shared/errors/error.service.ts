@@ -52,23 +52,9 @@ export class ErrorService {
     } else if (exception instanceof SyntaxError) {
       formattedError = {
         message: 'Malformed JSON body',
-        details: exception.message,
-        status: 400,
-        errorCode: 'MALFORMED_JSON',
-        exception: exception,
-        stack: exception.stack,
-        context: {}
-      }
-    } else if (
-      exception instanceof TypeError &&
-      exception.stack &&
-      exception.stack.includes('path-to-regexp')
-    ) {
-      formattedError = {
-        message: 'Malformed JSON body',
         details: `The request body contains malformed JSON. Please ensure your JSON is valid and does not contain syntax errors like trailing commas or unquoted keys.`,
         status: 400,
-        errorCode: 'MALFORMED_REQUEST_PATH_OR_BODY',
+        errorCode: 'MALFORMED_JSON',
         exception: exception,
         stack: exception.stack,
         context: {}
