@@ -9,8 +9,7 @@ import { ApiError } from '@/utils'
 
 import env from './environment'
 
-const apiVersion = 'v1'
-const apiBasePath = env.API_BASE_URL + `/${apiVersion}/`
+const apiBasePath = env.API_BASE_URL + `/${env.API_VERSION}/`
 
 const apiClient = axios.create({
   baseURL: apiBasePath,
