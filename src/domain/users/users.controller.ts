@@ -17,7 +17,13 @@ import type { ProfileWithDeserializedSettings } from '@/domain/profiles/types'
 import type { DeleteResponse } from '@/shared/interfaces'
 
 import { User } from './entities/user.entity'
-import { CreateUserDto, SetRolesDto, UpdateUserDto } from './dto'
+import { UserSecurity } from './entities/user-security.entity'
+import {
+  CreateUserDto,
+  SetRolesDto,
+  UpdateUserDto,
+  UpdateUserSecurityDto
+} from './dto'
 import { UsersService } from './users.service'
 
 @Controller('users')
@@ -106,5 +112,20 @@ export class UsersController {
     @Param('id', ParseUUIDPipe) id: string
   ): Promise<ProfileWithDeserializedSettings> {
     return await this.usersService.recoverProfile(id)
+  }
+
+  @Get(':id/security')
+  async getUserSecurity(
+    @Param('id', ParseUUIDPipe) id: string
+  ): Promise<Partial<UserSecurity>> {
+    return await this.usersService.findUserSecurity(id)
+  }
+
+  @Patch(':id/security')
+  async updateUserSecurity(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateUserSecurityDto: UpdateUserSecurityDto
+  ): Promise<Partial<UserSecurity>> {
+    return await this.usersService.updateUserSecurity(id, updateUserSecurityDto)
   }
 }

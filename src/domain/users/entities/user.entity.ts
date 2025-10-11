@@ -24,7 +24,7 @@ export class User extends BaseEntity {
   @OneToOne('Profile', 'user')
   profile: Profile
 
-  @OneToOne('UserSecurity')
+  @OneToOne('UserSecurity', 'user')
   userSecurity: UserSecurity
 
   @Exclude()

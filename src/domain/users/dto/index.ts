@@ -1,3 +1,5 @@
 export * from './create-user.dto'
+export * from './create-user-security.dto'
 export * from './set-roles.dto'
 export * from './update-user.dto'
+export * from './update-user-security.dto'
