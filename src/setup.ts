@@ -38,9 +38,7 @@ export function setup(app: INestApplication): INestApplication {
     })
   )
 
-  // app.setGlobalPrefix('api', {
-  //   exclude: [{ path: 'health', method: RequestMethod.GET }]
-  // })
+  app.setGlobalPrefix('api')
 
   app.enableVersioning({
     type: VersioningType.URI,
