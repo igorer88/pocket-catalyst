@@ -1,20 +1,22 @@
+import { Exclude, Expose } from 'class-transformer'
 import { Column, Entity, Index, JoinColumn, OneToOne, Unique } from 'typeorm'
 
 import { BaseEntity } from '@/shared/entities/base.entity'
 
-import { User } from './user.entity'
+import type { User } from './user.entity'
 
 @Entity('UserSecurity')
 @Unique('UQ_USER_SECURITY_USER_ID', ['user'])
 @Unique('UQ_USER_SECURITY_RECOVERY_EMAIL', ['recoveryEmail'])
 @Index('IDX_USER_SECURITY_USER_ID', ['user'])
 export class UserSecurity extends BaseEntity {
-  @OneToOne(() => User)
+  @Exclude()
+  @OneToOne('User')
   @JoinColumn({ name: 'user_id' })
   user: User
 
-  @Column({ type: 'varchar', nullable: true, name: 'interface_lock_pin_hash' })
-  interfaceLockPinHash: string
+  @Column({ type: 'varchar', nullable: true, name: 'security_pin_hash' })
+  securityPinHash: string
 
   @Column({ type: 'int', default: 0, name: 'pin_attempts' })
   pinAttempts: number
@@ -26,9 +28,9 @@ export class UserSecurity extends BaseEntity {
     type: 'varchar',
     length: 100,
     nullable: true,
-    name: 'recovery_hint'
+    name: 'pin_hint'
   })
-  recoveryHint: string
+  pinHint: string
 
   @Column({
     type: 'varchar',
@@ -42,9 +44,8 @@ export class UserSecurity extends BaseEntity {
   @Column({ type: 'varchar', length: 15, nullable: true })
   phone: string
 
-  @Column({ type: 'boolean', default: false, name: 'biometric_enabled' })
-  biometricEnabled: boolean
-
-  @Column({ type: 'datetime', nullable: true, name: 'biometric_last_used' })
-  biometricLastUsed: Date
+  @Expose()
+  get userId(): string {
+    return this.user ? this.user.id : null
+  }
 }
