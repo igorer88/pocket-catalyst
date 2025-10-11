@@ -7,6 +7,9 @@ import { BaseEntity } from '@/shared/entities/base.entity'
 @Unique('UQ_PROFILES_USER_ID', ['user'])
 @Index('IDX_PROFILES_USER_ID', ['user'])
 export class Profile extends BaseEntity {
+  @Column({ type: 'uuid', name: 'user_id', nullable: false })
+  userId: string
+
   @OneToOne('User')
   @JoinColumn({ name: 'user_id' })
   user: User
