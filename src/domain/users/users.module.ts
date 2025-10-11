@@ -5,22 +5,22 @@ import { Profile } from '@/domain/profiles/entities/profile.entity'
 import { ProfilesModule } from '@/domain/profiles/profiles.module'
 import { Role } from '@/domain/roles/entities'
 import { RolesModule } from '@/domain/roles/roles.module'
+import { UserSecurityModule } from '@/domain/user-security/user-security.module'
 
 import { User } from './entities/user.entity'
-import { UserSecurity } from './entities/user-security.entity'
 import { UserRepository } from './repositories/user.repository'
-import { UserSecurityRepository } from './repositories/user-security.repository'
 import { UsersController } from './users.controller'
 import { UsersService } from './users.service'
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Role, UserSecurity, Profile]),
+    TypeOrmModule.forFeature([User, Role, Profile]),
     RolesModule,
-    ProfilesModule
+    ProfilesModule,
+    UserSecurityModule
   ],
-  providers: [UsersService, UserRepository, UserSecurityRepository],
+  providers: [UsersService, UserRepository],
   controllers: [UsersController],
-  exports: [UserRepository, UserSecurityRepository]
+  exports: [UserRepository]
 })
 export class UsersModule {}

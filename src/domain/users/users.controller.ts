@@ -14,23 +14,23 @@ import {
 
 import { UpdateProfileDto } from '@/domain/profiles/dto'
 import type { ProfileWithDeserializedSettings } from '@/domain/profiles/types'
+import { UpdateUserSecurityDto } from '@/domain/user-security/dto'
+import { UserSecurity } from '@/domain/user-security/entities/user-security.entity'
+import { UserSecurityService } from '@/domain/user-security/user-security.service'
 import type { DeleteResponse } from '@/shared/interfaces'
 
 import { User } from './entities/user.entity'
-import { UserSecurity } from './entities/user-security.entity'
-import {
-  CreateUserDto,
-  SetRolesDto,
-  UpdateUserDto,
-  UpdateUserSecurityDto
-} from './dto'
+import { CreateUserDto, SetRolesDto, UpdateUserDto } from './dto'
 import { UsersService } from './users.service'
 
 @Controller('users')
 export class UsersController {
   private logger = new Logger(this.constructor.name)
 
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly userSecurityService: UserSecurityService
+  ) {}
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto): Promise<Partial<User>> {
@@ -118,7 +118,7 @@ export class UsersController {
   async getUserSecurity(
     @Param('id', ParseUUIDPipe) id: string
   ): Promise<Partial<UserSecurity>> {
-    return await this.usersService.findUserSecurity(id)
+    return await this.userSecurityService.findUserSecurity(id)
   }
 
   @Patch(':id/security')
@@ -126,6 +126,9 @@ export class UsersController {
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateUserSecurityDto: UpdateUserSecurityDto
   ): Promise<Partial<UserSecurity>> {
-    return await this.usersService.updateUserSecurity(id, updateUserSecurityDto)
+    return await this.userSecurityService.updateUserSecurity(
+      id,
+      updateUserSecurityDto
+    )
   }
 }

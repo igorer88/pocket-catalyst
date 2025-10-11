@@ -4,9 +4,8 @@ import { Column, Entity, OneToMany, OneToOne, Unique } from 'typeorm'
 import type { Profile } from '@/domain/profiles/entities/profile.entity'
 import type { Role } from '@/domain/roles/entities/role.entity'
 import type { UserRole } from '@/domain/roles/entities/user-role.entity'
+import type { UserSecurity } from '@/domain/user-security/entities/user-security.entity'
 import { BaseEntity } from '@/shared/entities/base.entity'
-
-import type { UserSecurity } from './user-security.entity'
 
 @Entity('Users')
 @Unique('UQ_USERS_EMAIL', ['email'])

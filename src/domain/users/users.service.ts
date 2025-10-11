@@ -5,7 +5,7 @@ import {
   Logger,
   NotFoundException
 } from '@nestjs/common'
-import { instanceToPlain, plainToInstance } from 'class-transformer'
+import { plainToInstance } from 'class-transformer'
 
 import { defaultProfileExtraSettings, Defaults } from '@/config'
 import { ProfileRepository } from '@/domain/profiles/profiles.repository'
@@ -16,13 +16,12 @@ import type {
 } from '@/domain/profiles/types'
 import { RoleRepository } from '@/domain/roles/roles.repository'
 import { UserRoleRepository } from '@/domain/roles/user-role.repository'
+import { UserSecurityRepository } from '@/domain/user-security/repositories/user-security.repository'
 import type { DeleteResponse } from '@/shared/interfaces'
 
 import { User } from './entities/user.entity'
-import { UserSecurity } from './entities/user-security.entity'
 import { UserRepository } from './repositories/user.repository'
-import { UserSecurityRepository } from './repositories/user-security.repository'
-import { CreateUserDto, UpdateUserDto, UpdateUserSecurityDto } from './dto'
+import { CreateUserDto, UpdateUserDto } from './dto'
 
 @Injectable()
 export class UsersService {
@@ -289,64 +288,5 @@ export class UsersService {
     } catch (error) {
       throw error
     }
-  }
-
-  async findUserSecurity(userId: string): Promise<Partial<UserSecurity>> {
-    // First, ensure the user exists.
-    const user = await this.userRepository.findOne({ where: { id: userId } })
-    if (!user) {
-      throw new NotFoundException(`User with ID '${userId}' not found`)
-    }
-
-    let security = await this.userSecurityRepository.findOne({
-      where: { user: { id: userId } },
-      relations: ['user']
-    })
-
-    if (!security) {
-      // This case should ideally not happen if user creation is robust
-      // But as a safeguard, we can create a default security record
-      const newSecurity = this.userSecurityRepository.create({ user })
-      await this.userSecurityRepository.save(newSecurity)
-      // Reload to get the relation
-      security = await this.userSecurityRepository.findOne({
-        where: { id: newSecurity.id },
-        relations: ['user']
-      })
-    }
-
-    return instanceToPlain(security) as Partial<UserSecurity>
-  }
-
-  async updateUserSecurity(
-    userId: string,
-    updateUserSecurityDto: UpdateUserSecurityDto
-  ): Promise<Partial<UserSecurity>> {
-    // First, ensure the user exists.
-    const user = await this.userRepository.findOne({ where: { id: userId } })
-    if (!user) {
-      throw new NotFoundException(`User with ID '${userId}' not found`)
-    }
-
-    let security = await this.userSecurityRepository.findOne({
-      where: { user: { id: userId } }
-    })
-
-    if (!security) {
-      // Create if it doesn't exist
-      security = this.userSecurityRepository.create({ user })
-    }
-
-    Object.assign(security, updateUserSecurityDto)
-
-    const updatedSecurity = await this.userSecurityRepository.save(security)
-
-    // We need to reload it to get the user relation for the getter
-    const reloadedSecurity = await this.userSecurityRepository.findOne({
-      where: { id: updatedSecurity.id },
-      relations: ['user']
-    })
-
-    return instanceToPlain(reloadedSecurity) as Partial<UserSecurity>
   }
 }

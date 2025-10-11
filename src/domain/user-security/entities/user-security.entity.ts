@@ -1,9 +1,8 @@
 import { Exclude, Expose } from 'class-transformer'
 import { Column, Entity, Index, JoinColumn, OneToOne, Unique } from 'typeorm'
 
+import type { User } from '@/domain/users/entities/user.entity'
 import { BaseEntity } from '@/shared/entities/base.entity'
-
-import type { User } from './user.entity'
 
 @Entity('UserSecurity')
 @Unique('UQ_USER_SECURITY_USER_ID', ['user'])
@@ -15,6 +14,7 @@ export class UserSecurity extends BaseEntity {
   @JoinColumn({ name: 'user_id' })
   user: User
 
+  @Exclude()
   @Column({ type: 'varchar', nullable: true, name: 'security_pin_hash' })
   securityPinHash: string
 
