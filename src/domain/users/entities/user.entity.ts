@@ -32,7 +32,5 @@ export class User extends BaseEntity {
   userRoles: UserRole[]
 
   @Expose()
-  get roles(): Role[] {
-    return this.userRoles ? this.userRoles.map(userRole => userRole.role) : []
-  }
+  roles: Role[]
 }

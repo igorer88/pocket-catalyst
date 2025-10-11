@@ -55,6 +55,9 @@ export class UsersService {
       isActive: true
     })
 
+    // Initialize roles for new user
+    user.roles = []
+
     // Create profile for the user with default values
     const profile = this.profileRepository.create({
       user,

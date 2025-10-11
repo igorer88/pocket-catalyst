@@ -42,6 +42,12 @@ export class UserRepository extends Repository<User> {
       relations: ['userRoles', 'userRoles.role']
     })
 
+    if (user) {
+      user.roles = user.userRoles
+        ? user.userRoles.map(userRole => userRole.role)
+        : []
+    }
+
     return user
   }
 
@@ -49,6 +55,11 @@ export class UserRepository extends Repository<User> {
     const users = await this.repository.find({
       relations: ['userRoles', 'userRoles.role']
     })
-    return users
+    return users.map(user => {
+      user.roles = user.userRoles
+        ? user.userRoles.map(userRole => userRole.role)
+        : []
+      return user
+    })
   }
 }
