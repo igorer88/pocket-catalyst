@@ -5,7 +5,7 @@ import {
   Logger,
   NotFoundException
 } from '@nestjs/common'
-import { instanceToPlain } from 'class-transformer'
+import { instanceToPlain, plainToInstance } from 'class-transformer'
 
 import { defaultProfileExtraSettings, Defaults } from '@/config'
 import { ProfileRepository } from '@/domain/profiles/profiles.repository'
@@ -69,14 +69,12 @@ export class UsersService {
     await this.userSecurityRepository.save(security)
 
     // Return a partial user without sensitive information
-    return user
+    return plainToInstance(User, user)
   }
 
   async findAll(): Promise<Partial<User>[]> {
     const users = await this.userRepository.findAllUsersWithRoles()
-    return users.map(user => {
-      return user
-    })
+    return users.map(user => plainToInstance(User, user))
   }
 
   async findOne(id: string): Promise<Partial<User>> {
@@ -84,7 +82,7 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException(`User with ID '${id}' not found`)
     }
-    return user
+    return plainToInstance(User, user)
   }
 
   async update(
@@ -111,7 +109,7 @@ export class UsersService {
     }
 
     const updatedUser = await this.userRepository.updateUser(id, data)
-    return updatedUser
+    return plainToInstance(User, updatedUser)
   }
 
   async remove(id: string): Promise<DeleteResponse> {
@@ -142,7 +140,7 @@ export class UsersService {
         )
       }
       const recoveredUser = await this.userRepository.recover(user)
-      return recoveredUser
+      return plainToInstance(User, recoveredUser)
     } catch (error) {
       throw error
     }
@@ -173,7 +171,7 @@ export class UsersService {
 
       // Return updated user without sensitive information
       const updatedUser = await this.userRepository.findUserWithRoles(userId)
-      return updatedUser as Partial<User>
+      return plainToInstance(User, updatedUser)
     } catch (error) {
       throw error
     }
