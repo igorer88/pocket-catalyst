@@ -55,12 +55,21 @@ export class RolesService {
     }
   }
 
-  async remove(id: string): Promise<string> {
+  async remove(id: string): Promise<Partial<Role>> {
     try {
       const role = await this.findOne(id)
       await this.roleRepository.softRemove(role)
 
-      return `Role removed: ${role.id}`
+      // Return the soft-deleted role with deletedAt
+      const deletedRole = await this.roleRepository.findOne({
+        where: { id },
+        withDeleted: true
+      })
+
+      return {
+        ...deletedRole,
+        deletedAt: deletedRole.deletedAt
+      }
     } catch (error) {
       throw error
     }

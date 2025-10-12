@@ -13,12 +13,12 @@ import {
 } from '@nestjs/common'
 
 import { UpdateProfileDto } from '@/domain/profiles/dto'
+import { Profile } from '@/domain/profiles/entities/profile.entity'
 import { ProfilesService } from '@/domain/profiles/profiles.service'
 import type { ProfileWithDeserializedSettings } from '@/domain/profiles/types'
 import { UpdateUserSecurityDto } from '@/domain/user-security/dto'
 import { UserSecurity } from '@/domain/user-security/entities/user-security.entity'
 import { UserSecurityService } from '@/domain/user-security/user-security.service'
-import type { DeleteResponse } from '@/shared/interfaces'
 
 import { User } from './entities/user.entity'
 import { CreateUserDto, SetRolesDto, UpdateUserDto } from './dto'
@@ -65,9 +65,7 @@ export class UsersController {
   }
 
   @Delete(':id')
-  async remove(
-    @Param('id', ParseUUIDPipe) id: string
-  ): Promise<DeleteResponse> {
+  async remove(@Param('id', ParseUUIDPipe) id: string): Promise<Partial<User>> {
     return await this.usersService.remove(id)
   }
 
@@ -108,7 +106,7 @@ export class UsersController {
   @Delete(':id/profile')
   async deleteProfile(
     @Param('id', ParseUUIDPipe) id: string
-  ): Promise<DeleteResponse> {
+  ): Promise<Partial<Profile>> {
     return await this.profilesService.deleteProfileByUserId(id)
   }
 

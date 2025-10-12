@@ -192,7 +192,7 @@ export class ProfilesService {
     }
   }
 
-  async deleteProfileByUserId(userId: string): Promise<DeleteResponse> {
+  async deleteProfileByUserId(userId: string): Promise<Partial<Profile>> {
     try {
       // Check if profile is already deleted
       const deletedProfile =
@@ -212,12 +212,16 @@ export class ProfilesService {
 
       await this.profileRepository.softDelete(activeProfile.id)
 
+      // Return the soft-deleted profile with deletedAt
+      const softDeletedProfile = await this.profileRepository.findOne({
+        where: { id: activeProfile.id },
+        withDeleted: true
+      })
+
       return {
-        statusCode: 200,
-        message: 'Profile deleted successfully',
-        resource: `users/${userId}/profile`,
-        deleted: true,
-        timestamp: new Date().toISOString()
+        ...plainToInstance(Profile, softDeletedProfile),
+        extraSettings: JSON.parse(softDeletedProfile.extraSettings),
+        deletedAt: softDeletedProfile.deletedAt
       }
     } catch (error) {
       throw error

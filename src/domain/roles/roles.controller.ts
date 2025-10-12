@@ -51,7 +51,7 @@ export class RolesController {
   }
 
   @Delete(':id')
-  async remove(@Param('id', ParseUUIDPipe) id: string): Promise<string> {
+  async remove(@Param('id', ParseUUIDPipe) id: string): Promise<Partial<Role>> {
     return await this.rolesService.remove(id)
   }
 

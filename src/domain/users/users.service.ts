@@ -11,7 +11,6 @@ import { ProfileRepository } from '@/domain/profiles/profiles.repository'
 import { RoleRepository } from '@/domain/roles/roles.repository'
 import { UserRoleRepository } from '@/domain/roles/user-role.repository'
 import { UserSecurityRepository } from '@/domain/user-security/repositories/user-security.repository'
-import type { DeleteResponse } from '@/shared/interfaces'
 
 import { User } from './entities/user.entity'
 import { UserRepository } from './repositories/user.repository'
@@ -107,19 +106,22 @@ export class UsersService {
     return plainToInstance(User, updatedUser)
   }
 
-  async remove(id: string): Promise<DeleteResponse> {
+  async remove(id: string): Promise<Partial<User>> {
     const user = await this.userRepository.findOne({ where: { id } })
     if (!user) {
       throw new NotFoundException(`User with ID '${id}' not found`)
     }
     await this.userRepository.softRemove(user)
 
+    // Return the soft-deleted user with deletedAt
+    const deletedUser = await this.userRepository.findOne({
+      where: { id },
+      withDeleted: true
+    })
+
     return {
-      statusCode: 200,
-      message: 'User deleted successfully',
-      resource: `users/${id}`,
-      deleted: true,
-      timestamp: new Date().toISOString()
+      ...plainToInstance(User, deletedUser),
+      deletedAt: deletedUser.deletedAt
     }
   }
 
