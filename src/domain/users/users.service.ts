@@ -1,6 +1,5 @@
 import {
   BadRequestException,
-  GoneException,
   Injectable,
   Logger,
   NotFoundException
@@ -9,11 +8,6 @@ import { plainToInstance } from 'class-transformer'
 
 import { defaultProfileExtraSettings, Defaults } from '@/config'
 import { ProfileRepository } from '@/domain/profiles/profiles.repository'
-import { ProfilesService } from '@/domain/profiles/profiles.service'
-import type {
-  ProfileUpdateData,
-  ProfileWithDeserializedSettings
-} from '@/domain/profiles/types'
 import { RoleRepository } from '@/domain/roles/roles.repository'
 import { UserRoleRepository } from '@/domain/roles/user-role.repository'
 import { UserSecurityRepository } from '@/domain/user-security/repositories/user-security.repository'
@@ -35,8 +29,7 @@ export class UsersService {
     private readonly userSecurityRepository: UserSecurityRepository,
     private readonly roleRepository: RoleRepository,
     private readonly userRoleRepository: UserRoleRepository,
-    private readonly profileRepository: ProfileRepository,
-    private readonly profilesService: ProfilesService
+    private readonly profileRepository: ProfileRepository
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<Partial<User>> {
@@ -174,117 +167,6 @@ export class UsersService {
       // Return updated user without sensitive information
       const updatedUser = await this.userRepository.findUserWithRoles(userId)
       return plainToInstance(User, updatedUser)
-    } catch (error) {
-      throw error
-    }
-  }
-
-  async getProfile(userId: string): Promise<ProfileWithDeserializedSettings> {
-    try {
-      const user = await this.userRepository.findOne({
-        where: { id: userId },
-        relations: ['profile']
-      })
-      if (!user || !user.profile) {
-        throw new NotFoundException(
-          `User or profile with ID '${userId}' not found`
-        )
-      }
-
-      return await this.profilesService.findProfile(user.profile.id)
-    } catch (error) {
-      throw error
-    }
-  }
-
-  async updateProfile(
-    userId: string,
-    updateData: ProfileUpdateData
-  ): Promise<ProfileWithDeserializedSettings> {
-    try {
-      const user = await this.userRepository.findOne({
-        where: { id: userId },
-        relations: ['profile']
-      })
-      if (!user || !user.profile) {
-        throw new NotFoundException(
-          `User or profile with ID '${userId}' not found`
-        )
-      }
-
-      return await this.profilesService.updateProfile(
-        user.profile.id,
-        updateData
-      )
-    } catch (error) {
-      throw error
-    }
-  }
-
-  async deleteProfile(userId: string): Promise<DeleteResponse> {
-    try {
-      // Check if user exists
-      const user = await this.userRepository.findOne({ where: { id: userId } })
-      if (!user) {
-        throw new NotFoundException(`User with ID '${userId}' not found`)
-      }
-
-      // Check if profile is already deleted
-      const deletedProfile =
-        await this.profileRepository.findDeletedProfileByUserId(userId)
-      if (deletedProfile) {
-        throw new GoneException(
-          `Profile for user '${userId}' is already deleted`
-        )
-      }
-
-      // Check if active profile exists
-      const activeProfile =
-        await this.profileRepository.findActiveProfileByUserId(userId)
-      if (!activeProfile) {
-        throw new NotFoundException(`Profile for user '${userId}' not found`)
-      }
-
-      await this.profilesService.remove(activeProfile.id)
-
-      return {
-        statusCode: 200,
-        message: 'Profile deleted successfully',
-        resource: `users/${userId}/profile`,
-        deleted: true,
-        timestamp: new Date().toISOString()
-      }
-    } catch (error) {
-      throw error
-    }
-  }
-
-  async recoverProfile(
-    userId: string
-  ): Promise<ProfileWithDeserializedSettings> {
-    try {
-      const user = await this.userRepository.findOne({ where: { id: userId } })
-      if (!user) {
-        throw new NotFoundException(`User with ID '${userId}' not found`)
-      }
-
-      const deletedProfile =
-        await this.profileRepository.findDeletedProfileByUserId(userId)
-
-      if (!deletedProfile) {
-        throw new NotFoundException(
-          `No deleted profile found for user '${userId}'`
-        )
-      }
-
-      const recoveredProfile = await this.profilesService.recover(
-        deletedProfile.id
-      )
-
-      return {
-        ...recoveredProfile,
-        extraSettings: JSON.parse(recoveredProfile.extraSettings)
-      }
     } catch (error) {
       throw error
     }

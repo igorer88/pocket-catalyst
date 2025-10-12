@@ -149,4 +149,105 @@ export class ProfilesService {
       throw error
     }
   }
+
+  async findProfileByUserId(
+    userId: string
+  ): Promise<ProfileWithDeserializedSettings> {
+    try {
+      const profile =
+        await this.profileRepository.findActiveProfileByUserId(userId)
+      if (!profile) {
+        throw new NotFoundException(`Profile for user ID ${userId} not found`)
+      }
+      return {
+        ...plainToInstance(Profile, profile),
+        extraSettings: JSON.parse(profile.extraSettings)
+      }
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async updateProfileByUserId(
+    userId: string,
+    updateData: ProfileUpdateData
+  ): Promise<ProfileWithDeserializedSettings> {
+    try {
+      const profile =
+        await this.profileRepository.findActiveProfileByUserId(userId)
+      if (!profile) {
+        throw new NotFoundException(`Profile for user ID ${userId} not found`)
+      }
+
+      const updatedProfile = await this.profileRepository.updateProfile(
+        profile.id,
+        updateData
+      )
+      return {
+        ...plainToInstance(Profile, updatedProfile),
+        extraSettings: JSON.parse(updatedProfile.extraSettings)
+      }
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async deleteProfileByUserId(userId: string): Promise<DeleteResponse> {
+    try {
+      // Check if profile is already deleted
+      const deletedProfile =
+        await this.profileRepository.findDeletedProfileByUserId(userId)
+      if (deletedProfile) {
+        throw new GoneException(
+          `Profile for user '${userId}' is already deleted`
+        )
+      }
+
+      // Check if active profile exists
+      const activeProfile =
+        await this.profileRepository.findActiveProfileByUserId(userId)
+      if (!activeProfile) {
+        throw new NotFoundException(`Profile for user '${userId}' not found`)
+      }
+
+      await this.profileRepository.softDelete(activeProfile.id)
+
+      return {
+        statusCode: 200,
+        message: 'Profile deleted successfully',
+        resource: `users/${userId}/profile`,
+        deleted: true,
+        timestamp: new Date().toISOString()
+      }
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async recoverProfileByUserId(
+    userId: string
+  ): Promise<ProfileWithDeserializedSettings> {
+    try {
+      const deletedProfile =
+        await this.profileRepository.findDeletedProfileByUserId(userId)
+
+      if (!deletedProfile) {
+        throw new NotFoundException(
+          `No deleted profile found for user '${userId}'`
+        )
+      }
+
+      await this.profileRepository.restore(deletedProfile.id)
+      const recoveredProfile = await this.profileRepository.findOne({
+        where: { id: deletedProfile.id }
+      })
+
+      return {
+        ...plainToInstance(Profile, recoveredProfile),
+        extraSettings: JSON.parse(recoveredProfile.extraSettings)
+      }
+    } catch (error) {
+      throw error
+    }
+  }
 }

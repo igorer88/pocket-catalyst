@@ -13,6 +13,7 @@ import {
 } from '@nestjs/common'
 
 import { UpdateProfileDto } from '@/domain/profiles/dto'
+import { ProfilesService } from '@/domain/profiles/profiles.service'
 import type { ProfileWithDeserializedSettings } from '@/domain/profiles/types'
 import { UpdateUserSecurityDto } from '@/domain/user-security/dto'
 import { UserSecurity } from '@/domain/user-security/entities/user-security.entity'
@@ -29,7 +30,8 @@ export class UsersController {
 
   constructor(
     private readonly usersService: UsersService,
-    private readonly userSecurityService: UserSecurityService
+    private readonly userSecurityService: UserSecurityService,
+    private readonly profilesService: ProfilesService
   ) {}
 
   @Post()
@@ -89,7 +91,7 @@ export class UsersController {
   async getProfile(
     @Param('id', ParseUUIDPipe) id: string
   ): Promise<ProfileWithDeserializedSettings> {
-    return await this.usersService.getProfile(id)
+    return await this.profilesService.findProfileByUserId(id)
   }
 
   @Patch(':id/profile')
@@ -97,21 +99,24 @@ export class UsersController {
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateProfileDto: UpdateProfileDto
   ): Promise<ProfileWithDeserializedSettings> {
-    return await this.usersService.updateProfile(id, updateProfileDto)
+    return await this.profilesService.updateProfileByUserId(
+      id,
+      updateProfileDto
+    )
   }
 
   @Delete(':id/profile')
   async deleteProfile(
     @Param('id', ParseUUIDPipe) id: string
   ): Promise<DeleteResponse> {
-    return await this.usersService.deleteProfile(id)
+    return await this.profilesService.deleteProfileByUserId(id)
   }
 
   @Patch(':id/profile/recover')
   async recoverProfile(
     @Param('id', ParseUUIDPipe) id: string
   ): Promise<ProfileWithDeserializedSettings> {
-    return await this.usersService.recoverProfile(id)
+    return await this.profilesService.recoverProfileByUserId(id)
   }
 
   @Get(':id/security')
