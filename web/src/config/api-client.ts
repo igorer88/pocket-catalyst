@@ -4,7 +4,6 @@ import axios, {
   AxiosRequestHeaders
 } from 'axios'
 
-import { useAuthStore } from '@/stores/authStore'
 import { ApiError } from '@/utils'
 
 import env from './environment'
@@ -23,9 +22,42 @@ interface RetryableAxiosRequestConfig extends AxiosRequestConfig {
 
 apiClient.defaults.headers.common['Content-Type'] = 'application/json'
 
+// Function to get auth token from authStore
+const getAuthToken = (): string | null => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { useAuthStore } = require('@/stores/authStore')
+    return useAuthStore.getState().getAuthToken()
+  } catch {
+    return null
+  }
+}
+
+// Function to handle token refresh from authStore
+const handleTokenRefresh = async (): Promise<string | null> => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { useAuthStore } = require('@/stores/authStore')
+    return await useAuthStore.getState().handleTokenRefresh()
+  } catch {
+    return null
+  }
+}
+
+// Function to logout from authStore
+const logout = (): void => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { useAuthStore } = require('@/stores/authStore')
+    useAuthStore.getState().logout()
+  } catch {
+    // Ignore if store is not available
+  }
+}
+
 apiClient.interceptors.request.use(
   config => {
-    const authToken = useAuthStore.getState().authToken
+    const authToken = getAuthToken()
     const publicEndpoints = ['/token/', '/token/refresh/']
     if (
       authToken &&
@@ -59,9 +91,7 @@ apiClient.interceptors.response.use(
         console.log('Token expired, attempting refresh via authStore...')
 
         try {
-          const newAccessToken = await useAuthStore
-            .getState()
-            .handleTokenRefresh()
+          const newAccessToken = await handleTokenRefresh()
 
           if (newAccessToken) {
             console.log(
@@ -86,7 +116,7 @@ apiClient.interceptors.response.use(
             'Error during token refresh attempt:',
             refreshCatchError
           )
-          useAuthStore.getState().logout()
+          logout()
           return Promise.reject(
             new ApiError(
               'Session refresh failed. Please login again.',
@@ -98,6 +128,21 @@ apiClient.interceptors.response.use(
       }
     }
 
+    if (axios.isAxiosError(error)) {
+      const message = (error.response?.data?.detail as string) || error.message
+      const status = error.response?.status
+      const data = error.response?.data as object
+      return Promise.reject(new ApiError(message, status, data))
+    } else if (error instanceof Error) {
+      return Promise.reject(new Error(error.message))
+    }
+    return Promise.reject(new Error('An unexpected error occurred'))
+  }
+)
+
+apiClient.interceptors.response.use(
+  response => response,
+  error => {
     if (axios.isAxiosError(error)) {
       const message = (error.response?.data?.detail as string) || error.message
       const status = error.response?.status
