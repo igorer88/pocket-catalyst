@@ -4,13 +4,11 @@ import type { Profile } from '@/@types'
 import { apiClient } from '@/config'
 import { ApiError } from '@/utils'
 
-import { useAuthStore } from './authStore'
-
 interface ProfileState {
   profile: Profile | null
   isLoading: boolean
   error: string | null
-  fetchProfile: () => Promise<void>
+  fetchProfile: (userId: string, isAuthenticated?: boolean) => Promise<void>
   setProfile: (profile: Profile | null) => void
   clearProfile: () => void
 }
@@ -19,8 +17,11 @@ export const useProfileStore = create<ProfileState>(set => ({
   profile: null,
   isLoading: false,
   error: null,
-  fetchProfile: async (): Promise<void> => {
-    if (!useAuthStore.getState().isAuthenticated) {
+  fetchProfile: async (
+    userId: string,
+    isAuthenticated = true
+  ): Promise<void> => {
+    if (!isAuthenticated) {
       console.log('User not authenticated, skipping profile fetch.')
       set({ profile: null, isLoading: false, error: null })
       return
@@ -28,7 +29,7 @@ export const useProfileStore = create<ProfileState>(set => ({
 
     set({ isLoading: true, error: null })
     try {
-      const response = await apiClient.get<Profile>('/profiles/me/')
+      const response = await apiClient.get<Profile>(`users/${userId}/profile`)
       set({ profile: response.data, isLoading: false })
     } catch (err: unknown) {
       const errorMsg = (err as ApiError)?.message || 'Failed to fetch profile'

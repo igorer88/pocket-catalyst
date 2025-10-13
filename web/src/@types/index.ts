@@ -12,9 +12,13 @@ export interface Profile {
   id: number
   user: number
   username: string
+  firstName: string
+  lastName: string
+  email: string
+  language: string
   displayCurrency: string
   createdAt: string
-  modifiedAt: string
+  updatedAt: string
 }
 
 export interface Account {
