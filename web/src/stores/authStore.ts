@@ -1,7 +1,8 @@
 import { create } from 'zustand'
 
 import { User } from '@/@types'
-import { apiClient, environment } from '@/config'
+import { environment } from '@/config'
+import apiClient from '@/config/api-client'
 import { ApiError } from '@/utils'
 
 import { useProfileStore } from './profileStore'
@@ -13,6 +14,16 @@ interface LoginResponse {
 interface TokenRefreshResponse {
   access: string
   refresh?: string
+}
+
+const demoUser: User = {
+  id: '455be978-dd76-4456-bc23-158f8c2bb970',
+  username: 'demo',
+  email: 'demo@example.com',
+  first_name: 'Demo',
+  last_name: 'User',
+  date_joined: '2023-01-01T00:00:00Z',
+  is_active: true
 }
 
 interface AuthState {
@@ -30,6 +41,7 @@ interface AuthState {
   checkAuth: () => void
   handleTokenRefresh: () => Promise<string | null>
   setUser: (userData: User | null) => void
+  getAuthToken: () => string | null
 }
 
 const getInitialTokens = (): {
@@ -94,16 +106,6 @@ export const useAuthStore = create<AuthState>((set, get) => {
         username === 'demo' &&
         password === 'demo'
       ) {
-        const demoUser: User = {
-          id: 1,
-          username: 'demo',
-          email: 'demo@example.com',
-          first_name: 'Demo',
-          last_name: 'User',
-          date_joined: '2023-01-01T00:00:00Z',
-          is_active: true
-        }
-
         set({
           isAuthenticated: true,
           user: demoUser,
@@ -169,26 +171,16 @@ export const useAuthStore = create<AuthState>((set, get) => {
             localStorage.setItem('authToken', access)
             localStorage.setItem('refreshToken', refresh)
           }
-          await useProfileStore.getState().fetchProfile()
-          const profileData = useProfileStore.getState().profile
-          if (profileData) {
-            const userData: User = {
-              id: profileData.user,
-              username: profileData.username,
-              email: '',
-              first_name: '',
-              last_name: '',
-              date_joined: '',
-              is_active: true
-            }
-            set({ user: userData })
-
-            if (typeof window !== 'undefined') {
-              localStorage.setItem('userData', JSON.stringify(userData))
-            }
-          } else {
-            set({ user: null })
+          // TODO: The API should return the user object on login.
+          // For now, we'll assume the demo user is the one logging in.
+          set({ user: demoUser })
+          if (typeof window !== 'undefined') {
+            localStorage.setItem('userData', JSON.stringify(demoUser))
           }
+          await useProfileStore
+            .getState()
+            .fetchProfile(demoUser.id.toString(), true)
+
           return true
         }
         throw new Error('Invalid token response from server.')
@@ -209,6 +201,7 @@ export const useAuthStore = create<AuthState>((set, get) => {
     },
     logout: internalLogout,
     setUser: (userData: User | null): void => set({ user: userData }),
+    getAuthToken: (): string | null => get().authToken,
     handleTokenRefresh: async (): Promise<string | null> => {
       const currentRefreshToken = get().refreshToken
       if (!currentRefreshToken) {
@@ -245,27 +238,12 @@ export const useAuthStore = create<AuthState>((set, get) => {
       const { authToken, refreshToken } = getInitialTokens()
       if (authToken && refreshToken) {
         set({ isAuthenticated: true, authToken, refreshToken })
-        void useProfileStore
-          .getState()
-          .fetchProfile()
-          .then(() => {
-            const profileData = useProfileStore.getState().profile
-            if (profileData) {
-              const userData: User = {
-                id: profileData.user,
-                username: profileData.username,
-                email: '',
-                first_name: '',
-                last_name: '',
-                date_joined: '',
-                is_active: true
-              }
-              set({ user: userData })
-            }
-          })
-          .catch(err => {
-            console.error('Error fetching profile during checkAuth:', err)
-          })
+        const currentUser = get().user
+        if (currentUser?.id) {
+          void useProfileStore
+            .getState()
+            .fetchProfile(String(currentUser.id), get().isAuthenticated)
+        }
       } else {
         get().logout()
       }
