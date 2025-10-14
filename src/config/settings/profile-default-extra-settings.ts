@@ -1,19 +1,22 @@
 export const defaultProfileExtraSettings = {
-  theme: 'dark',
-  notifications: {
-    push: true,
-    email: false,
-    sms: false
-  },
-  dashboard: {
-    defaultView: 'overview',
-    widgetsOrder: ['balance', 'transactions', 'goals'],
-    itemsPerPage: 10
-  },
-  preferences: {
-    language: 'en',
+  regionalPreferences: {
+    locale: 'en-US',
     timezone: 'UTC',
     dateFormat: 'MM/DD/YYYY'
+  },
+  appPreferences: {
+    theme: 'light',
+    schema: 'default',
+    notifications: {
+      push: true,
+      email: false,
+      sms: false
+    }
+  },
+  dashboardSettings: {
+    defaultView: 'overview',
+    itemsPerPage: 10,
+    widgetsOrder: ['balance', 'transactions', 'goals']
   }
 } as const
 
