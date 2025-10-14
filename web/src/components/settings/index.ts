@@ -1,0 +1,6 @@
+export { default as IntegrationsSection } from './IntegrationsSection.tsx'
+export { default as NotificationSection } from './NotificationSection.tsx'
+export { default as PreferencesSection } from './PreferencesSection.tsx'
+export { default as ProfileSection } from './ProfileSection.tsx'
+export { default as SecuritySection } from './SecuritySection.tsx'
+export { default as SupportSection } from './SupportSection.tsx'

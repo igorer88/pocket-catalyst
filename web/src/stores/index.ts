@@ -2,6 +2,7 @@ export * from './accountStore'
 export * from './authStore'
 export * from './globalStore'
 export * from './profileStore'
+export * from './securityStore'
 export * from './subscriptionStore'
 export * from './transactionStore'
 

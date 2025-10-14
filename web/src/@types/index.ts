@@ -1,22 +1,35 @@
 export interface User {
-  id: string | number
+  id: string
   username: string
   email: string
-  first_name: string
-  last_name: string
-  date_joined: string
-  is_active: boolean
+  isActive: boolean
+  createdAt: string
+  updatedAt: string
+  deletedAt?: string
 }
 
 export interface Profile {
-  id: number
-  user: number
-  username: string
+  id: string
+  userId: string
   firstName: string
   lastName: string
   email: string
   language: string
   displayCurrency: string
+  extraSettings: Record<string, unknown>
+  createdAt: string
+  updatedAt: string
+  deletedAt?: string
+}
+
+export interface Security {
+  id: string
+  userId: string
+  pinAttempts: number
+  pinLockedUntil: string | null
+  pinHint: string | null
+  recoveryEmail: string | null
+  phone: string | null
   createdAt: string
   updatedAt: string
 }
