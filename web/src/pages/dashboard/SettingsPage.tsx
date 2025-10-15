@@ -20,10 +20,11 @@ import {
 } from '@heroui/react'
 
 import {
+  AppAppearanceSection,
   IntegrationsSection,
   NotificationSection,
-  PreferencesSection,
   ProfileSection,
+  RegionalSettingsSection,
   SecuritySection,
   SupportSection
 } from '@/components/settings'
@@ -70,18 +71,25 @@ function SettingsPage(): React.JSX.Element {
 
   const preferencesItems = [
     {
+      title: t('pages.settings.regionalSettings'),
+      subtitle: t('pages.settings.regionalSettingsDescription'),
+      tooltipContent: t('pages.settings.regionalSettingsTooltip'),
+      icon: <UserCircleIcon className={iconClasses} />,
+      content: <RegionalSettingsSection user={user} />
+    },
+    {
       title: t('pages.settings.appAppearance'),
       subtitle: t('pages.settings.appAppearanceDescription'),
       tooltipContent: t('pages.settings.appAppearanceTooltip'),
       icon: <PaintBrushIcon className={iconClasses} />,
-      content: <PreferencesSection />
+      content: <AppAppearanceSection user={user} />
     },
     {
       title: t('pages.settings.notifications'),
       subtitle: t('pages.settings.notificationsDescription'),
       tooltipContent: t('pages.settings.notificationsTooltip'),
       icon: <BellIcon className={iconClasses} />,
-      content: <NotificationSection />
+      content: <NotificationSection user={user} />
     }
   ]
 
@@ -91,7 +99,7 @@ function SettingsPage(): React.JSX.Element {
       subtitle: t('pages.settings.bankAccountsDescription'),
       tooltipContent: t('pages.settings.bankAccountsTooltip'),
       icon: <BuildingLibraryIcon className={iconClasses} />,
-      content: <IntegrationsSection />
+      content: <IntegrationsSection user={user} />
     }
   ]
 
