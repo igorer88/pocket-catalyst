@@ -20,8 +20,6 @@ const demoUser: User = {
   id: '455be978-dd76-4456-bc23-158f8c2bb970',
   username: 'demo',
   email: 'demo@example.com',
-  firstName: 'Demo',
-  lastName: 'User',
   isActive: true,
   createdAt: '2023-01-01T00:00:00Z',
   updatedAt: '2023-01-01T00:00:00Z'
