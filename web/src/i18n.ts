@@ -13,9 +13,14 @@ const resources = {
   }
 }
 
-const getLanguage = (): string => {
-  const lang = navigator.language.split(/[-_]/)[0]
-  return lang in resources ? lang : 'en'
+export const getLanguage = (): string => {
+  // Check localStorage first, then fallback to browser language
+  const storedLang = localStorage.getItem('language')
+  if (storedLang && storedLang in resources) {
+    return storedLang
+  }
+  const browserLang = navigator.language.split(/[-_]/)[0]
+  return browserLang in resources ? browserLang : 'en'
 }
 
 i18n.use(initReactI18next).init({
@@ -26,5 +31,10 @@ i18n.use(initReactI18next).init({
     escapeValue: false // React already escapes values
   }
 })
+
+export const changeLanguage = (lng: string): void => {
+  i18n.changeLanguage(lng)
+  localStorage.setItem('language', lng)
+}
 
 export default i18n
