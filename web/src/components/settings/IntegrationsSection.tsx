@@ -1,6 +1,14 @@
 import { useTranslation } from 'react-i18next'
 
-function IntegrationsSection(): React.JSX.Element {
+import { User } from '@/@types'
+
+interface IntegrationsSectionProps {
+  user: User | null
+}
+
+function IntegrationsSection({
+  user: _user
+}: IntegrationsSectionProps): React.JSX.Element {
   const { t } = useTranslation()
 
   return (
