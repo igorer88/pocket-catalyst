@@ -32,6 +32,16 @@ export interface Security {
   phone: string | null
   createdAt: string
   updatedAt: string
+  activeSessions: number
+  securityEvents: SecurityEvent[]
+}
+
+interface SecurityEvent {
+  id: string
+  type: 'login' | 'password_change'
+  timestamp: string
+  ipAddress: string
+  userAgent: string
 }
 
 export interface Account {

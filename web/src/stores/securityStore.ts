@@ -1,26 +1,8 @@
 import { create } from 'zustand'
 
+import { Security } from '@/@types'
 import apiClient from '@/config/api-client'
 import { ApiError } from '@/utils'
-
-interface SecuritySettings {
-  twoFactorEnabled: boolean
-  passwordLastChanged: string | null
-  activeSessions: number
-  securityEvents: SecurityEvent[]
-}
-
-interface SecurityEvent {
-  id: string
-  type:
-    | 'login'
-    | 'password_change'
-    | 'two_factor_enabled'
-    | 'two_factor_disabled'
-  timestamp: string
-  ipAddress: string
-  userAgent: string
-}
 
 interface ChangePasswordData {
   currentPassword: string
@@ -28,12 +10,23 @@ interface ChangePasswordData {
   confirmPassword: string
 }
 
+interface UpdateSecuritySettingsData {
+  pin?: string
+  pinHint?: string
+  recoveryEmail?: string
+  phone?: string
+}
+
 interface SecurityState {
-  settings: SecuritySettings | null
+  settings: Security | null
   isLoading: boolean
   error: string | null
   fetchSecuritySettings: (userId: string) => Promise<void>
   changePassword: (userId: string, data: ChangePasswordData) => Promise<void>
+  updateSecuritySettings: (
+    userId: string,
+    data: UpdateSecuritySettingsData
+  ) => Promise<void>
   clearSecurityData: () => void
 }
 
@@ -44,9 +37,7 @@ export const useSecurityStore = create<SecurityState>((set, _get) => ({
   fetchSecuritySettings: async (userId: string): Promise<void> => {
     set({ isLoading: true, error: null })
     try {
-      const response = await apiClient.get<SecuritySettings>(
-        `users/${userId}/security`
-      )
+      const response = await apiClient.get<Security>(`users/${userId}/security`)
       set({ settings: response.data, isLoading: false })
     } catch (err: unknown) {
       const errorMsg =
@@ -61,12 +52,31 @@ export const useSecurityStore = create<SecurityState>((set, _get) => ({
   ): Promise<void> => {
     set({ isLoading: true, error: null })
     try {
-      await apiClient.post(`users/${userId}/security/change-password`, data)
+      await apiClient.patch(`users/${userId}`, data)
       set({ isLoading: false })
     } catch (err: unknown) {
       const errorMsg = (err as ApiError)?.message || 'Failed to change password'
       set({ error: errorMsg, isLoading: false })
       console.error('Error changing password:', err)
+      throw err
+    }
+  },
+  updateSecuritySettings: async (
+    userId: string,
+    data: UpdateSecuritySettingsData
+  ): Promise<void> => {
+    set({ isLoading: true, error: null })
+    try {
+      const response = await apiClient.patch<Security>(
+        `users/${userId}/security`,
+        data
+      )
+      set({ settings: response.data, isLoading: false })
+    } catch (err: unknown) {
+      const errorMsg =
+        (err as ApiError)?.message || 'Failed to update security settings'
+      set({ error: errorMsg, isLoading: false })
+      console.error('Error updating security settings:', err)
       throw err
     }
   },

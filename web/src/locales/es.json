@@ -126,7 +126,14 @@
       "changePasswordDescription": "Actualiza tu contraseña para mantener tu cuenta segura.",
       "activeSessions": "Sesiones Activas",
       "sessionsActive": "sesiones activas",
-      "manageSessions": "Gestionar Sesiones"
+      "manageSessions": "Gestionar Sesiones",
+      "pin": "PIN de operaciones criticas",
+      "setPin": "Establecer PIN de operaciones criticas",
+      "pinHint": "Pista del PIN de operaciones criticas",
+      "recoveryEmail": "Correo de Recuperación",
+      "phone": "Número de Teléfono",
+      "securitySettings": "Configuración de Seguridad",
+      "securitySettingsDescription": "Gestiona tus preferencias de seguridad y opciones de recuperación."
     }
   },
   "components": {

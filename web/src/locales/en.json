@@ -126,7 +126,14 @@
       "changePasswordDescription": "Update your password to keep your account secure.",
       "activeSessions": "Active Sessions",
       "sessionsActive": "sessions active",
-      "manageSessions": "Manage Sessions"
+      "manageSessions": "Manage Sessions",
+      "pin": "Critical Operations PIN",
+      "setPin": "Set PIN for Critical Operations",
+      "pinHint": "PIN Hint for Critical Operations",
+      "recoveryEmail": "Recovery Email",
+      "phone": "Phone Number",
+      "securitySettings": "Security Settings",
+      "securitySettingsDescription": "Manage your security preferences and recovery options."
     }
   },
   "components": {
