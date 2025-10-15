@@ -10,9 +10,9 @@ interface PersonalInfoSectionProps {
 }
 
 function PersonalInfoSection({
-  user: _user
+  user: user
 }: PersonalInfoSectionProps): React.JSX.Element {
-  const { profile, isLoading, error } = useProfileStore()
+  const { profile, isLoading, error, updateProfile } = useProfileStore()
   const { t } = useTranslation()
 
   // Form state
@@ -37,12 +37,11 @@ function PersonalInfoSection({
   }
 
   const handleSave = async (): Promise<void> => {
+    if (!user?.id) return
+
     setIsSaving(true)
     try {
-      // TODO: Implement API call to update profile
-      console.log('Saving profile:', formData)
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      await updateProfile(user.id, formData)
     } catch (error) {
       console.error('Error saving profile:', error)
     } finally {
@@ -95,7 +94,7 @@ function PersonalInfoSection({
       </div>
       <Input
         label={t('pages.settings.email')}
-        value={profile?.email || ''}
+        value={user?.email || ''}
         disabled
       />
       <div className="flex justify-end space-x-2">
@@ -112,7 +111,7 @@ function PersonalInfoSection({
         </Button>
       </div>
       <pre className="mt-4 p-2 bg-gray-100 dark:bg-gray-800 rounded-md overflow-auto text-xs">
-        {JSON.stringify({ formData, profile }, null, 2)}
+        {JSON.stringify({ formData, user, profile }, null, 2)}
       </pre>
     </div>
   )
