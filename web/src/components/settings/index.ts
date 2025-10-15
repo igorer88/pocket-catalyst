@@ -1,7 +1,7 @@
 export { default as AppAppearanceSection } from './AppAppearanceSection.tsx'
 export { default as IntegrationsSection } from './IntegrationsSection.tsx'
 export { default as NotificationSection } from './NotificationSection.tsx'
-export { default as ProfileSection } from './ProfileSection.tsx'
+export { default as PersonalInfoSection } from './PersonalInfoSection.tsx'
 export { default as RegionalSettingsSection } from './RegionalSettingsSection.tsx'
 export { default as SecuritySection } from './SecuritySection.tsx'
 export { default as SupportSection } from './SupportSection.tsx'

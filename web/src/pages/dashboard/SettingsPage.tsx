@@ -23,7 +23,7 @@ import {
   AppAppearanceSection,
   IntegrationsSection,
   NotificationSection,
-  ProfileSection,
+  PersonalInfoSection,
   RegionalSettingsSection,
   SecuritySection,
   SupportSection
@@ -58,7 +58,7 @@ function SettingsPage(): React.JSX.Element {
       subtitle: t('pages.settings.personalInformationDescription'),
       tooltipContent: t('pages.settings.personalInformationTooltip'),
       icon: <UserCircleIcon className={iconClasses} />,
-      content: <ProfileSection user={user} />
+      content: <PersonalInfoSection user={user} />
     },
     {
       title: t('pages.settings.security'),

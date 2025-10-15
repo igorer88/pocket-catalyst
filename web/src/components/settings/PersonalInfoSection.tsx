@@ -5,13 +5,13 @@ import { Button, Input, Spinner } from '@heroui/react'
 import { User } from '@/@types'
 import { useProfileStore } from '@/stores/profileStore'
 
-interface ProfileSectionProps {
+interface PersonalInfoSectionProps {
   user: User | null
 }
 
-function ProfileSection({
+function PersonalInfoSection({
   user: _user
-}: ProfileSectionProps): React.JSX.Element {
+}: PersonalInfoSectionProps): React.JSX.Element {
   const { profile, isLoading, error } = useProfileStore()
   const { t } = useTranslation()
 
@@ -118,4 +118,4 @@ function ProfileSection({
   )
 }
 
-export default ProfileSection
+export default PersonalInfoSection
